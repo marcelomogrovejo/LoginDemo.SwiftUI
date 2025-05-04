@@ -50,10 +50,11 @@ struct SignInView: View {
 
                         VStack(alignment: .leading) {
                             TextField("", text: $email)
+                                .foregroundStyle(Color.AppPalette.TextField.primary)
 
                             Rectangle()
-                                .fill(email == "" ? Color.black.opacity(0.08) : Color.AppPalette.Main.appPink)
-                                .frame(height: 3)
+                                .fill(email == "" ? Color.black.opacity(0.08) : Color.AppPalette.Main.appPurple)
+                                .frame(height: 1)
 
                             Text("Error message")
                                 .font(.system(size: 12))
@@ -66,11 +67,21 @@ struct SignInView: View {
                             .font(.system(size: 15))
 
                         VStack(alignment: .leading) {
-                            SecureField("", text: $password)
+                            HStack {
+                                SecureField("", text: $password)
+                                    .foregroundStyle(Color.AppPalette.TextField.primary)
+
+                                Button {
+                                    // TODO:
+                                } label: {
+                                    Image(systemName: "eye.slash.fill")
+                                        .foregroundStyle(Color.AppPalette.Main.appPurple)
+                                }
+                            }
 
                             Rectangle()
-                                .fill(password == "" ? Color.black.opacity(0.08) : Color.AppPalette.Main.appPink)
-                                .frame(height: 3)
+                                .fill(password == "" ? Color.black.opacity(0.08) : Color.AppPalette.Main.appPurple)
+                                .frame(height: 1)
 
                             Text("Error message")
                                 .font(.system(size: 12))
@@ -118,9 +129,8 @@ struct SignInView: View {
                                     .fontWeight(.bold)
                                     .foregroundStyle(Color.AppPalette.Main.appPurple)
                             }
-                            
                         }
-                        
+
                         Spacer()
                     }
                     .padding(40)
