@@ -22,6 +22,10 @@ extension Color {
             static let secondary = Color("txt-secondary-color")
             static let error = Color("txt-error-color")
         }
+
+        struct TextField {
+            static let primary = Color("txtfld-primary-color")
+        }
     }
     
     

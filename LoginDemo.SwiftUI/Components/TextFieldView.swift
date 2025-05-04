@@ -11,36 +11,42 @@ struct TextFieldView: View {
 
     @Binding var value: String
 
+    var title: String = "title"
     var placeholderText: String = "placeholder here"
-    var width: CGFloat = 200
-    var isSecureText: Bool = false
     var errorMessage: String = "error message"
+    var isSecureText: Bool = false
 
     var body: some View {
-        HStack {
-            Spacer()
+        Text(title)
+            .foregroundStyle(Color.AppPalette.Text.secondary)
+            .font(.system(size: 15))
 
-            VStack (alignment: .leading){
-                TextField("", text: $value, prompt: Text(placeholderText).foregroundColor(.gray))
-                    .foregroundStyle(Color.purple)
-                    .frame(height: 40)
-                    .padding(.horizontal, 10)
-                    .cornerRadius(10)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(.purple, lineWidth: 1.0)
-                    )
+        VStack(alignment: .leading) {
+            if isSecureText {
+                HStack {
+                    SecureField("", text: $value)
+                        .foregroundStyle(Color.AppPalette.TextField.primary)
 
-                Text(errorMessage)
-                    .foregroundStyle(Color.red)
-                    .font(.system(size: 12))
-                    .padding(.leading, 10)
+                    Button {
+                        // TODO:
+                    } label: {
+                        Image(systemName: "eye.slash.fill")
+                            .foregroundStyle(Color.AppPalette.Main.appPurple)
+                    }
+                }
+            } else {
+                TextField("", text: $value)
+                    .foregroundStyle(Color.AppPalette.TextField.primary)
             }
 
-            Spacer()
+            Rectangle()
+                .fill(value == "" ? Color.black.opacity(0.08) : Color.AppPalette.Main.appPurple)
+                .frame(height: 1)
+
+            Text(errorMessage)
+                .font(.system(size: 12))
+                .foregroundStyle(Color.AppPalette.Text.error)
         }
-        .frame(width: width)
-//        .background(Color.teal)
     }
 }
 
