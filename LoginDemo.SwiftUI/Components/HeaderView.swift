@@ -5,11 +5,12 @@
 //  Created by Marcelo Mogrovejo on 28/04/2025.
 //
 
-// Source: https://designmodo.com/wp-content/uploads/2018/12/login-form.jpg
-
 import SwiftUI
 
 struct HeaderView: View {
+
+    var title: String = ""
+
     var body: some View {
         ZStack(alignment: .top) {
 //            Image("login-form-template")
@@ -30,9 +31,20 @@ struct HeaderView: View {
                 .frame(maxWidth: .infinity, alignment: .top)
                 .frame(height: 400)
                 .offset(x: 0, y: 0)
+
+            HStack {
+                Text(title)
+                    .fontWeight(.bold)
+                    .font(.system(size: 32))
+                    .foregroundStyle(Color.AppPalette.Text.title)
+                    .padding(.top, 190)
+                    .padding(.leading, 50)
+
+                Spacer()
+            }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .background(Color.white)
+        .frame(maxWidth: .infinity/*, maxHeight: .infinity*/, alignment: .top)
+        .background(Color.clear)
         .ignoresSafeArea(edges: .top)
     }
 }
