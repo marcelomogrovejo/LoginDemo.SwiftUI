@@ -5,8 +5,6 @@
 //  Created by Marcelo Mogrovejo on 28/04/2025.
 //
 
-// Source: https://designmodo.com/wp-content/uploads/2018/12/login-form.jpg
-
 import SwiftUI
 
 struct HeaderView: View {

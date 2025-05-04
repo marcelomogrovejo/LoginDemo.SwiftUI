@@ -5,7 +5,9 @@
 //  Created by Marcelo Mogrovejo on 26/04/2025.
 //
 
-// Source: https://www.youtube.com/watch?v=ASnDMEFmty0
+// Source: https://designmodo.com/wp-content/uploads/2018/12/login-form.jpg
+// Source: https://www.youtube.com/watch?v=K9d45tbLi0M
+// TODO: https://www.youtube.com/watch?v=ASnDMEFmty0
 
 import SwiftUI
 
@@ -14,15 +16,21 @@ struct SignInView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var height: CGFloat = 0
-    private var sharedWindow = UIApplication
-        .shared
-        .connectedScenes
-        .flatMap { ($0 as? UIWindowScene)?.windows ?? [] }
-        .first { $0.isKeyWindow }
+    private var sharedWindow: [UIWindow].Element? {
+        UIApplication
+            .shared
+            .connectedScenes
+            .flatMap { ($0 as? UIWindowScene)?.windows ?? [] }
+            .first { $0.isKeyWindow }
+    }
+    private var isSmallScreenPhone: Bool {
+        UIScreen.main.bounds.height < 750
+    }
 
     var body: some View {
+        /// To adjust the view when the keyboard appears
         /// for phones having lesser screen size, we're enabling scroll view for all time
-        ScrollView(UIScreen.main.bounds.height < 750 ? .vertical : (height == 0 ? .init() : .vertical),
+        ScrollView(isSmallScreenPhone ? .vertical : (height == 0 ? .init() : .vertical),
                    showsIndicators: false) {
             ZStack {
                 Color.AppPalette.Main.appBackground
@@ -79,30 +87,34 @@ struct SignInView: View {
                     }
                     .padding(40)
                 }
-                .padding(.bottom, sharedWindow?.safeAreaInsets.bottom)
+                /// -130 is just a random number that pulls the screen upward to show the bottom buttons.
+                .padding(.top, isSmallScreenPhone ? -130 : 0)
             }
         }
-        .padding(.bottom, height)
-        .background(Color.black.opacity(0.03).edgesIgnoringSafeArea(.all))
+        .offset(y: -height)
         .edgesIgnoringSafeArea(.all)
         .onAppear {
             NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidShowNotification,
                                                    object: nil,
                                                    queue: .main) { notification in
-                // TODO: WARNING!
-                // guard let
-                let data = notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
-                // guard let
-                let height = data.cgRectValue.height - (self.sharedWindow?.safeAreaInsets.bottom)!
+                guard let userInfo = notification.userInfo else { return }
+                guard let keyboardFrameEnd = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
 
-                print(height)
-                self.height = height
+                guard let bottomHeight = self.sharedWindow?.safeAreaInsets.bottom else { return }
+//                print(bottomHeight)
+
+                let height = keyboardFrameEnd.height - bottomHeight
+//                print(keyboardFrameEnd.height)
+//                print(height)
+
+                /// 195 and 230 are just random numbers that approache to the password error message bottom
+                self.height = height - (isSmallScreenPhone ? 195 : 230)
             }
 
             NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidHideNotification,
                                                    object: nil,
                                                    queue: .main) { _ in
-                print("hidden")
+//                print("hidden")
                 self.height = 0
             }
         }
