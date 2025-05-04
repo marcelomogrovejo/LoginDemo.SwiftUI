@@ -22,71 +22,27 @@ struct SignInView: View {
 
     var body: some View {
         /// for phones having lesser screen size, we're enabling scroll view for all time
-        ScrollView(UIScreen.main.bounds.height < 750 ? .vertical : (height == 0 ? .init() : .vertical), showsIndicators: true) {
+        ScrollView(UIScreen.main.bounds.height < 750 ? .vertical : (height == 0 ? .init() : .vertical),
+                   showsIndicators: false) {
             ZStack {
                 Color.AppPalette.Main.appBackground
                     .edgesIgnoringSafeArea(.all)
 
                 VStack {
-                    ZStack(alignment: .top) {
-                        HeaderView()
-
-                        HStack {
-                            Text("Welcome\n Back")
-                                .fontWeight(.bold)
-                                .font(.system(size: 32))
-                                .foregroundStyle(Color.AppPalette.Text.title)
-                                .padding(.leading, 60)
-
-                            Spacer()
-                        }
-                        .padding(.top, 150)
-                    }
+                    HeaderView(title: "Welcome\n Back")
 
                     VStack(alignment: .leading) {
-                        Text("Email")
-                            .foregroundStyle(Color.AppPalette.Text.secondary)
-                            .font(.system(size: 15))
+                        TextFieldView(value: $email,
+                                      title: "Email",
+                                      errorMessage: "Email error message here")
 
-                        VStack(alignment: .leading) {
-                            TextField("", text: $email)
-                                .foregroundStyle(Color.AppPalette.TextField.primary)
+                        Spacer()
+                            .frame(height: 20)
 
-                            Rectangle()
-                                .fill(email == "" ? Color.black.opacity(0.08) : Color.AppPalette.Main.appPurple)
-                                .frame(height: 1)
-
-                            Text("Error message")
-                                .font(.system(size: 12))
-                                .foregroundStyle(Color.AppPalette.Text.error)
-                        }
-                        .padding(.bottom, 20)
-
-                        Text("Password")
-                            .foregroundStyle(Color.AppPalette.Text.secondary)
-                            .font(.system(size: 15))
-
-                        VStack(alignment: .leading) {
-                            HStack {
-                                SecureField("", text: $password)
-                                    .foregroundStyle(Color.AppPalette.TextField.primary)
-
-                                Button {
-                                    // TODO:
-                                } label: {
-                                    Image(systemName: "eye.slash.fill")
-                                        .foregroundStyle(Color.AppPalette.Main.appPurple)
-                                }
-                            }
-
-                            Rectangle()
-                                .fill(password == "" ? Color.black.opacity(0.08) : Color.AppPalette.Main.appPurple)
-                                .frame(height: 1)
-
-                            Text("Error message")
-                                .font(.system(size: 12))
-                                .foregroundStyle(Color.AppPalette.Text.error)
-                        }
+                        TextFieldView(value: $password,
+                                      title: "Password",
+                                      errorMessage: "Wrong password error message here",
+                                      isSecureText: true)
                     }
                     .padding(.horizontal, 40)
 
@@ -111,24 +67,12 @@ struct SignInView: View {
                         }
                         
                         HStack {
-                            Button {
-                                // TODO: Sign Up
-                            } label: {
-                                Text("Sign Up")
-                                    .fontWeight(.bold)
-                                    .foregroundStyle(Color.AppPalette.Main.appPurple)
-                            }
-                            .padding(.vertical, 30)
+                            LinkStyleButton(title: "Sign Up")
+                                .padding(.vertical, 30)
 
                             Spacer()
 
-                            Button {
-                                // TODO: Forgot password
-                            } label: {
-                                Text("Forgot Password")
-                                    .fontWeight(.bold)
-                                    .foregroundStyle(Color.AppPalette.Main.appPurple)
-                            }
+                            LinkStyleButton(title: "Forgot Password")
                         }
 
                         Spacer()
@@ -142,7 +86,9 @@ struct SignInView: View {
         .background(Color.black.opacity(0.03).edgesIgnoringSafeArea(.all))
         .edgesIgnoringSafeArea(.all)
         .onAppear {
-            NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidShowNotification, object: nil, queue: .main) { notification in
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidShowNotification,
+                                                   object: nil,
+                                                   queue: .main) { notification in
                 // TODO: WARNING!
                 // guard let
                 let data = notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
@@ -153,7 +99,9 @@ struct SignInView: View {
                 self.height = height
             }
 
-            NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidHideNotification, object: nil, queue: .main) { _ in
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidHideNotification,
+                                                   object: nil,
+                                                   queue: .main) { _ in
                 print("hidden")
                 self.height = 0
             }
