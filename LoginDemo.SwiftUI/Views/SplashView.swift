@@ -14,9 +14,9 @@ struct SplashView: View {
     @State private var opacity: CGFloat = 0.5
 
     var body: some View {
-//        if isActive {
-//            ContentView()
-//        } else {
+        if isActive {
+            ContentView()
+        } else {
             ZStack {
                 Color(.white)
 
@@ -49,7 +49,7 @@ struct SplashView: View {
                 }
             }
             .ignoresSafeArea(.all)
-//        }
+        }
     }
 }
 
