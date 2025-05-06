@@ -13,6 +13,8 @@ import SwiftUI
 
 struct SignInView: View {
 
+    @EnvironmentObject var settings: AppSettings
+
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var height: CGFloat = 0
@@ -64,7 +66,8 @@ struct SignInView: View {
                             Spacer()
 
                             Button {
-                                // TODO:
+                                // TODO: validate textfields
+                                settings.isLoggedIn = true
                             } label: {
                                 Image(systemName: "arrow.right.circle.fill")
                                     .resizable()
@@ -73,7 +76,7 @@ struct SignInView: View {
                                     .frame(width: 80, height: 80)
                             }
                         }
-                        
+
                         HStack {
                             LinkStyleButton(title: "Sign Up")
                                 .padding(.vertical, 30)
