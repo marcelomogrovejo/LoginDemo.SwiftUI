@@ -8,8 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
+
+    @EnvironmentObject var settings: AppSettings
+
     var body: some View {
-        SignInView()
+        NavigationStack {
+            if settings.isLoggedIn {
+                HomeView()
+            } else {
+                SignInView()
+            }
+        }
     }
 }
 

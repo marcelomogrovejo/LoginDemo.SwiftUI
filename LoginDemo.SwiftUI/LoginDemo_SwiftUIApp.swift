@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct LoginDemo_SwiftUIApp: App {
+
+    @StateObject var settings = AppSettings()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SplashView()
+                .environmentObject(settings)
         }
     }
 }
