@@ -14,7 +14,7 @@ struct LoginDemo_SwiftUIApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SplashView()
                 .environmentObject(settings)
         }
     }
