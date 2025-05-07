@@ -12,11 +12,8 @@
 import SwiftUI
 
 struct SignInView: View {
+    @StateObject private var viewModel: SignInViewModel = SignInViewModel()
 
-    @EnvironmentObject var settings: AppSettings
-
-    @State private var email: String = ""
-    @State private var password: String = ""
     @State private var height: CGFloat = 0
     private var sharedWindow: [UIWindow].Element? {
         UIApplication
@@ -42,17 +39,24 @@ struct SignInView: View {
                     HeaderView(title: "Welcome\n Back")
 
                     VStack(alignment: .leading) {
-                        TextFieldView(value: $email,
+                        CustomTextField(value: $viewModel.email,
                                       title: "Email",
-                                      errorMessage: "Email error message here")
+                                      errorMessage: "Email error message here",
+                                      textContentType: .emailAddress,
+                                      keyboardType: .emailAddress,
+                                      focus: .email
+                        )
 
                         Spacer()
                             .frame(height: 20)
 
-                        TextFieldView(value: $password,
+                        CustomTextField(value: $viewModel.password,
                                       title: "Password",
                                       errorMessage: "Wrong password error message here",
-                                      isSecureText: true)
+                                      isSecureText: true,
+                                      textContentType: .password,
+                                      focus: .password
+                        )
                     }
                     .padding(.horizontal, 40)
 
@@ -65,15 +69,8 @@ struct SignInView: View {
 
                             Spacer()
 
-                            Button {
-                                // TODO: validate textfields
-                                settings.isLoggedIn = true
-                            } label: {
-                                Image(systemName: "arrow.right.circle.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .foregroundStyle(Color.AppPalette.Main.appPurple)
-                                    .frame(width: 80, height: 80)
+                            CircleButton(state: $viewModel.buttonState) {
+                                viewModel.authenticate()
                             }
                         }
 
