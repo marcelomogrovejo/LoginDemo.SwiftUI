@@ -77,7 +77,7 @@ struct SignInView: View {
 
                             Spacer()
 
-                            CircleButton(state: $viewModel.buttonState) {
+                            CircleButton(isEnabled: $viewModel.isFormValid) {
                                 viewModel.authenticate()
                             }
                         }
