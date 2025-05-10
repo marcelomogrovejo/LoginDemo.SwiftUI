@@ -62,7 +62,7 @@ struct SignInView: View {
                                         isSecureText: true,
                                         textContentType: .password,
                                         onSubmit: {
-                            viewModel.authenticate()
+                            viewModel.triggerAuthentication()
                         })
                         .focused($currentFocus, equals: .password)
                     }
@@ -78,7 +78,7 @@ struct SignInView: View {
                             Spacer()
 
                             CircleButton(isEnabled: $viewModel.isFormValid) {
-                                viewModel.authenticate()
+                                viewModel.triggerAuthentication()
                             }
                         }
 
