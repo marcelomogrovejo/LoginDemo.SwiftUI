@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SplashView: View {
+    @EnvironmentObject var settings: AppSettings
 
     @State private var isActive: Bool = false
     @State private var size: CGFloat = 1.0
@@ -16,6 +17,7 @@ struct SplashView: View {
     var body: some View {
         if isActive {
             ContentView()
+                .environmentObject(settings)
         } else {
             ZStack {
                 Color(.white)

@@ -9,7 +9,6 @@ import SwiftUI
 import Combine
 
 class SignInViewModel: ObservableObject {
-    @EnvironmentObject var settings: AppSettings
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var buttonState: CircleButtonType = .disabled
@@ -28,7 +27,12 @@ class SignInViewModel: ObservableObject {
             .eraseToAnyPublisher()
     }
 
+    var appSettings: AppSettings?
+
     init() {
+        // TODO: This is not working, the form is not being validated on keyboard return and tapping the main button when is active.
+
+        /// Simple textfield validateion, if both are not empty, enable the submit button
         isEmailValidPublisher.combineLatest(isPasswordValidPublisher)
             .map{ value1, value2 in
                 value1 && value2
@@ -43,9 +47,14 @@ class SignInViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
+    func setup(_ appSettings: AppSettings) {
+        self.appSettings = appSettings
+    }
+
     func authenticate() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-            self?.settings.isLoggedIn = true
-        }
+        appSettings?.isLoggedIn = true
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+//            self?.settings.isLoggedIn = true
+//        }
     }
 }

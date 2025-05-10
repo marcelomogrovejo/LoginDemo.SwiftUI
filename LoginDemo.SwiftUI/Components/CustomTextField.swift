@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct CustomTextField: View {
-
     @Binding var value: String
-    @FocusState private var focusState: TextFieldFocusable?
     @State private var isPasswordHidden: Bool = true
 
     var title: String = "title"
@@ -19,7 +17,7 @@ struct CustomTextField: View {
     var isSecureText: Bool = false
     var textContentType: UITextContentType? = nil
     var keyboardType: UIKeyboardType = .default
-    var focus: TextFieldFocusable? = nil
+    var onSubmit: () -> Void = { }
 
     var body: some View {
         Text(title)
@@ -32,10 +30,32 @@ struct CustomTextField: View {
                     if isPasswordHidden {
                         SecureField("", text: $value)
                             .foregroundStyle(Color.AppPalette.TextField.primary)
+                            .textContentType(textContentType)
+                            .keyboardType(keyboardType)
+                            .submitLabel(.return) // TODO: param
+                            .onSubmit {
+                                onSubmit()
+                            }
+                        #if DEBUG
+                            .simultaneousGesture(TapGesture().onEnded {
+                                print("\(title) pressed")
+                            })
+                        #endif
                     } else {
                         TextField("", text: $value)
                             .disableAutocorrection(true)
                             .foregroundStyle(Color.AppPalette.TextField.primary)
+                            .textContentType(textContentType)
+                            .keyboardType(keyboardType)
+                            .submitLabel(.return) // TODO: param
+                            .onSubmit {
+                                onSubmit()
+                            }
+                        #if DEBUG
+                            .simultaneousGesture(TapGesture().onEnded {
+                                print("\(title) pressed")
+                            })
+                        #endif
                     }
 
                     Button {
@@ -50,13 +70,15 @@ struct CustomTextField: View {
                     .foregroundStyle(Color.AppPalette.TextField.primary)
                     .textContentType(textContentType)
                     .keyboardType(keyboardType)
-                    .submitLabel(.next)
-                    .focused($focusState, equals: focus)
+                    .submitLabel(.next) // TODO: param
                     .onSubmit {
-                        // TODO: figure out how to send the focus to the next textField
-//                        focus = .password
-                        // also if password, can trigger the login() function as the main button
+                        onSubmit()
                     }
+                #if DEBUG
+                    .simultaneousGesture(TapGesture().onEnded {
+                        print("\(title) pressed")
+                    })
+                #endif
             }
 
             Rectangle()
