@@ -17,6 +17,7 @@ struct ContentView: View {
                 HomeView()
             } else {
                 SignInView()
+                    .environmentObject(settings)
             }
         }
     }

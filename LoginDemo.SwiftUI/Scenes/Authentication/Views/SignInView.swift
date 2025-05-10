@@ -7,11 +7,13 @@
 
 // Source: https://designmodo.com/wp-content/uploads/2018/12/login-form.jpg
 // Source: https://www.youtube.com/watch?v=K9d45tbLi0M
-// TODO: https://www.youtube.com/watch?v=ASnDMEFmty0
+// Source: https://www.youtube.com/watch?v=ASnDMEFmty0
+// Focus handler source: https://stackoverflow.com/questions/73726968/how-to-make-swiftui-textfield-more-genric-for-focus-state
 
 import SwiftUI
 
 struct SignInView: View {
+    @EnvironmentObject var settings: AppSettings
     @StateObject private var viewModel: SignInViewModel = SignInViewModel()
 
     @State private var height: CGFloat = 0
@@ -25,6 +27,8 @@ struct SignInView: View {
     private var isSmallScreenPhone: Bool {
         UIScreen.main.bounds.height < 750
     }
+
+    @FocusState private var currentFocus: TextFieldFocusType?
 
     var body: some View {
         /// To adjust the view when the keyboard appears
@@ -40,23 +44,27 @@ struct SignInView: View {
 
                     VStack(alignment: .leading) {
                         CustomTextField(value: $viewModel.email,
-                                      title: "Email",
-                                      errorMessage: "Email error message here",
-                                      textContentType: .emailAddress,
-                                      keyboardType: .emailAddress,
-                                      focus: .email
-                        )
+                                        title: "Email",
+                                        errorMessage: "Email error message here",
+                                        textContentType: .emailAddress,
+                                        keyboardType: .emailAddress,
+                                        onSubmit: {
+                            currentFocus = .password
+                        })
+                        .focused($currentFocus, equals: .email)
 
                         Spacer()
                             .frame(height: 20)
 
                         CustomTextField(value: $viewModel.password,
-                                      title: "Password",
-                                      errorMessage: "Wrong password error message here",
-                                      isSecureText: true,
-                                      textContentType: .password,
-                                      focus: .password
-                        )
+                                        title: "Password",
+                                        errorMessage: "Wrong password error message here",
+                                        isSecureText: true,
+                                        textContentType: .password,
+                                        onSubmit: {
+                            viewModel.authenticate()
+                        })
+                        .focused($currentFocus, equals: .password)
                     }
                     .padding(.horizontal, 40)
 
@@ -94,6 +102,10 @@ struct SignInView: View {
         .offset(y: -height)
         .edgesIgnoringSafeArea(.all)
         .onAppear {
+            // Default focus
+            // TODO: set here
+
+            // Keyboard handlers
             NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidShowNotification,
                                                    object: nil,
                                                    queue: .main) { notification in
@@ -117,6 +129,9 @@ struct SignInView: View {
 //                print("hidden")
                 self.height = 0
             }
+
+            // Configure enviroment vars
+            viewModel.setup(settings)
         }
     }
 }
