@@ -23,13 +23,13 @@ struct CircleButton: View {
 
     private var color: Color
 
-    @Binding var state: CircleButtonType
+    @Binding var isEnabled: Bool
     var action: (() -> ())? = nil
 
-    init(state: Binding<CircleButtonType>,
+    init(isEnabled: Binding<Bool>,
          action: (() -> ())? = nil) {
         self.color = .AppPalette.Button.enabled
-        self._state = state
+        self._isEnabled = isEnabled
         self.action = action
     }
 
@@ -42,17 +42,17 @@ struct CircleButton: View {
             Image(systemName: "arrow.right.circle.fill")
                 .resizable()
                 .scaledToFit()
-                .foregroundStyle(state == .disabled ?
+                .foregroundStyle(!isEnabled ?
                                  Color.AppPalette.Button.disabled : color)
                 .frame(width: 80, height: 80)
         }
         // TODO: animation
 //        .buttonStyle(GrowingButtonStyle())
-        .disabled(Bool(state == .disabled))
+        .disabled(!isEnabled)
     }
 }
 
 #Preview {
-    CircleButton(state: .constant(.disabled),
+    CircleButton(isEnabled: .constant(false),
                  action: { print("Action performed") })
 }
