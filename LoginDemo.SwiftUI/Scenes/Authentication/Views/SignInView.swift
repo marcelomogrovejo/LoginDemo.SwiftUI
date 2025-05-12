@@ -9,10 +9,37 @@
 // Source: https://www.youtube.com/watch?v=K9d45tbLi0M
 // Source: https://www.youtube.com/watch?v=ASnDMEFmty0
 // Focus handler source: https://stackoverflow.com/questions/73726968/how-to-make-swiftui-textfield-more-genric-for-focus-state
+// Alert source: https://www.hackingwithswift.com/quick-start/swiftui/how-to-show-an-alert
 
 import SwiftUI
 
 struct SignInView: View {
+
+    private struct Constants {
+        static let screenHeight: CGFloat = 750
+
+        static let mainTitle: String = "Welcome\n Back"
+        static let usernameTitle: String = "Email"
+        static let passwordTitle: String = "Password"
+
+        static let spaceBetweenTextFields: CGFloat = 20
+        static let formPadding: CGFloat = 40
+
+        static let submitTitle: String = "Sign In"
+        static let submitFontSize: CGFloat = 24
+
+        static let signUpTitle: String = "Sign Up"
+        static let signUpButtonVerticalPadding: CGFloat = 30
+        static let forgotPasswordTitle: String = "Forgot Password?"
+
+        static let buttonSectionPadding: CGFloat = 40
+
+        static let viewPadding: CGFloat = -130
+
+        static let errorAlertTitle: String = "Something went wrong"
+        static let errorAlertButtonTitle: String = "Got it!"
+    }
+
     @EnvironmentObject var settings: AppSettings
     @StateObject private var viewModel: SignInViewModel = SignInViewModel()
 
@@ -25,7 +52,7 @@ struct SignInView: View {
             .first { $0.isKeyWindow }
     }
     private var isSmallScreenPhone: Bool {
-        UIScreen.main.bounds.height < 750
+        UIScreen.main.bounds.height < Constants.screenHeight
     }
 
     @FocusState private var currentFocus: TextFieldFocusType?
@@ -41,12 +68,11 @@ struct SignInView: View {
                     .edgesIgnoringSafeArea(.all)
 
                 VStack {
-                    HeaderView(title: "Welcome\n Back")
+                    HeaderView(title: Constants.mainTitle)
 
                     VStack(alignment: .leading) {
                         CustomTextField(value: $viewModel.email,
-                                        title: "Email",
-                                        errorMessage: "Email error message here",
+                                        title: Constants.usernameTitle,
                                         textContentType: .emailAddress,
                                         keyboardType: .emailAddress,
                                         isDisabled: $viewModel.isLoading,
@@ -56,11 +82,10 @@ struct SignInView: View {
                         .focused($currentFocus, equals: .email)
 
                         Spacer()
-                            .frame(height: 20)
+                            .frame(height: Constants.spaceBetweenTextFields)
 
                         CustomTextField(value: $viewModel.password,
-                                        title: "Password",
-                                        errorMessage: "Wrong password error message here",
+                                        title: Constants.passwordTitle,
                                         isSecureText: true,
                                         textContentType: .password,
                                         isDisabled: $viewModel.isLoading,
@@ -69,14 +94,14 @@ struct SignInView: View {
                         })
                         .focused($currentFocus, equals: .password)
                     }
-                    .padding(.horizontal, 40)
+                    .padding(.horizontal, Constants.formPadding)
 
                     VStack(alignment: .leading) {
                         HStack {
-                            Text("Sign In")
+                            Text(Constants.submitTitle)
                                 .fontWeight(.bold)
                                 .foregroundStyle(Color.AppPalette.Text.primary)
-                                .font(.system(size: 24))
+                                .font(.system(size: Constants.submitFontSize))
 
                             Spacer()
 
@@ -87,20 +112,20 @@ struct SignInView: View {
                         }
 
                         HStack {
-                            LinkStyleButton(title: "Sign Up")
-                                .padding(.vertical, 30)
+                            LinkStyleButton(title: Constants.signUpTitle)
+                                .padding(.vertical, Constants.signUpButtonVerticalPadding)
 
                             Spacer()
 
-                            LinkStyleButton(title: "Forgot Password")
+                            LinkStyleButton(title: Constants.forgotPasswordTitle)
                         }
 
                         Spacer()
                     }
-                    .padding(40)
+                    .padding(Constants.buttonSectionPadding)
                 }
                 /// -130 is just a random number that pulls the screen upward to show the bottom buttons.
-                .padding(.top, isSmallScreenPhone ? -130 : 0)
+                .padding(.top, isSmallScreenPhone ?  Constants.viewPadding : 0)
             }
         }
         .offset(y: -height)
@@ -143,8 +168,13 @@ struct SignInView: View {
             // Configure enviroment vars
             viewModel.setup(settings)
         }
+        .customeAlert(isPresented: $viewModel.hasError,
+                      title: Constants.errorAlertTitle,
+                      message: viewModel.errorMessage ?? "Error",
+                      buttonTitle: Constants.errorAlertButtonTitle)
     }
 }
+
 
 #Preview {
     SignInView()

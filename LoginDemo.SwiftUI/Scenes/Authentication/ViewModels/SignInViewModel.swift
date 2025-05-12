@@ -18,6 +18,8 @@ class SignInViewModel: ObservableObject {
     @Published var isFormValid: Bool = false
     @Published var shouldAuthenticate = false
     @Published var isLoading: Bool = false
+    @Published var errorMessage: String?
+    @Published var hasError: Bool = false
 
     private var cancellables: Set<AnyCancellable> = []
     var appSettings: AppSettings?
@@ -69,10 +71,16 @@ class SignInViewModel: ObservableObject {
 
     private func authenticateUser() {
         isLoading = true
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-//            self?.isLoading = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+            self?.isLoading = false
+
+            // Simulate API response error on username/email
+            // Simulate API response error on password
+            self?.hasError = true
+            self?.errorMessage = "🔒 Invalid credentials"
+
 //            self?.appSettings?.isLoggedIn = true
-//        }
+        }
     }
 
     func setup(_ appSettings: AppSettings) {
