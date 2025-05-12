@@ -25,6 +25,7 @@ extension Color {
 
         struct TextField {
             static let primary = Color("txtfld-primary-color")
+            static let secondary = Color("txtfld-secondary-color")
         }
 
         struct Button {

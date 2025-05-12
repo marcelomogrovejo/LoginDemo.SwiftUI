@@ -17,6 +17,7 @@ class SignInViewModel: ObservableObject {
     // Output subscriber
     @Published var isFormValid: Bool = false
     @Published var shouldAuthenticate = false
+    @Published var isLoading: Bool = false
 
     private var cancellables: Set<AnyCancellable> = []
     var appSettings: AppSettings?
@@ -67,10 +68,11 @@ class SignInViewModel: ObservableObject {
 //    }
 
     private func authenticateUser() {
-        print("Authenticating...")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-            self?.appSettings?.isLoggedIn = true
-        }
+        isLoading = true
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+//            self?.isLoading = false
+//            self?.appSettings?.isLoggedIn = true
+//        }
     }
 
     func setup(_ appSettings: AppSettings) {

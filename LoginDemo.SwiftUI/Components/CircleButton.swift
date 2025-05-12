@@ -5,54 +5,109 @@
 //  Created by Marcelo Mogrovejo on 30/04/2025.
 //
 
+// Source SF symbols colors: https://stackoverflow.com/questions/56709463/change-the-stroke-fill-color-of-sf-symbol-icon-in-swiftui
+
 import SwiftUI
 
-struct GrowingButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .padding()
-            .background(.purple)
-            .foregroundStyle(.white)
-            .clipShape(Capsule())
-            .scaleEffect(configuration.isPressed ? 1.2 : 1)
-            .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
-    }
-}
+// TODO: button growing event
+//struct GrowingButtonStyle: ButtonStyle {
+//    func makeBody(configuration: Configuration) -> some View {
+//        configuration.label
+//            .padding()
+//            .background(.purple)
+//            .foregroundStyle(.white)
+//            .clipShape(Capsule())
+//            .scaleEffect(configuration.isPressed ? 1.2 : 1)
+//            .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
+//    }
+//}
 
 struct CircleButton: View {
+
+    private struct Constants {
+        static let animationDuration: Double = 2.0
+        static let animationImageStartAngleDegrees: Double = 0.0
+        static let animationImageEndAngleDegrees: Double = 360.0
+        static let submitImageName: String = "arrow.right.circle.fill"
+        static let loadingImageName: String = "arrow.trianglehead.2.clockwise.rotate.90.circle.fill"
+        static let imageWidth: CGFloat = 50
+        static let imageHeight: CGFloat = 50
+    }
 
     private var color: Color
 
     @Binding var isEnabled: Bool
-    var action: (() -> ())? = nil
+    @Binding var isLoading: Bool
+    var action: (() -> ())?
+
+    @State private var isAnimating = false
+    private var foreverAnimation: Animation {
+        Animation.linear(duration: Constants.animationDuration)
+            .repeatForever(autoreverses: false)
+    }
 
     init(isEnabled: Binding<Bool>,
+         isLoading: Binding<Bool>,
          action: (() -> ())? = nil) {
         self.color = .AppPalette.Button.enabled
         self._isEnabled = isEnabled
+        self._isLoading = isLoading
         self.action = action
     }
 
     var body: some View {
         Button {
-            if let action = action {
-                action()
+            if !isLoading && isEnabled {
+                if let action = action {
+                    action()
+                }
             }
+
+            #if DEBUG
+            // TODO: Warning! Testing the fade bug
+//            isLoading.toggle()
+            #endif
         } label: {
-            Image(systemName: "arrow.right.circle.fill")
-                .resizable()
-                .scaledToFit()
-                .foregroundStyle(!isEnabled ?
-                                 Color.AppPalette.Button.disabled : color)
-                .frame(width: 80, height: 80)
+            // TODO: figure out how to have just one image
+            if isLoading {
+                Image(systemName: Constants.loadingImageName)
+                    .resizable()
+                    .scaledToFit()
+                    /// .white = primary, disabled color = secondary, none = tertiary
+                    .foregroundStyle(.white, Color.AppPalette.Button.disabled)
+                    .rotationEffect(Angle(degrees: isAnimating ?
+                                          Constants.animationImageEndAngleDegrees :
+                                            Constants.animationImageStartAngleDegrees))
+                    .animation(isAnimating ? foreverAnimation : .default, value: UUID())
+                    .onAppear {
+                        self.isAnimating = true
+                        self.isEnabled = false
+                    }
+                    .onDisappear {
+                        self.isAnimating = false
+                        self.isEnabled = true
+                    }
+                    .frame(width: Constants.imageWidth,
+                           height: Constants.imageHeight)
+            } else {
+                Image(systemName: Constants.submitImageName)
+                    .resizable()
+                    .scaledToFit()
+                    /// .white = primary, disabled color = secondary, none = tertiary
+                    .foregroundStyle(.white, (isEnabled ? color : Color.AppPalette.Button.disabled))
+                    .frame(width: Constants.imageWidth,
+                           height: Constants.imageHeight)
+            }
         }
         // TODO: animation
 //        .buttonStyle(GrowingButtonStyle())
         .disabled(!isEnabled)
+        .onAppear { self.isLoading = false }
     }
 }
 
 #Preview {
     CircleButton(isEnabled: .constant(false),
+                 isLoading: .constant(true),
                  action: { print("Action performed") })
 }

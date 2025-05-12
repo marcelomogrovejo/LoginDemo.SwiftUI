@@ -17,6 +17,7 @@ struct CustomTextField: View {
     var isSecureText: Bool = false
     var textContentType: UITextContentType? = nil
     var keyboardType: UIKeyboardType = .default
+    @Binding var isDisabled: Bool
     var onSubmit: () -> Void = { }
 
     var body: some View {
@@ -29,10 +30,13 @@ struct CustomTextField: View {
                 ZStack(alignment: .trailing) {
                     if isPasswordHidden {
                         SecureField("", text: $value)
-                            .foregroundStyle(Color.AppPalette.TextField.primary)
+                            .foregroundStyle(isDisabled ?
+                                             Color.AppPalette.TextField.secondary :
+                                                Color.AppPalette.TextField.primary)
                             .textContentType(textContentType)
                             .keyboardType(keyboardType)
                             .submitLabel(.return) // TODO: param
+                            .disabled(isDisabled)
                             .onSubmit {
                                 onSubmit()
                             }
@@ -44,10 +48,13 @@ struct CustomTextField: View {
                     } else {
                         TextField("", text: $value)
                             .disableAutocorrection(true)
-                            .foregroundStyle(Color.AppPalette.TextField.primary)
+                            .foregroundStyle(isDisabled ?
+                                             Color.AppPalette.TextField.secondary :
+                                                Color.AppPalette.TextField.primary)
                             .textContentType(textContentType)
                             .keyboardType(keyboardType)
                             .submitLabel(.return) // TODO: param
+                            .disabled(isDisabled)
                             .onSubmit {
                                 onSubmit()
                             }
@@ -64,13 +71,17 @@ struct CustomTextField: View {
                         Image(systemName: isPasswordHidden ? "eye.fill" : "eye.slash.fill")
                     }
                     .foregroundStyle(Color.AppPalette.Main.appPurple)
+                    .disabled(isDisabled)
                 }
             } else {
                 TextField("", text: $value)
-                    .foregroundStyle(Color.AppPalette.TextField.primary)
+                    .foregroundStyle(isDisabled ?
+                                     Color.AppPalette.TextField.secondary :
+                                        Color.AppPalette.TextField.primary)
                     .textContentType(textContentType)
                     .keyboardType(keyboardType)
                     .submitLabel(.next) // TODO: param
+                    .disabled(isDisabled)
                     .onSubmit {
                         onSubmit()
                     }
@@ -93,5 +104,6 @@ struct CustomTextField: View {
 }
 
 #Preview {
-    CustomTextField(value: .constant(""))
+    CustomTextField(value: .constant(""),
+                    isDisabled: .constant(false))
 }
