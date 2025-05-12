@@ -77,7 +77,7 @@ class SignInViewModel: ObservableObject {
             // Simulate API response error on username/email
             // Simulate API response error on password
             self?.hasError = true
-            self?.errorMessage = "Invalid credentials"
+            self?.errorMessage = "🔒 Invalid credentials"
 
 //            self?.appSettings?.isLoggedIn = true
         }
