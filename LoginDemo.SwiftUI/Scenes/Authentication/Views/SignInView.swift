@@ -31,6 +31,7 @@ struct SignInView: View {
     @FocusState private var currentFocus: TextFieldFocusType?
 
     var body: some View {
+
         /// To adjust the view when the keyboard appears
         /// for phones having lesser screen size, we're enabling scroll view for all time
         ScrollView(isSmallScreenPhone ? .vertical : (height == 0 ? .init() : .vertical),
@@ -48,6 +49,7 @@ struct SignInView: View {
                                         errorMessage: "Email error message here",
                                         textContentType: .emailAddress,
                                         keyboardType: .emailAddress,
+                                        isDisabled: $viewModel.isLoading,
                                         onSubmit: {
                             currentFocus = .password
                         })
@@ -61,6 +63,7 @@ struct SignInView: View {
                                         errorMessage: "Wrong password error message here",
                                         isSecureText: true,
                                         textContentType: .password,
+                                        isDisabled: $viewModel.isLoading,
                                         onSubmit: {
                             viewModel.triggerAuthentication()
                         })
@@ -77,7 +80,8 @@ struct SignInView: View {
 
                             Spacer()
 
-                            CircleButton(isEnabled: $viewModel.isFormValid) {
+                            CircleButton(isEnabled: $viewModel.isFormValid,
+                                         isLoading: $viewModel.isLoading) {
                                 viewModel.triggerAuthentication()
                             }
                         }
@@ -113,11 +117,15 @@ struct SignInView: View {
                 guard let keyboardFrameEnd = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
 
                 guard let bottomHeight = self.sharedWindow?.safeAreaInsets.bottom else { return }
+                #if DEBUG
 //                print(bottomHeight)
+                #endif
 
                 let height = keyboardFrameEnd.height - bottomHeight
+                #if DEBUG
 //                print(keyboardFrameEnd.height)
 //                print(height)
+                #endif
 
                 /// 195 and 230 are just random numbers that approache to the password error message bottom
                 self.height = height - (isSmallScreenPhone ? 195 : 230)
@@ -126,7 +134,9 @@ struct SignInView: View {
             NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidHideNotification,
                                                    object: nil,
                                                    queue: .main) { _ in
+                #if DEBUG
 //                print("hidden")
+                #endif
                 self.height = 0
             }
 
@@ -138,4 +148,5 @@ struct SignInView: View {
 
 #Preview {
     SignInView()
+        .environmentObject(AppSettings())
 }
