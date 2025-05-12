@@ -13,7 +13,7 @@ struct CustomTextField: View {
 
     var title: String = "title"
     var placeholderText: String = "placeholder here"
-    var errorMessage: String = "error message"
+    var errorMessage: String = ""
     var isSecureText: Bool = false
     var textContentType: UITextContentType? = nil
     var keyboardType: UIKeyboardType = .default
