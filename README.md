@@ -42,12 +42,10 @@ The project consists of a simple sign in view that validates email (username) an
 You should see an animated splash screen, and then the main sign in view.<br>
 
 # Structure
-<p>🚧 In construction.</p>
-
 * "Components": Custom UI re-usable components.
-* "Extensions": .
+* "Extensions": Extended functionality to add to the existing components.
 * "Helpers": Configuration files.
-* "Scenes": MVVM views.
+* "Scenes": MVVM reactive views.
 
 # Running the tests
 <p>🚧 In construction.</p>
