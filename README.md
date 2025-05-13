@@ -44,7 +44,7 @@ The project consists of a simple sign in view that validates email (username) an
 
 You should see an animated splash screen, and then the main sign in view.<br>
 
-# 🚧 Structure 
+# Structure 🚧 
 * "DataSource": Procotols, error handling and model files.
 * "Extension": Formaters and utils.
 * "DomainLayer": Api service file that exposes the methods to be used by the apps.
@@ -61,6 +61,9 @@ Keeping in mind that deploying an iOS app to the App Store requires to have an A
 This will create a signed IPA file that can be installed on iOS devices.
 4. Follow the prompts in the distribution wizard to complete the distribution process.
 5. Once the distribution is complete, you can use the IPA file to install the app on iOS devices
+
+# Dependencies
+N/A
 
 # Workflow
 
