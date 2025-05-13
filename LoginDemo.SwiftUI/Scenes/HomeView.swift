@@ -19,7 +19,7 @@ struct HomeView: View {
                 settings.isLoggedIn = false
             } label: {
                 Text("Logout")
-                    .foregroundStyle(Color.AppPalette.Main.appPurple)
+                    .foregroundStyle(Color.AppPalette.Button.enabled)
             }
             .padding(.trailing, 30)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
@@ -28,12 +28,12 @@ struct HomeView: View {
                 Image(systemName: "flag.pattern.checkered")
                     .resizable()
                     .frame(width: 80, height: 80)
-                    .foregroundStyle(Color.AppPalette.Main.appPurple)
+                    .foregroundStyle(Color.AppPalette.Button.enabled)
                     .symbolEffect(.breathe)
                 
                 Text("Home View")
                     .font(.system(size: 32))
-                    .foregroundStyle(Color.AppPalette.Main.appPurple)
+                    .foregroundStyle(Color.AppPalette.Text.primary)
                     .bold()
                     .padding(.vertical)
             }

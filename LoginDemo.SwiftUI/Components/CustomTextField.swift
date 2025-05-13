@@ -8,6 +8,14 @@
 import SwiftUI
 
 struct CustomTextField: View {
+
+    struct Constants {
+        static let titleFontSize: CGFloat = 15
+        static let visiblePasswordImageName: String = "eye.fill"
+        static let hiddenPasswordImageName: String = "eye.slash.fill"
+        static let passwordImageBottonPadding: CGFloat = 3
+    }
+
     @Binding var value: String
     @State private var isPasswordHidden: Bool = true
 
@@ -22,8 +30,8 @@ struct CustomTextField: View {
 
     var body: some View {
         Text(title)
-            .foregroundStyle(Color.AppPalette.Text.secondary)
-            .font(.system(size: 15))
+            .foregroundStyle(Color.AppPalette.TextField.secondary)
+            .font(.system(size: Constants.titleFontSize))
 
         VStack(alignment: .leading) {
             if isSecureText {
@@ -68,10 +76,13 @@ struct CustomTextField: View {
                     Button {
                         isPasswordHidden.toggle()
                     } label: {
-                        Image(systemName: isPasswordHidden ? "eye.fill" : "eye.slash.fill")
+                        Image(systemName: isPasswordHidden ?
+                              Constants.visiblePasswordImageName :
+                                Constants.hiddenPasswordImageName)
                     }
-                    .foregroundStyle(Color.AppPalette.Main.appPurple)
+                    .foregroundStyle(Color.AppPalette.TextField.primary)
                     .disabled(isDisabled)
+                    .padding(.bottom, Constants.passwordImageBottonPadding)
                 }
             } else {
                 TextField("", text: $value)
@@ -93,12 +104,14 @@ struct CustomTextField: View {
             }
 
             Rectangle()
-                .fill(value == "" ? Color.black.opacity(0.08) : Color.AppPalette.Main.appPurple)
+                .fill(value == "" ?
+                      Color.AppPalette.TextField.secondary :
+                        Color.AppPalette.TextField.primary)
                 .frame(height: 1)
 
             Text(errorMessage)
                 .font(.system(size: 12))
-                .foregroundStyle(Color.AppPalette.Text.error)
+                .foregroundStyle(Color.AppPalette.TextField.error)
         }
     }
 }

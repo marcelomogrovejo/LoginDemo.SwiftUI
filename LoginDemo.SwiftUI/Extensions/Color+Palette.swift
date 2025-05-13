@@ -5,15 +5,17 @@
 //  Created by Marcelo Mogrovejo on 03/05/2025.
 //
 
+// Source: https://coolors.co/ffbc42-d81159-8f2d56-218380-73d2de
+
 import SwiftUI
 
 extension Color {
     struct AppPalette {
         struct Main {
             static let appBackground = Color("bkg-default-color")
-            static let appPink = Color("app-pink-color")
-            static let appPurple = Color("app-purple-color")
-            static let appYellow = Color("app-yellow-color")
+            static let appPrimary = Color("app-primary-color")
+            static let appSecondary = Color("app-secondary-color")
+            static let appTertiary = Color("app-tertiary-color")
         }
 
         struct Text {
@@ -26,6 +28,7 @@ extension Color {
         struct TextField {
             static let primary = Color("txtfld-primary-color")
             static let secondary = Color("txtfld-secondary-color")
+            static let error = Color("txtfld-error-color")
         }
 
         struct Button {

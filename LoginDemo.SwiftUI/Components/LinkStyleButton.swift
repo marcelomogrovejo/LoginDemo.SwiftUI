@@ -19,12 +19,12 @@ struct LinkStyleButton: View {
             } label: {
                 Text(title)
                     .fontWeight(.bold)
-                    .foregroundStyle(Color.AppPalette.Main.appPurple)
+                    .foregroundStyle(Color.AppPalette.Button.enabled)
             }
             .overlay {
                 Rectangle()
                     .offset(y: 13)
-                    .fill(Color.AppPalette.Main.appPurple)
+                    .fill(Color.AppPalette.Button.enabled)
                     .frame(height: 1)
             }
 

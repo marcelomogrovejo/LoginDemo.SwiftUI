@@ -16,18 +16,18 @@ struct HeaderView: View {
 //            Image("login-form-template")
 
             Rectangle()
-                .fill(Color.AppPalette.Main.appPink)
+                .fill(Color.AppPalette.Main.appSecondary)
                 .frame(maxWidth: .infinity)
                 .frame(height: 200)
                 .offset(x: 0, y: 0)
 
             Circle()
-                .fill(Color.AppPalette.Main.appYellow)
+                .fill(Color.AppPalette.Main.appTertiary)
                 .frame(width: 400, height: 400)
                 .offset(x: 220, y: 0)
 
             StainShape()
-                .fill(Color.AppPalette.Main.appPurple)
+                .fill(Color.AppPalette.Main.appPrimary)
                 .frame(maxWidth: .infinity, alignment: .top)
                 .frame(height: 400)
                 .offset(x: 0, y: 0)
