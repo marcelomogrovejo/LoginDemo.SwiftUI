@@ -44,7 +44,8 @@ The project consists of a simple sign in view that validates email (username) an
 
 You should see an animated splash screen, and then the main sign in view.<br>
 
-# Structure 🚧 
+# Structure
+<p>🚧 In construction.</p> 
 * "DataSource": Procotols, error handling and model files.
 * "Extension": Formaters and utils.
 * "DomainLayer": Api service file that exposes the methods to be used by the apps.
