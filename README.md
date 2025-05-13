@@ -24,13 +24,13 @@
     <img src="logo-logindemo-app.png" alt="Logo" width="80" height="80">
   </a>
   <p align="center">
-    A simple login demo app project which acts library to future projects.
+    A simple login demo app project.
   </p>
 </p>
 
 # Description
-<p>LoginDemo App is a simple project which was developed to learn 'SwiftUI' and to be a base library to future apps that need an authentication process.<br>
-The project consists of a simple sign in view that validates email (username) and password, enabling a submit button in case of success. It also disabled the user interaction during the sign in process meanwhile it shows a loading indicator that gives feedback to the user. Also it can show an alert in case of error from the API.<br>
+<p>LoginDemo.SwiftUI is a simple project which was developed to learn 'SwiftUI' and to be a base library to future apps that need an authentication process.<br>
+The project consists of a simple sign in view that validates email (username) and password, enabling a submit button in case of success. It also disables the user interaction during the sign in process meanwhile shows a loading indicator that gives feedback to the user. Also it can show an alert in case of error from the API.<br>
 🚧 The project also will have a forgot password and sign up sections, which are in construction.
 </p>
 
@@ -42,7 +42,7 @@ The project consists of a simple sign in view that validates email (username) an
 4. Make sure the LoginDemo.SwiftUI app is downloaded successfully.<br>
 5. Run the active scheme.<br>
 
-You should see an splash screen with an animation, and then the main sign in view.<br>
+You should see an animated splash screen, and then the main sign in view.<br>
 
 # 🚧 Structure 
 * "DataSource": Procotols, error handling and model files.
@@ -53,7 +53,7 @@ You should see an splash screen with an animation, and then the main sign in vie
 <p>🚧 In construction.</p>
 
 # Deployment
-Keep in mind that deploying an iOS app to the App Store requires having an Apple Developer account.
+Keeping in mind that deploying an iOS app to the App Store requires to have an Apple Developer account.
 
 1. Click on the "Product" menu in Xcode and select "Archive." This will create an archive of your project.
 2. Once the archive has been created, select it in the Organizer window and click on the "Validate" button to perform some preliminary tests on the app.
