@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+enum TextFieldFocusType: Hashable {
+    case email
+    case password
+}
+
 struct CustomTextField: View {
 
     struct Constants {

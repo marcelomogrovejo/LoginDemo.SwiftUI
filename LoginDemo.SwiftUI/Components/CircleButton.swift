@@ -9,6 +9,12 @@
 
 import SwiftUI
 
+enum CircleButtonType {
+    case enabled
+    case disabled
+    case loading
+}
+
 // TODO: button growing event
 //struct GrowingButtonStyle: ButtonStyle {
 //    func makeBody(configuration: Configuration) -> some View {
