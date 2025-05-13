@@ -1,6 +1,3 @@
-# LoginDemo.SwiftUI
-
-
 [![Swift Version][swift-image]][swift-url]
 [![License][license-image]][license-url]
 [![PRs Welcome][pr-welcome-image]][pr-welcome-url]
