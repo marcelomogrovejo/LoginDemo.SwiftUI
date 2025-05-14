@@ -27,6 +27,7 @@ struct LinkStyleButton: View {
                     .fill(Color.AppPalette.Button.enabled)
                     .frame(height: 1)
             }
+            .accessibilityLabel(title)
 
         }
     }
