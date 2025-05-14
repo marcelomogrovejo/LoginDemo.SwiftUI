@@ -38,10 +38,16 @@ struct CircleButton: View {
         static let loadingImageName: String = "arrow.trianglehead.2.clockwise.rotate.90.circle.fill"
         static let imageWidth: CGFloat = 50
         static let imageHeight: CGFloat = 50
+
+        static let defaultTitle: String = "Submit"
+
+        static let accessibilityLoadingLabel: String = "Loading indicator rolling"
+        static let accessibilityLoadingValue: String = "It is a loading indicator that rolling instead of showing the button."
     }
 
     private var color: Color
 
+    var title: String?
     @Binding var isEnabled: Bool
     @Binding var isLoading: Bool
     var action: (() -> ())?
@@ -52,10 +58,12 @@ struct CircleButton: View {
             .repeatForever(autoreverses: false)
     }
 
-    init(isEnabled: Binding<Bool>,
+    init(title: String? = "",
+         isEnabled: Binding<Bool>,
          isLoading: Binding<Bool>,
          action: (() -> ())? = nil) {
         self.color = .AppPalette.Button.enabled
+        self.title = title
         self._isEnabled = isEnabled
         self._isLoading = isLoading
         self.action = action
@@ -95,6 +103,9 @@ struct CircleButton: View {
                     }
                     .frame(width: Constants.imageWidth,
                            height: Constants.imageHeight)
+                    .accessibilityAddTraits(.isButton)
+                    .accessibilityLabel(Constants.accessibilityLoadingLabel)
+                    .accessibilityValue(Constants.accessibilityLoadingValue)
             } else {
                 Image(systemName: Constants.submitImageName)
                     .resizable()
@@ -103,6 +114,8 @@ struct CircleButton: View {
                     .foregroundStyle(.white, (isEnabled ? color : Color.AppPalette.Button.disabled))
                     .frame(width: Constants.imageWidth,
                            height: Constants.imageHeight)
+                    .accessibilityAddTraits(.isButton)
+                    .accessibilityLabel(title ?? Constants.defaultTitle)
             }
         }
         // TODO: animation

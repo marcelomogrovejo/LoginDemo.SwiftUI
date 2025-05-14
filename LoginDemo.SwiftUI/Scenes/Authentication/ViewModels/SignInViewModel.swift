@@ -79,7 +79,8 @@ class SignInViewModel: ObservableObject {
             self?.hasError = true
             self?.errorMessage = "🔒 Invalid credentials"
 
-//            self?.appSettings?.isLoggedIn = true
+            // Navigate to a logged in home page
+            self?.appSettings?.isLoggedIn = true
         }
     }
 

@@ -37,11 +37,13 @@ struct CustomTextField: View {
         Text(title)
             .foregroundStyle(Color.AppPalette.TextField.secondary)
             .font(.system(size: Constants.titleFontSize))
+            .accessibilityHidden(true)
 
         VStack(alignment: .leading) {
             if isSecureText {
                 ZStack(alignment: .trailing) {
                     if isPasswordHidden {
+                        // Textfield content hidden
                         SecureField("", text: $value)
                             .foregroundStyle(isDisabled ?
                                              Color.AppPalette.TextField.secondary :
@@ -53,12 +55,14 @@ struct CustomTextField: View {
                             .onSubmit {
                                 onSubmit()
                             }
+                            .accessibilityLabel("\(title) textfield")
                         #if DEBUG
                             .simultaneousGesture(TapGesture().onEnded {
                                 print("\(title) pressed")
                             })
                         #endif
                     } else {
+                        // Textfield content showed
                         TextField("", text: $value)
                             .disableAutocorrection(true)
                             .foregroundStyle(isDisabled ?
@@ -71,6 +75,7 @@ struct CustomTextField: View {
                             .onSubmit {
                                 onSubmit()
                             }
+                            .accessibilityLabel("\(title) textfield")
                         #if DEBUG
                             .simultaneousGesture(TapGesture().onEnded {
                                 print("\(title) pressed")
@@ -88,6 +93,7 @@ struct CustomTextField: View {
                     .foregroundStyle(Color.AppPalette.TextField.primary)
                     .disabled(isDisabled)
                     .padding(.bottom, Constants.passwordImageBottonPadding)
+                    .accessibilityLabel(isPasswordHidden ? "Show \(title)" : "Hide \(title)")
                 }
             } else {
                 TextField("", text: $value)
@@ -101,6 +107,7 @@ struct CustomTextField: View {
                     .onSubmit {
                         onSubmit()
                     }
+                    .accessibilityLabel("\(title) textfield")
                 #if DEBUG
                     .simultaneousGesture(TapGesture().onEnded {
                         print("\(title) pressed")

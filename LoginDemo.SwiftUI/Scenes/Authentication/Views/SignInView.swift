@@ -38,6 +38,8 @@ struct SignInView: View {
 
         static let errorAlertTitle: String = "Something went wrong"
         static let errorAlertButtonTitle: String = "Got it!"
+
+        static let circularButtonTitle: String = "Sign In"
     }
 
     @EnvironmentObject var settings: AppSettings
@@ -102,10 +104,12 @@ struct SignInView: View {
                                 .fontWeight(.bold)
                                 .foregroundStyle(Color.AppPalette.Text.primary)
                                 .font(.system(size: Constants.submitFontSize))
+                                .accessibilityHidden(true)
 
                             Spacer()
 
-                            CircleButton(isEnabled: $viewModel.isFormValid,
+                            CircleButton(title: Constants.circularButtonTitle,
+                                         isEnabled: $viewModel.isFormValid,
                                          isLoading: $viewModel.isLoading) {
                                 viewModel.triggerAuthentication()
                             }
