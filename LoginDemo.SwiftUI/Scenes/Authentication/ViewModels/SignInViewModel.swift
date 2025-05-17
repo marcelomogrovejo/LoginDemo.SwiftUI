@@ -22,9 +22,18 @@ class SignInViewModel: ObservableObject {
     @Published var hasError: Bool = false
 
     private var cancellables: Set<AnyCancellable> = []
-    var appSettings: AppSettings?
+    let authApiService: ApiServiceProtocol
+    @Published var appSettings: AppSettings?
 
-    init() {
+    // MARK: - WARNING !!!
+    // This variable tells the mock authentication method to be succed or fail when sign in.
+    // It is just here for testing purposes. In a real app it mustn't be here.
+    var loginShouldSucced: Bool = false
+
+    init(authApiService: ApiServiceProtocol, appSettings: AppSettings? = nil) {
+        self.authApiService = authApiService
+        self.appSettings = appSettings
+
         isFormValidPublisher
             .receive(on: RunLoop.main)
             .assign(to: \.isFormValid, on: self)
@@ -38,13 +47,16 @@ class SignInViewModel: ObservableObject {
             // when it finishes. It's the bridge between the reactive data flow you define
             // with Combine and the imperative actions you need to perform in your application.
             .sink { _ in
-                self.authenticateUser()
+                Task { @MainActor in
+                    try await self.authenticateUser()
+                }
                 // Reset the trigger
                 self.shouldAuthenticate = false
             }
             .store(in: &cancellables)
     }
 
+    /// Enabled the form to be validated
     func triggerAuthentication() {
         shouldAuthenticate = true
     }
@@ -69,21 +81,46 @@ class SignInViewModel: ObservableObject {
 //        print("ViewModel validateForm()...")
 //    }
 
-    private func authenticateUser() {
-        isLoading = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-            self?.isLoading = false
+    /// Perfomrs an api call to authenticate the user
+    func authenticateUser() async throws {
+        Task { @MainActor [weak self] in
+            guard let self else { return }
 
-            // Simulate API response error on username/email
-            // Simulate API response error on password
-            self?.hasError = true
-            self?.errorMessage = "🔒 Invalid credentials"
+            self.isLoading = true
 
-            // Navigate to a logged in home page
-            self?.appSettings?.isLoggedIn = true
+            do {
+                // shouldSucced: for testing purposes can be true to succed or false to fail.
+                let result = try await self.authApiService.mockLoginUser(email: self.email,
+                                                                    password: self.password,
+                                                                    shouldSucceed: self.loginShouldSucced)
+
+                self.isLoading = false
+
+                if result {
+                    // Navigate to a logged in home page
+                    self.appSettings?.isLoggedIn = result
+                } else {
+                    print("Error: Authentication")
+
+                    // Simulate API response error on username/email
+                    // Simulate API response error on password
+                    self.hasError = true
+                    self.errorMessage = "🔒 Invalid credentials"
+                }
+            } catch {
+                print("Error: Mock Authentication failed: \(error)")
+                self.isLoading = false
+
+                // Simulate API response error on username/email
+                // Simulate API response error on password
+                self.hasError = true
+                self.errorMessage = "Something went wrong."
+            }
         }
     }
-
+    
+    /// Configure the scene to be able to navigate
+    /// - Parameter appSettings: Global configuration file
     func setup(_ appSettings: AppSettings) {
         self.appSettings = appSettings
     }
@@ -91,6 +128,7 @@ class SignInViewModel: ObservableObject {
 
 private extension SignInViewModel {
 
+    /// Creates a combine publisher that validates the email or username
     var isEmailValidPublisher: AnyPublisher<Bool, Never> {
         $email
             .map{ email in
@@ -99,7 +137,8 @@ private extension SignInViewModel {
             }
             .eraseToAnyPublisher()
     }
-
+    
+    /// Creates a combine publisher that validates the password
     var isPasswordValidPublisher: AnyPublisher<Bool, Never> {
         $password
             .map{ password in
@@ -107,7 +146,8 @@ private extension SignInViewModel {
             }
             .eraseToAnyPublisher()
     }
-
+    
+    /// Checks if the form (username and password) are valid
     var isFormValidPublisher: AnyPublisher<Bool, Never> {
         Publishers.CombineLatest(
             isEmailValidPublisher,

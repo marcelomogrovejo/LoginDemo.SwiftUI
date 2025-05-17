@@ -36,14 +36,16 @@ struct SignInView: View {
 
         static let viewPadding: CGFloat = -130
 
-        static let errorAlertTitle: String = "Something went wrong"
+        static let errorAlertTitle: String = "Error"
         static let errorAlertButtonTitle: String = "Got it!"
+        static let errorAlertMessage: String = "Something went wrong"
 
         static let circularButtonTitle: String = "Sign In"
+
     }
 
     @EnvironmentObject var settings: AppSettings
-    @StateObject private var viewModel: SignInViewModel = SignInViewModel()
+    @StateObject private var viewModel: SignInViewModel
 
     @State private var height: CGFloat = 0
     private var sharedWindow: [UIWindow].Element? {
@@ -58,6 +60,10 @@ struct SignInView: View {
     }
 
     @FocusState private var currentFocus: TextFieldFocusType?
+
+    init(authApiService: ApiServiceProtocol) {
+        _viewModel = StateObject(wrappedValue: SignInViewModel(authApiService: authApiService))
+    }
 
     var body: some View {
 
@@ -79,7 +85,9 @@ struct SignInView: View {
                                         keyboardType: .emailAddress,
                                         isDisabled: $viewModel.isLoading,
                                         onSubmit: {
-                            currentFocus = .password
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                                currentFocus = .password
+                            }
                         })
                         .focused($currentFocus, equals: .email)
 
@@ -132,6 +140,8 @@ struct SignInView: View {
                 .padding(.top, isSmallScreenPhone ?  Constants.viewPadding : 0)
             }
         }
+        // Pushes up the scrollview content to make the password visible.
+        // The button is covered by the keyboard.
         .offset(y: -height)
         .edgesIgnoringSafeArea(.all)
         .onAppear {
@@ -174,13 +184,14 @@ struct SignInView: View {
         }
         .customeAlert(isPresented: $viewModel.hasError,
                       title: Constants.errorAlertTitle,
-                      message: viewModel.errorMessage ?? "Error",
+                      message: viewModel.errorMessage ?? Constants.errorAlertMessage,
                       buttonTitle: Constants.errorAlertButtonTitle)
     }
 }
 
 
 #Preview {
-    SignInView()
+    let authApiService = AuthApiService()
+    SignInView(authApiService: authApiService)
         .environmentObject(AppSettings())
 }
