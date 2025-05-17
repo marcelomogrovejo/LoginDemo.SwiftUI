@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import Combine
 @testable import LoginDemo_SwiftUI
 
 final class SignInViewModelTests: XCTestCase {
@@ -23,49 +24,7 @@ final class SignInViewModelTests: XCTestCase {
         sut = nil
     }
 
-    // init ?
-
-    // TODO: Not working
-    // Looks like the issue is related to async/await and combine. In some way, the test is not waiting
-    // the completion of the async task to do the assertions.
-    // The google searchs were related to 'how to unit testing main actor task', 'how to unit testing
-    // async/await and combine' and things like that.
-    //
-    // Discoveries:
-    // * Setting a breakpoint on 'authenticateUser()' method on SignInViewModel:97: self.isLoading = false
-    //   When the app run on simulator, the breakpoint is reached.
-    //   When the test runs, the breakpoint is never reached, and the test fails very fast.
-    // * Setting a breakpoint on 'mockLoginUser()' method on ApiService:26: return shouldSucceed
-    //   When the app run on simulator, the breakpoint is reached.
-    //   When the test runs, the breakpoint is never reached, and the test fails very fast.
-    func testAuthenticateUserShouldFail() async throws {
-        // Arrange
-        sut.shouldAuthenticate = true
-        sut.email = "test@test.com"
-        sut.password = "12345678"
-        sut.loginShouldSucced = false
-        let errorMessage = "🔒 Invalid credentials"
-        let expectation = XCTestExpectation(description:
-                                                "Failed authentication should set hasError and errorMessage")
-
-        // Act
-        Task {
-            try await sut.authenticateUser()
-            expectation.fulfill()
-        }
-
-        // Assert
-        await fulfillment(of: [expectation], timeout: 5)
-
-//        XCTAssertFalse(sut.appSettings?.isLoggedIn,
-//                       "appSettings.isLoggedIn should be false but it was true.")
-        XCTAssertTrue(sut.hasError, "hasError should be true")
-        XCTAssertEqual(sut.errorMessage, errorMessage, "errorMessage should be '\(errorMessage)'")
-        XCTAssertFalse(sut.isLoading, "isLoading should be false")
-    }
-
-    func testAuthenticateUserShouldSucced() async throws {
-    }
+    // TODO: test the init ?
 
     func testTriggerAuthenticationShouldSucced() throws {
         // Arrange
@@ -79,4 +38,89 @@ final class SignInViewModelTests: XCTestCase {
                       "shouldAuthenticate should be true but it was false.")
     }
 
+    func testAuthenticateUserShouldFail() async throws {
+        // Arrange
+        sut.shouldAuthenticate = true
+        sut.email = "test@test.com"
+        sut.password = "12345678"
+        sut.loginShouldSucced = false
+        let errorMessage = "🔒 Invalid credentials"
+        let expectation = XCTestExpectation(description:
+                                                "Failed authentication should set hasError and errorMessage")
+        var cancellables = Set<AnyCancellable>()
+
+        // Act
+        Task {
+            try await sut.authenticateUser()
+        }
+
+        // Observe the errorMessage and fulfill the expectation when it's set
+        sut.$errorMessage
+            .dropFirst() // Ignore the initial nil value
+            .sink { receivedErrorMessage in
+                if receivedErrorMessage == errorMessage {
+                    expectation.fulfill()
+                }
+            }
+            .store(in: &cancellables)
+
+        // Assert
+        await fulfillment(of: [expectation], timeout: 5)
+
+        XCTAssertTrue(sut.hasError, "hasError should be true")
+        XCTAssertEqual(sut.errorMessage, errorMessage, "errorMessage should be '\(errorMessage)'")
+        XCTAssertFalse(sut.isLoading, "isLoading should be false")
+    }
+
+    func testAuthenticateUserShouldSucced() async throws {
+        // Arrange
+        sut.setup(AppSettings())
+        sut.shouldAuthenticate = true
+        sut.email = "test@test.com"
+        sut.password = "12345678"
+        sut.loginShouldSucced = true
+        let expectation = XCTestExpectation(description:
+                                                "Successful authentication should set isLoggedIn")
+        var cancellables = Set<AnyCancellable>()
+
+        // Act
+        Task {
+            try await sut.authenticateUser()
+        }
+
+        // Observe the errorMessage and fulfill the expectation when it's set
+        sut.$isLoading
+            .dropFirst() // Ignore the initial value
+            .sink { receivedValue in
+                if receivedValue == false {
+                    expectation.fulfill()
+                }
+            }
+            .store(in: &cancellables)
+
+        // Assert
+        await fulfillment(of: [expectation], timeout: 5)
+
+        XCTAssertFalse(sut.hasError, "hasError should be false")
+        XCTAssertFalse(sut.isLoading, "isLoading should be false")
+        XCTAssertNotNil(sut.appSettings, "appSettings should not be nil")
+        if let appSettings = sut.appSettings {
+            XCTAssertTrue(appSettings.isLoggedIn, "isLoggedIn should be true")
+        }
+    }
+
+    func testSetupShouldSetAppSettings() {
+        // Arrange
+        let appSettings = AppSettings()
+
+        // Act
+        sut.setup(appSettings)
+
+        // Accert
+        XCTAssertNotNil(sut.appSettings, "appSettings should not be nil")
+        XCTAssertTrue(sut.appSettings === appSettings, "appSettings should be the same instance")
+        XCTAssertFalse(appSettings.isLoggedIn, "isLoggedIn should be false as initial value")
+    }
+
+    // TODO: test the validation computed vars ?
 }

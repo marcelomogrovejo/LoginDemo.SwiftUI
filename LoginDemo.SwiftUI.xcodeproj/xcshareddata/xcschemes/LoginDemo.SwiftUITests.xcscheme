@@ -14,7 +14,7 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <TestPlans>
          <TestPlanReference
-            reference = "container:LoginDemo.SwiftUITests.xctestplan"
+            reference = "container:LoginDemo.SwiftUI/TestPlan/LoginDemo.SwiftUITests.xctestplan"
             default = "YES">
          </TestPlanReference>
       </TestPlans>
@@ -42,6 +42,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "BDA066732DC6311100A807CD"
+            BuildableName = "LoginDemo.SwiftUI.app"
+            BlueprintName = "LoginDemo.SwiftUI"
+            ReferencedContainer = "container:LoginDemo.SwiftUI.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -49,6 +59,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "BDA066732DC6311100A807CD"
+            BuildableName = "LoginDemo.SwiftUI.app"
+            BlueprintName = "LoginDemo.SwiftUI"
+            ReferencedContainer = "container:LoginDemo.SwiftUI.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

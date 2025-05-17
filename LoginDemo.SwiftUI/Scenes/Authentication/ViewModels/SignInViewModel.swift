@@ -30,9 +30,9 @@ class SignInViewModel: ObservableObject {
     // It is just here for testing purposes. In a real app it mustn't be here.
     var loginShouldSucced: Bool = false
 
-    init(authApiService: ApiServiceProtocol, appSettings: AppSettings? = nil) {
+    init(authApiService: ApiServiceProtocol/*, appSettings: AppSettings? = nil*/) {
         self.authApiService = authApiService
-        self.appSettings = appSettings
+//        self.appSettings = appSettings
 
         isFormValidPublisher
             .receive(on: RunLoop.main)
@@ -118,7 +118,7 @@ class SignInViewModel: ObservableObject {
             }
         }
     }
-    
+
     /// Configure the scene to be able to navigate
     /// - Parameter appSettings: Global configuration file
     func setup(_ appSettings: AppSettings) {

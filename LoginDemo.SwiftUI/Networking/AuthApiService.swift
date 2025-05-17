@@ -7,6 +7,8 @@
 
 import Foundation
 
+// TODO: implement here the real api call and dtos
+
 protocol ApiServiceProtocol {
     func mockLoginUser(email: String, password: String, shouldSucceed: Bool) async throws -> Bool
 }
