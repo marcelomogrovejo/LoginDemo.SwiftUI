@@ -30,11 +30,10 @@ class SignInViewModel: ObservableObject {
     // It is just here for testing purposes. In a real app it mustn't be here.
     var loginShouldSucced: Bool = false
 
-    init(authApiService: ApiServiceProtocol/*, appSettings: AppSettings? = nil*/) {
+    init(authApiService: ApiServiceProtocol) {
         self.authApiService = authApiService
-//        self.appSettings = appSettings
 
-        isFormValidPublisher
+        isValidFormPublisher
             .receive(on: RunLoop.main)
             .assign(to: \.isFormValid, on: self)
             .store(in: &cancellables)
@@ -54,6 +53,17 @@ class SignInViewModel: ObservableObject {
                 self.shouldAuthenticate = false
             }
             .store(in: &cancellables)
+    }
+
+    deinit {
+        cancellables.forEach{ $0.cancel() }
+        cancellables.removeAll()
+    }
+
+    /// Configure the scene to be able to navigate
+    /// - Parameter appSettings: Global configuration file
+    func setup(_ appSettings: AppSettings) {
+        self.appSettings = appSettings
     }
 
     /// Enabled the form to be validated
@@ -119,27 +129,23 @@ class SignInViewModel: ObservableObject {
         }
     }
 
-    /// Configure the scene to be able to navigate
-    /// - Parameter appSettings: Global configuration file
-    func setup(_ appSettings: AppSettings) {
-        self.appSettings = appSettings
-    }
 }
 
-private extension SignInViewModel {
+extension SignInViewModel {
 
     /// Creates a combine publisher that validates the email or username
-    var isEmailValidPublisher: AnyPublisher<Bool, Never> {
+    var isValidEmailPublisher: AnyPublisher<Bool, Never> {
         $email
             .map{ email in
-                let emailPredicate = NSPredicate(format:"SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}")
+                let emailPredicate = NSPredicate(format:"SELF MATCHES %@",
+                                                 "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}")
                 return emailPredicate.evaluate(with: email)
             }
             .eraseToAnyPublisher()
     }
     
     /// Creates a combine publisher that validates the password
-    var isPasswordValidPublisher: AnyPublisher<Bool, Never> {
+    var isValidPasswordPublisher: AnyPublisher<Bool, Never> {
         $password
             .map{ password in
                 return password.count >= 8
@@ -148,10 +154,10 @@ private extension SignInViewModel {
     }
     
     /// Checks if the form (username and password) are valid
-    var isFormValidPublisher: AnyPublisher<Bool, Never> {
+    var isValidFormPublisher: AnyPublisher<Bool, Never> {
         Publishers.CombineLatest(
-            isEmailValidPublisher,
-            isPasswordValidPublisher
+            isValidEmailPublisher,
+            isValidPasswordPublisher
         )
         .map{ isEmailValid, isPasswordValid in
             return isEmailValid && isPasswordValid //&& !email.isEmpty && !password.isEmpty

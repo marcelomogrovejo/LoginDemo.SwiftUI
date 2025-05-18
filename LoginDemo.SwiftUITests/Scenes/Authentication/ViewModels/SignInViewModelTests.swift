@@ -9,17 +9,26 @@ import XCTest
 import Combine
 @testable import LoginDemo_SwiftUI
 
+
+
+// TODO: handle cancellables
+
+
 final class SignInViewModelTests: XCTestCase {
 
     var authApiService: ApiServiceProtocol!
     var sut: SignInViewModel!
+    var cancellables: Set<AnyCancellable>!
 
     override func setUpWithError() throws {
         authApiService = AuthApiService()
         sut = SignInViewModel(authApiService: authApiService)
+        cancellables = Set<AnyCancellable>()
     }
 
     override func tearDownWithError() throws {
+        cancellables.forEach { $0.cancel() }
+        cancellables.removeAll()
         authApiService = nil
         sut = nil
     }
@@ -47,7 +56,6 @@ final class SignInViewModelTests: XCTestCase {
         let errorMessage = "🔒 Invalid credentials"
         let expectation = XCTestExpectation(description:
                                                 "Failed authentication should set hasError and errorMessage")
-        var cancellables = Set<AnyCancellable>()
 
         // Act
         Task {
@@ -81,7 +89,6 @@ final class SignInViewModelTests: XCTestCase {
         sut.loginShouldSucced = true
         let expectation = XCTestExpectation(description:
                                                 "Successful authentication should set isLoggedIn")
-        var cancellables = Set<AnyCancellable>()
 
         // Act
         Task {
@@ -122,5 +129,154 @@ final class SignInViewModelTests: XCTestCase {
         XCTAssertFalse(appSettings.isLoggedIn, "isLoggedIn should be false as initial value")
     }
 
-    // TODO: test the validation computed vars ?
+    func testIsValidEmailPublisher_ShouldBeValid() async throws {
+        // Arrange
+        sut.email = "test@test.com"
+        var isEmailValid = false
+        let expectation = XCTestExpectation(description:
+                                                "Successful email validation")
+
+        // Act
+        sut.isValidEmailPublisher
+            .sink { receivedValue in
+                isEmailValid = receivedValue
+                expectation.fulfill()
+            }
+            .store(in: &cancellables)
+
+        // Assert
+        await fulfillment(of: [expectation], timeout: 5)
+
+        XCTAssertTrue(isEmailValid, "Email should be valid")
+    }
+
+    func testIsValidEmailPublisher_ShouldNotBeValid() async throws {
+        // Arrange
+        sut.email = "test"
+        var isEmailValid = false
+        let expectation = XCTestExpectation(description:
+                                                "Failure email validation")
+
+        // Act
+        sut.isValidEmailPublisher
+            .sink { receivedValue in
+                isEmailValid = receivedValue
+                expectation.fulfill()
+            }
+            .store(in: &cancellables)
+
+        // Assert
+        await fulfillment(of: [expectation], timeout: 5)
+
+        XCTAssertFalse(isEmailValid, "Email should not be valid")
+    }
+
+    func testIsValidPasswordPublisher_ShouldBeValid() async throws {
+        // Arrange
+        sut.password = "12345678"
+        var isPasswordValid = false
+        let expectation = XCTestExpectation(description:
+                                                "Successful password validation")
+
+        // Act
+        sut.isValidPasswordPublisher
+            .sink { receivedValue in
+                isPasswordValid = receivedValue
+                expectation.fulfill()
+            }
+            .store(in: &cancellables)
+
+        // Assert
+        await fulfillment(of: [expectation], timeout: 5)
+
+        XCTAssertTrue(isPasswordValid, "Password should be valid")
+    }
+
+    func testIsValidPasswordPublisher_ShouldNotBeValid() async throws {
+        // Arrange
+        sut.email = "12"
+        var isPasswordValid = false
+        let expectation = XCTestExpectation(description:
+                                                "Failure password validation")
+
+        // Act
+        sut.isValidPasswordPublisher
+            .sink { receivedValue in
+                isPasswordValid = receivedValue
+                expectation.fulfill()
+            }
+            .store(in: &cancellables)
+
+        // Assert
+        await fulfillment(of: [expectation], timeout: 5)
+
+        XCTAssertFalse(isPasswordValid, "Password should not be valid")
+    }
+
+    func testIsValidFormPublisher_ShouldBeValid() async throws {
+        // Arrange
+        sut.email = "test@test.com"
+        sut.password = "12345678"
+        var isFormValid = false
+        let expectation = XCTestExpectation(description:
+                                                "Successful form validation")
+
+        // Act
+        sut.isValidFormPublisher
+            .sink { receivedValue in
+                isFormValid = receivedValue
+                expectation.fulfill()
+            }
+            .store(in: &cancellables)
+
+        // Assert
+        await fulfillment(of: [expectation], timeout: 5)
+
+        XCTAssertTrue(isFormValid, "Form should be valid")
+    }
+
+    func testIsValidFormPublisher_ShouldNotBeValid_WhenEmailIsNotValid() async throws {
+        // Arrange
+        sut.email = "test"
+        sut.password = "12345678"
+        var isFormValid = false
+        let expectation = XCTestExpectation(description:
+                                                "Failure form validation")
+
+        // Act
+        sut.isValidFormPublisher
+            .sink { receivedValue in
+                isFormValid = receivedValue
+                expectation.fulfill()
+            }
+            .store(in: &cancellables)
+
+        // Assert
+        await fulfillment(of: [expectation], timeout: 5)
+
+        XCTAssertFalse(isFormValid, "Form should not be valid")
+    }
+
+    func testIsValidFormPublisher_ShouldNotBeValid_WhenPasswordIsNotValid() async throws {
+        // Arrange
+        sut.email = "test@test.com"
+        sut.password = "12"
+        var isFormValid = false
+        let expectation = XCTestExpectation(description:
+                                                "Failure form validation")
+
+        // Act
+        sut.isValidFormPublisher
+            .sink { receivedValue in
+                isFormValid = receivedValue
+                expectation.fulfill()
+            }
+            .store(in: &cancellables)
+
+        // Assert
+        await fulfillment(of: [expectation], timeout: 5)
+
+        XCTAssertFalse(isFormValid, "Form should not be valid")
+    }
+
 }
