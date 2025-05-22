@@ -39,7 +39,7 @@ struct CircleButton: View {
         static let imageWidth: CGFloat = 50
         static let imageHeight: CGFloat = 50
 
-        static let defaultTitle: String = "Submit"
+        static let defaultTitle: String = "Button"
 
         static let accessibilityLoadingLabel: String = "Loading indicator rolling"
         static let accessibilityLoadingValue: String = "It is a loading indicator that rolling instead of showing the button."
@@ -58,7 +58,7 @@ struct CircleButton: View {
             .repeatForever(autoreverses: false)
     }
 
-    init(title: String? = "",
+    init(title: String? = nil,
          isEnabled: Binding<Bool>,
          isLoading: Binding<Bool>,
          action: (() -> ())? = nil) {
@@ -122,6 +122,7 @@ struct CircleButton: View {
 //        .buttonStyle(GrowingButtonStyle())
         .disabled(!isEnabled)
         .onAppear { self.isLoading = false }
+        .accessibilityIdentifier("\(title?.lowercased().replacingOccurrences(of: " ", with: "-") ?? Constants.defaultTitle.lowercased())-button-id")
     }
 }
 

@@ -6,17 +6,32 @@
 //
 
 // Source form validation: https://blorenzop.medium.com/form-validation-with-combine-4988adcc3b0
+// Source ObservableObject protocol: https://stackoverflow.com/questions/59503399/how-to-define-a-protocol-as-a-type-for-a-observedobject-property
 
+import Foundation
 import SwiftUI
 import Combine
 
-class SignInViewModel: ObservableObject {
+protocol SignInViewModelProtocol: ObservableObject {
+    var email: String { get set }
+    var password: String { get set }
+    var isLoading: Bool { get set }
+    var isFormValid: Bool { get set }
+    var errorMessage: String? { get set }
+    var hasError: Bool { get set }
+
+    func setup(_ appSettings: AppSettings)
+    func authenticateUser() async throws
+    func triggerAuthentication()
+}
+
+class SignInViewModel: SignInViewModelProtocol {
     // Input values
     @Published var email: String = ""
     @Published var password: String = ""
     // Output subscriber
     @Published var isFormValid: Bool = false
-    @Published var shouldAuthenticate = false
+    @Published var shouldAuthenticate: Bool = false
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     @Published var hasError: Bool = false
@@ -30,7 +45,12 @@ class SignInViewModel: ObservableObject {
     // It is just here for testing purposes. In a real app it mustn't be here.
     var loginShouldSucced: Bool = false
 
-    init(authApiService: ApiServiceProtocol) {
+    // MARK: - Warning !
+    // This service should be known just here, within the viewModel context,
+    // not from outside, the view.
+    // In the future, maybe that can be present on the environment, list AppSettins,
+    // so that way can be acceded by forgot password and sign up as well.
+    init(authApiService: ApiServiceProtocol = AuthApiService()) {
         self.authApiService = authApiService
 
         isValidFormPublisher

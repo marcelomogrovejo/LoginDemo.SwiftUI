@@ -9,13 +9,17 @@ import SwiftUI
 
 struct LinkStyleButton: View {
 
+    // TODO: Warning !!
+    // Using title to get the accessibilityIdentifier is not a good idea because for instance
+    // "Forgot Password?" will become in "forgot-password?-button-id" with the "?" character
+    // in the middle. Or worse, there can be an emoji or whatever symbol.
     var title: String = "button title"
-//    var action: TODO:
+    var action: () -> Void = {}
 
     var body: some View {
         VStack(spacing: 2) {
             Button {
-                // TODO: Action
+                action()
             } label: {
                 Text(title)
                     .fontWeight(.bold)
@@ -28,7 +32,7 @@ struct LinkStyleButton: View {
                     .frame(height: 1)
             }
             .accessibilityLabel(title)
-
+            .accessibilityIdentifier("\(title.lowercased().replacingOccurrences(of: " ", with: "-"))-button-id")
         }
     }
 }

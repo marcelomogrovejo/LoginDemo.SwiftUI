@@ -13,39 +13,10 @@
 
 import SwiftUI
 
-struct SignInView: View {
-
-    private struct Constants {
-        static let screenHeight: CGFloat = 750
-
-        static let mainTitle: String = "Welcome\n Back"
-        static let usernameTitle: String = "Email"
-        static let passwordTitle: String = "Password"
-
-        static let spaceBetweenTextFields: CGFloat = 20
-        static let formPadding: CGFloat = 40
-
-        static let submitTitle: String = "Sign In"
-        static let submitFontSize: CGFloat = 24
-
-        static let signUpTitle: String = "Sign Up"
-        static let signUpButtonVerticalPadding: CGFloat = 30
-        static let forgotPasswordTitle: String = "Forgot Password?"
-
-        static let buttonSectionPadding: CGFloat = 40
-
-        static let viewPadding: CGFloat = -130
-
-        static let errorAlertTitle: String = "Error"
-        static let errorAlertButtonTitle: String = "Got it!"
-        static let errorAlertMessage: String = "Something went wrong"
-
-        static let circularButtonTitle: String = "Sign In"
-
-    }
+struct SignInView<ViewModel>: View where ViewModel: SignInViewModelProtocol {
 
     @EnvironmentObject var settings: AppSettings
-    @StateObject private var viewModel: SignInViewModel
+    @StateObject private var viewModel: ViewModel
 
     @State private var height: CGFloat = 0
     private var sharedWindow: [UIWindow].Element? {
@@ -56,13 +27,13 @@ struct SignInView: View {
             .first { $0.isKeyWindow }
     }
     private var isSmallScreenPhone: Bool {
-        UIScreen.main.bounds.height < Constants.screenHeight
+        UIScreen.main.bounds.height < AuthConstants.SignInView.screenHeight
     }
 
     @FocusState private var currentFocus: TextFieldFocusType?
 
-    init(authApiService: ApiServiceProtocol) {
-        _viewModel = StateObject(wrappedValue: SignInViewModel(authApiService: authApiService))
+    init(viewModel: ViewModel = SignInViewModel()) {
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
 
     var body: some View {
@@ -76,11 +47,11 @@ struct SignInView: View {
                     .edgesIgnoringSafeArea(.all)
 
                 VStack {
-                    HeaderView(title: Constants.mainTitle)
+                    HeaderView(title: AuthConstants.SignInView.mainTitle)
 
                     VStack(alignment: .leading) {
                         CustomTextField(value: $viewModel.email,
-                                        title: Constants.usernameTitle,
+                                        title: AuthConstants.SignInView.usernameTitle,
                                         textContentType: .emailAddress,
                                         keyboardType: .emailAddress,
                                         isDisabled: $viewModel.isLoading,
@@ -92,10 +63,10 @@ struct SignInView: View {
                         .focused($currentFocus, equals: .email)
 
                         Spacer()
-                            .frame(height: Constants.spaceBetweenTextFields)
+                            .frame(height: AuthConstants.SignInView.spaceBetweenTextFields)
 
                         CustomTextField(value: $viewModel.password,
-                                        title: Constants.passwordTitle,
+                                        title: AuthConstants.SignInView.passwordTitle,
                                         isSecureText: true,
                                         textContentType: .password,
                                         isDisabled: $viewModel.isLoading,
@@ -104,19 +75,19 @@ struct SignInView: View {
                         })
                         .focused($currentFocus, equals: .password)
                     }
-                    .padding(.horizontal, Constants.formPadding)
+                    .padding(.horizontal, AuthConstants.SignInView.formPadding)
 
                     VStack(alignment: .leading) {
                         HStack {
-                            Text(Constants.submitTitle)
+                            Text(AuthConstants.SignInView.submitTitle)
                                 .fontWeight(.bold)
                                 .foregroundStyle(Color.AppPalette.Text.primary)
-                                .font(.system(size: Constants.submitFontSize))
+                                .font(.system(size: AuthConstants.SignInView.submitFontSize))
                                 .accessibilityHidden(true)
 
                             Spacer()
 
-                            CircleButton(title: Constants.circularButtonTitle,
+                            CircleButton(title: AuthConstants.SignInView.circularButtonTitle,
                                          isEnabled: $viewModel.isFormValid,
                                          isLoading: $viewModel.isLoading) {
                                 viewModel.triggerAuthentication()
@@ -124,20 +95,20 @@ struct SignInView: View {
                         }
 
                         HStack {
-                            LinkStyleButton(title: Constants.signUpTitle)
-                                .padding(.vertical, Constants.signUpButtonVerticalPadding)
+                            LinkStyleButton(title: AuthConstants.SignInView.signUpTitle)
+                                .padding(.vertical, AuthConstants.SignInView.signUpButtonVerticalPadding)
 
                             Spacer()
 
-                            LinkStyleButton(title: Constants.forgotPasswordTitle)
+                            LinkStyleButton(title: AuthConstants.SignInView.forgotPasswordTitle)
                         }
 
                         Spacer()
                     }
-                    .padding(Constants.buttonSectionPadding)
+                    .padding(AuthConstants.SignInView.buttonSectionPadding)
                 }
                 /// -130 is just a random number that pulls the screen upward to show the bottom buttons.
-                .padding(.top, isSmallScreenPhone ?  Constants.viewPadding : 0)
+                .padding(.top, isSmallScreenPhone ?  AuthConstants.SignInView.viewPadding : 0)
             }
         }
         // Pushes up the scrollview content to make the password visible.
@@ -183,15 +154,13 @@ struct SignInView: View {
             viewModel.setup(settings)
         }
         .customeAlert(isPresented: $viewModel.hasError,
-                      title: Constants.errorAlertTitle,
-                      message: viewModel.errorMessage ?? Constants.errorAlertMessage,
-                      buttonTitle: Constants.errorAlertButtonTitle)
+                      title: AuthConstants.SignInView.errorAlertTitle,
+                      message: viewModel.errorMessage ?? AuthConstants.SignInView.errorAlertMessage,
+                      buttonTitle: AuthConstants.SignInView.errorAlertButtonTitle)
     }
 }
 
-
 #Preview {
-    let authApiService = AuthApiService()
-    SignInView(authApiService: authApiService)
+    SignInView()
         .environmentObject(AppSettings())
 }
