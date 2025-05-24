@@ -91,11 +91,14 @@ struct CustomTextField: View {
                         Image(systemName: isPasswordHidden ?
                               Constants.visiblePasswordImageName :
                                 Constants.hiddenPasswordImageName)
+                        .accessibilityLabel(isPasswordHidden ? "Show-\(title)" : "Hide-\(title)")
+                        .accessibilityIdentifier("eye-image-id")
                     }
                     .foregroundStyle(Color.AppPalette.TextField.primary)
                     .disabled(isDisabled)
                     .padding(.bottom, Constants.passwordImageBottonPadding)
                     .accessibilityLabel(isPasswordHidden ? "Show \(title)" : "Hide \(title)")
+                    .accessibilityIdentifier("eye-button-id")
                 }
             } else {
                 TextField("", text: $value)

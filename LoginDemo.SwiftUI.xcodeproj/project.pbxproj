@@ -10,7 +10,7 @@
 		BD42D24E2DD3069E00059F07 /* LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = BD42D24B2DD3069E00059F07 /* LICENSE.md */; };
 		BD42D24F2DD3069E00059F07 /* logo-logindemo-app.png in Resources */ = {isa = PBXBuildFile; fileRef = BD42D24C2DD3069E00059F07 /* logo-logindemo-app.png */; };
 		BD42D2502DD3069E00059F07 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = BD42D24D2DD3069E00059F07 /* README.md */; };
-		BD6B0A1E2DDAEB0C006575BF /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = BD6B0A1D2DDAEB0C006575BF /* ViewInspector */; };
+		BDE012F62DE1A0FC000DFC88 /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = BDE012F52DE1A0FC000DFC88 /* ViewInspector */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,7 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD6B0A1E2DDAEB0C006575BF /* ViewInspector in Frameworks */,
+				BDE012F62DE1A0FC000DFC88 /* ViewInspector in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,7 +105,7 @@
 			);
 			name = LoginDemo.SwiftUITests;
 			packageProductDependencies = (
-				BD6B0A1D2DDAEB0C006575BF /* ViewInspector */,
+				BDE012F52DE1A0FC000DFC88 /* ViewInspector */,
 			);
 			productName = LoginDemo.SwiftUITests;
 			productReference = BD42C3E22DD50C700035B547 /* LoginDemo.SwiftUITests.xctest */;
@@ -162,7 +162,7 @@
 			mainGroup = BDA0666B2DC6311100A807CD;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				BD6B0A1C2DDAEB0C006575BF /* XCRemoteSwiftPackageReference "ViewInspector" */,
+				BDE012F42DE1A0FC000DFC88 /* XCRemoteSwiftPackageReference "ViewInspector" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = BDA066752DC6311100A807CD /* Products */;
@@ -471,20 +471,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		BD6B0A1C2DDAEB0C006575BF /* XCRemoteSwiftPackageReference "ViewInspector" */ = {
+		BDE012F42DE1A0FC000DFC88 /* XCRemoteSwiftPackageReference "ViewInspector" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/nalexn/ViewInspector";
 			requirement = {
-				kind = upToNextMinorVersion;
+				kind = upToNextMajorVersion;
 				minimumVersion = 0.10.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		BD6B0A1D2DDAEB0C006575BF /* ViewInspector */ = {
+		BDE012F52DE1A0FC000DFC88 /* ViewInspector */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BD6B0A1C2DDAEB0C006575BF /* XCRemoteSwiftPackageReference "ViewInspector" */;
+			package = BDE012F42DE1A0FC000DFC88 /* XCRemoteSwiftPackageReference "ViewInspector" */;
 			productName = ViewInspector;
 		};
 /* End XCSwiftPackageProductDependency section */
