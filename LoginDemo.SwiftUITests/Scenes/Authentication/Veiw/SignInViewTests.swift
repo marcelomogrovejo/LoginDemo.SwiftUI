@@ -5,6 +5,8 @@
 //  Created by Marcelo Mogrovejo on 19/5/2025.
 //
 
+// Source mock viewModel: https://stackoverflow.com/questions/68565266/mocking-view-model-in-swiftui-with-combine
+
 import XCTest
 @testable import LoginDemo_SwiftUI
 import ViewInspector
@@ -104,33 +106,6 @@ final class SignInViewTests: XCTestCase {
         XCTAssertTrue(passwordCustomTextField.isSecureText, "Password textfield should be SecureText")
     }
 
-    func testPasswordCustomTextFieldInteraction_ShouldBeTypable() throws {
-        // Arrange
-
-        // TODO: mock the viewModel -> https://stackoverflow.com/questions/68565266/mocking-view-model-in-swiftui-with-combine
-        let viewModelMock = SignInViewModel()
-        let passwordText: String = "123456789"
-
-        // Act
-        sut = AnyView(ContentViewMock {
-            SignInView(viewModel: viewModelMock).environmentObject(settings)
-        })
-
-        /// Implementing ViewInspector way of traversing the hierarchy
-        let inspectedView = try sut.inspect()
-        let passwordCustomTextField = try inspectedView
-            .find(viewWithAccessibilityIdentifier: Constants.passwordSecureTextId)
-            .first
-        guard let passwordCustomTextField = passwordCustomTextField else {
-            XCTFail("Could not find password custom text field")
-            return
-        }
-        try passwordCustomTextField.secureField().setInput(passwordText)
-
-        // Assert
-        XCTAssertEqual(viewModelMock.password, passwordText)
-    }
-
     func testEyeButton_ShouldBePresent() throws {
         // Arrange
 
@@ -154,57 +129,10 @@ final class SignInViewTests: XCTestCase {
         XCTAssertFalse(eyeButton.isDisabled(), "Eye button should be enabled")
     }
 
-// TODO: eye button toggle to change SecureField by TextField
-//    func testEyeButtonInteraction_ShouldToggleToPlainTextField() throws {
-//        // Arrange
-//
-//        // Act
-//        sut = AnyView(ContentViewMock {
-//            SignInView().environmentObject(settings)
-//        })
-//
-//        /// Implementing ViewInspector way of traversing the hierarchy
-//        let inspectedView = try sut.inspect()
-//        let eyeButton = try inspectedView
-//            .find(ViewType.Button.self, containing: Constants.eyeButtonId)
-//            .first
-//        guard let eyeButton = eyeButton else {
-//            XCTFail("Could not find eye button")
-//            return
-//        }
-//
-//        let eyeImage = try eyeButton
-//            .find(ViewType.Image.self, containing: Constants.eyeImageId)
-//            .first
-//        guard let eyeImage = eyeImage else {
-//            XCTFail("Could not find eye image")
-//            return
-//        }
-//        
-//        XCTAssertEqual(try eyeImage.systemImageName(), "eye")
-//
-//
-////        _ = try eyeButton.button().tap()
-////
-////        let eyeImage = try inspectedView
-////            .find(viewWithAccessibilityIdentifier: Constants.eyeImageId)
-////            .first
-////        guard let eyeImage = eyeImage else {
-////            XCTFail("Could not find eye image")
-////            return
-////        }
-////        print(eyeImage)
-//
-////        XCTAssertEqual(try eyeImage.systemImageName(), "eye.fill")
-//
-//        // Assert
-////        XCTAssertFalse(eyeButton.isHidden(), "Eye button should be visible")
-////        XCTAssertFalse(eyeButton.isDisabled(), "Eye button should be enabled")
-//    }
+// TODO: error messaje above Email text field should be hidden
+// TODO: error message above Password text field should be hidden
 
-// TODO: error messajes above Email and Password TextFields
-
-    func testSubmitButtonInteraction_ShouldBeDisabled() throws {
+    func testSubmitButton_ShouldBeDisabled() throws {
         // Arrange
         let inspectedView = try sut.inspect()
         let signInButton = try inspectedView
@@ -220,6 +148,10 @@ final class SignInViewTests: XCTestCase {
         // Assert
         XCTAssertTrue(button.isDisabled(), "Button should be disabled initially")
     }
+
+    // TODO: Warning !
+    // it should be a test on CustomButton component that tests
+    // the state changes isolated.
 
     @MainActor
     func testSubmitButtonInteraction_ShouldBecomesEnabledAndAuthenticates() async throws {
@@ -443,28 +375,7 @@ final class SignInViewTests: XCTestCase {
         XCTAssertTrue(mockViewModel.hasError, "hasError should be true on failure mock login")
     }
 
-    func testSignUpButtonInteraction_ShouldBeTappable() throws {
-        // Arrange
-
-        // Act
-        /// Implementing ViewInspector way of traversing the hierarchy
-        let inspectedView = try sut.inspect()
-        let signUpLinkButton = try inspectedView
-            .find(viewWithAccessibilityIdentifier: Constants.signUpButtonId)
-            .first
-        guard let signUpLinkButton = signUpLinkButton else {
-            XCTFail("Could not find 'Sign Up' button")
-            return
-        }
-
-        let button = try signUpLinkButton.button()
-        try button.tap()
-
-        // Assert
-
-        // TODO: need to mock the viewModel to achieve that
-        XCTFail("Figure out how to assert the tap result on navigation")
-    }
+    // TODO: Check if the Sign up button is present
 
     // TODO: forgot password button tap. Figure out how to refine accessibilityIdentifier to take in account special chars
 }

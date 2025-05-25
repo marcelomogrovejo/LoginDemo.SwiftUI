@@ -19,6 +19,11 @@ struct CustomTextField: View {
         static let visiblePasswordImageName: String = "eye.fill"
         static let hiddenPasswordImageName: String = "eye.slash.fill"
         static let passwordImageBottonPadding: CGFloat = 3
+
+        struct Ids {
+            static let separatorLineId: String = "separator-line-id"
+            static let errorMessageId: String = "error-message-id"
+        }
     }
 
     @Binding var value: String
@@ -124,10 +129,12 @@ struct CustomTextField: View {
                       Color.AppPalette.TextField.secondary :
                         Color.AppPalette.TextField.primary)
                 .frame(height: 1)
+                .accessibilityIdentifier(Constants.Ids.separatorLineId)
 
             Text(errorMessage)
                 .font(.system(size: 12))
                 .foregroundStyle(Color.AppPalette.TextField.error)
+                .accessibilityIdentifier(Constants.Ids.errorMessageId)
         }
     }
 }
