@@ -24,13 +24,12 @@ final class CustomTextFieldTests: XCTestCase {
                               isSecureText: true,
                               isDisabled: isDisabled)
 
-        // Inspect the view
+        // Inspect the initial view
         let inspectedView = try sut.inspect()
 
         let mainVStack = try inspectedView
             .find(ViewType.VStack.self)
             .first
-
         guard let mainVStack = mainVStack else {
             XCTFail("Could not find main VStack")
             return
@@ -46,49 +45,48 @@ final class CustomTextFieldTests: XCTestCase {
             return
         }
 
-        let toggleImage = try toggleButton
-            .find(viewWithAccessibilityIdentifier: "eye-image-id")
+        // Initial Asserts
+        let initialSecureField = try? zStack
+            .find(viewWithAccessibilityIdentifier: "title-secure-text-field-id")
             .first
-        guard let toggleImage = toggleImage else {
-            XCTFail("Could not find eye image")
+        XCTAssertNotNil(initialSecureField, "Initial state should show SecureField")
+
+        let initialTextField = try? zStack
+            .find(viewWithAccessibilityIdentifier: "title-plain-text-field-id")
+            .first
+        XCTAssertNil(initialTextField, "Initial state should NOT show TextField")
+
+
+        // Act
+        let button = try toggleButton.button()
+
+        // MARK: - Warning !
+        /* .tap() is not working, the state of the text field doesn't change. To analyze that better I have created an isolated and simple test 'TestToggleStates' */
+        try button.tap()
+
+        // Inspect the after tap view
+        let afterInspectedView = try sut.inspect()
+
+        let afterMainVStack = try afterInspectedView
+            .find(ViewType.VStack.self)
+            .first
+        guard let afterMainVStack = afterMainVStack else {
+            XCTFail("Could not find main VStack")
             return
         }
 
-        print(try toggleImage.accessibilityLabel().string())
+        let afterZStack = try afterMainVStack.zStack(0)
 
-//        XCTAssertEqual(try toggleImage.accessibilityLabel().string(), "Show-Password", "Initial image should represent 'Show-Password'")
-//        XCTAssertTrue(try zStack.secureField(0).isPresent, "Initial state should show SecureField")
-//        XCTAssertFalse(try zStack.textField(0).isPresent, "Initial state should NOT show TextField")
+        let afterTapSecureField = try? afterZStack
+            .find(viewWithAccessibilityIdentifier: "title-secure-text-field-id")
+            .first
+        
+        let afterTapTextField = try? afterZStack
+            .find(viewWithAccessibilityIdentifier: "title-plain-text-field-id")
+            .first
 
-
-//        print("TOGGLE IMAGE NAME: \(try image.systemName)")
-
-//        XCTAssertEqual(try toggleImage.systemName, "eye.fill", "Initial image should be 'eye.fill'")
-//        XCTAssertTrue(try inspectedView.find(ViewType.SecureField.self, containing: "passwordField").isPresent, "Initial state should show SecureField")
-
-
-        // 2. Act: Tap the button
-//        try toggleButton.tap()
-
-        // 3. Assert State After First Tap (Crossed-eye is visible)
-        // Re-find the image, as the view has likely re-rendered
-//        toggleImage = try toggleButton
-//            .find(ViewType.Image.self, containing: "passwordVisibilityToggleImage")
-//            .first.unwrap(expectation: "Toggle image not found after first tap")
-//
-//        XCTAssertEqual(try toggleImage.systemName(), "eye.slash.fill", "Image should be 'eye.slash.fill' after first tap")
-//        XCTAssertTrue(try inspectedView.find(ViewType.TextField.self, containing: "passwordField").isPresent, "After tap, TextField should be visible")
-
-
-        // 4. Act: Tap the button again
-//        try toggleButton.tap()
-
-        // 5. Assert State After Second Tap (Eye is visible again)
-//        toggleImage = try toggleButton
-//            .find(ViewType.Image.self, containing: "passwordVisibilityToggleImage")
-//            .first.unwrap(expectation: "Toggle image not found after second tap")
-//
-//        XCTAssertEqual(try toggleImage.systemName(), "eye.fill", "Image should be 'eye.fill' after second tap")
-//        XCTAssertTrue(try inspectedView.find(ViewType.SecureField.self, containing: "passwordField").isPresent, "After second tap, SecureField should be visible again")
+        // Assert
+        XCTAssertNil(afterTapSecureField, "After tap, SecureField should not be visible")
+//        XCTAssertNotNil(afterTapTextField, "After tap, TextField should be visible")
     }
 }

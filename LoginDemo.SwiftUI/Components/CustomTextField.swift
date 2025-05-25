@@ -63,7 +63,7 @@ struct CustomTextField: View {
                             })
                         #endif
                     } else {
-                        // Textfield content showed
+                        // Textfield content visible
                         TextField("", text: $value)
                             .disableAutocorrection(true)
                             .foregroundStyle(isDisabled ?
@@ -91,8 +91,6 @@ struct CustomTextField: View {
                         Image(systemName: isPasswordHidden ?
                               Constants.visiblePasswordImageName :
                                 Constants.hiddenPasswordImageName)
-                        .accessibilityLabel(isPasswordHidden ? "Show-\(title)" : "Hide-\(title)")
-                        .accessibilityIdentifier("eye-image-id")
                     }
                     .foregroundStyle(Color.AppPalette.TextField.primary)
                     .disabled(isDisabled)
