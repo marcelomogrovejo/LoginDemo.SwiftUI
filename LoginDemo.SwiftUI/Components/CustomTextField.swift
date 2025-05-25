@@ -61,7 +61,7 @@ struct CustomTextField: View {
                                 onSubmit()
                             }
                             .accessibilityLabel("\(title) textfield")
-                            .accessibilityIdentifier("\(title.lowercased().replacingOccurrences(of: " ", with: "-"))-secure-text-field-id")
+                            .accessibilityIdentifier("\(title.getAccessibiltiyId(suffix: "secure-text-field"))")
                         #if DEBUG
                             .simultaneousGesture(TapGesture().onEnded {
                                 print("\(title) pressed")
@@ -82,7 +82,7 @@ struct CustomTextField: View {
                                 onSubmit()
                             }
                             .accessibilityLabel("\(title) textfield")
-                            .accessibilityIdentifier("\(title.lowercased().replacingOccurrences(of: " ", with: "-"))-plain-text-field-id")
+                            .accessibilityIdentifier("\(title.getAccessibiltiyId(suffix: "plain-text-field"))")
                         #if DEBUG
                             .simultaneousGesture(TapGesture().onEnded {
                                 print("\(title) pressed")
@@ -116,7 +116,7 @@ struct CustomTextField: View {
                         onSubmit()
                     }
                     .accessibilityLabel("\(title) textfield")
-                    .accessibilityIdentifier("\(title.lowercased().replacingOccurrences(of: " ", with: "-"))-plain-text-field-id")
+                    .accessibilityIdentifier("\(title.getAccessibiltiyId(suffix: "plain-text-field"))")
                 #if DEBUG
                     .simultaneousGesture(TapGesture().onEnded {
                         print("\(title) pressed")

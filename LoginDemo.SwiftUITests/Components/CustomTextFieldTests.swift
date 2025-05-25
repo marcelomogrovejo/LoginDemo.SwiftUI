@@ -30,8 +30,8 @@ final class CustomTextFieldTests: XCTestCase {
 
         // Act
         let inspectedView = try sut.inspect()
-        let plainTextFieldId = "\(testTitle.lowercased().replacingOccurrences(of: " ", with: "-"))-plain-text-field-id"
-        let secureTextFieldId = "\(testTitle.lowercased().replacingOccurrences(of: " ", with: "-"))-secure-text-field-id"
+        let plainTextFieldId = "\(testTitle.getAccessibiltiyId(suffix: "plain-text-field"))"
+        let secureTextFieldId = "\(testTitle.getAccessibiltiyId(suffix: "secure-text-field"))"
 
         // Assert Text(title)
         XCTAssertEqual(try inspectedView.text(0).string(), testTitle)
@@ -85,8 +85,8 @@ final class CustomTextFieldTests: XCTestCase {
 
         // Act
         let inspectedView = try sut.inspect()
-        let plainTextFieldId = "\(testTitle.lowercased().replacingOccurrences(of: " ", with: "-"))-plain-text-field-id"
-        let secureTextFieldId = "\(testTitle.lowercased().replacingOccurrences(of: " ", with: "-"))-secure-text-field-id"
+        let plainTextFieldId = "\(testTitle.getAccessibiltiyId(suffix: "plain-text-field"))"
+        let secureTextFieldId = "\(testTitle.getAccessibiltiyId(suffix: "secure-text-field"))"
 
         // Assert Text(title)
         XCTAssertEqual(try inspectedView.text(0).string(), testTitle)
@@ -139,7 +139,7 @@ final class CustomTextFieldTests: XCTestCase {
 
         // Act
         var inspectedView = try sut.inspect()
-        var plainTextFieldId = "\(testTitle.lowercased().replacingOccurrences(of: " ", with: "-"))-plain-text-field-id"
+        var plainTextFieldId = "\(testTitle.getAccessibiltiyId(suffix: "plain-text-field"))"
 
         var mainVStack = try inspectedView.vStack(1)
 
@@ -149,7 +149,7 @@ final class CustomTextFieldTests: XCTestCase {
         // Act
         inspectedView = try sut.inspect()
         mainVStack = try inspectedView.vStack(1)
-        plainTextFieldId = "\(testTitle.lowercased().replacingOccurrences(of: " ", with: "-"))-plain-text-field-id"
+        plainTextFieldId = "\(testTitle.getAccessibiltiyId(suffix: "plain-text-field"))"
 
         let plainTextField = try mainVStack
             .find(viewWithAccessibilityIdentifier: plainTextFieldId)
@@ -180,7 +180,7 @@ final class CustomTextFieldTests: XCTestCase {
         let mainVStack = try inspectedView.vStack(1)
         let zStack = try mainVStack.zStack(0)
 
-        let secureFieldId = "\(testTitle.lowercased().replacingOccurrences(of: " ", with: "-"))-secure-text-field-id"
+        let secureFieldId = "\(testTitle.getAccessibiltiyId(suffix: "secure-text-field"))"
 
         let secureTextField = try zStack
             .find(viewWithAccessibilityIdentifier: secureFieldId)
@@ -256,7 +256,7 @@ final class CustomTextFieldTests: XCTestCase {
         let mainVStack = try inspectedView.vStack(1)
         let zStack = try mainVStack.zStack(0)
 
-        let secureTextFieldId = "\(testTitle.lowercased().replacingOccurrences(of: " ", with: "-"))-secure-text-field-id"
+        let secureTextFieldId = testTitle.getAccessibiltiyId(suffix: "secure-text-field")
 
         let secureTextField = try? zStack
             .find(viewWithAccessibilityIdentifier: secureTextFieldId)

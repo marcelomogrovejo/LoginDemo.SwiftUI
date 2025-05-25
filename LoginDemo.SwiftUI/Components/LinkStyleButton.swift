@@ -32,7 +32,7 @@ struct LinkStyleButton: View {
                     .frame(height: 1)
             }
             .accessibilityLabel(title)
-            .accessibilityIdentifier("\(title.lowercased().replacingOccurrences(of: " ", with: "-"))-button-id")
+            .accessibilityIdentifier("\(title.getAccessibiltiyId(suffix: "button"))")
         }
     }
 }
