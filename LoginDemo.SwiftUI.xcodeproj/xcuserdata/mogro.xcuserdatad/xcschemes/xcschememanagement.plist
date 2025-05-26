@@ -9,6 +9,29 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>LoginDemo.SwiftUITests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>BDA066732DC6311100A807CD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BDA066832DC6311500A807CD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BDA0668D2DC6311500A807CD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 	</dict>
 </dict>
 </plist>

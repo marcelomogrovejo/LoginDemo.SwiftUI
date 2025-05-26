@@ -6,26 +6,54 @@
 //
 
 // Source form validation: https://blorenzop.medium.com/form-validation-with-combine-4988adcc3b0
+// Source ObservableObject protocol: https://stackoverflow.com/questions/59503399/how-to-define-a-protocol-as-a-type-for-a-observedobject-property
 
+import Foundation
 import SwiftUI
 import Combine
 
-class SignInViewModel: ObservableObject {
+protocol SignInViewModelProtocol: ObservableObject {
+    var email: String { get set }
+    var password: String { get set }
+    var isLoading: Bool { get set }
+    var isFormValid: Bool { get set }
+    var errorMessage: String? { get set }
+    var hasError: Bool { get set }
+
+    func setup(_ appSettings: AppSettings)
+    func authenticateUser() async throws
+    func triggerAuthentication()
+}
+
+class SignInViewModel: SignInViewModelProtocol {
     // Input values
     @Published var email: String = ""
     @Published var password: String = ""
     // Output subscriber
     @Published var isFormValid: Bool = false
-    @Published var shouldAuthenticate = false
+    @Published var shouldAuthenticate: Bool = false
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     @Published var hasError: Bool = false
 
     private var cancellables: Set<AnyCancellable> = []
-    var appSettings: AppSettings?
+    let authApiService: ApiServiceProtocol
+    @Published var appSettings: AppSettings?
 
-    init() {
-        isFormValidPublisher
+    // MARK: - WARNING !!!
+    // This variable tells the mock authentication method to be succed or fail when sign in.
+    // It is just here for testing purposes. In a real app it mustn't be here.
+    var loginShouldSucced: Bool = false
+
+    // MARK: - Warning !
+    // This service should be known just here, within the viewModel context,
+    // not from outside, the view.
+    // In the future, maybe that can be present on the environment, list AppSettins,
+    // so that way can be acceded by forgot password and sign up as well.
+    init(authApiService: ApiServiceProtocol = AuthApiService()) {
+        self.authApiService = authApiService
+
+        isValidFormPublisher
             .receive(on: RunLoop.main)
             .assign(to: \.isFormValid, on: self)
             .store(in: &cancellables)
@@ -38,13 +66,27 @@ class SignInViewModel: ObservableObject {
             // when it finishes. It's the bridge between the reactive data flow you define
             // with Combine and the imperative actions you need to perform in your application.
             .sink { _ in
-                self.authenticateUser()
+                Task { @MainActor in
+                    try await self.authenticateUser()
+                }
                 // Reset the trigger
                 self.shouldAuthenticate = false
             }
             .store(in: &cancellables)
     }
 
+    deinit {
+        cancellables.forEach{ $0.cancel() }
+        cancellables.removeAll()
+    }
+
+    /// Configure the scene to be able to navigate
+    /// - Parameter appSettings: Global configuration file
+    func setup(_ appSettings: AppSettings) {
+        self.appSettings = appSettings
+    }
+
+    /// Enabled the form to be validated
     func triggerAuthentication() {
         shouldAuthenticate = true
     }
@@ -69,49 +111,73 @@ class SignInViewModel: ObservableObject {
 //        print("ViewModel validateForm()...")
 //    }
 
-    private func authenticateUser() {
-        isLoading = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-            self?.isLoading = false
+    /// Perfomrs an api call to authenticate the user
+    func authenticateUser() async throws {
+        Task { @MainActor [weak self] in
+            guard let self else { return }
 
-            // Simulate API response error on username/email
-            // Simulate API response error on password
-            self?.hasError = true
-            self?.errorMessage = "🔒 Invalid credentials"
+            self.isLoading = true
 
-            // Navigate to a logged in home page
-            self?.appSettings?.isLoggedIn = true
+            do {
+                // shouldSucced: for testing purposes can be true to succed or false to fail.
+                let result = try await self.authApiService.mockLoginUser(email: self.email,
+                                                                    password: self.password,
+                                                                    shouldSucceed: self.loginShouldSucced)
+
+                self.isLoading = false
+
+                if result {
+                    // Navigate to a logged in home page
+                    self.appSettings?.isLoggedIn = result
+                } else {
+                    print("Error: Authentication")
+
+                    // Simulate API response error on username/email
+                    // Simulate API response error on password
+                    self.hasError = true
+                    self.errorMessage = "🔒 Invalid credentials"
+                }
+            } catch {
+                print("Error: Mock Authentication failed: \(error)")
+                self.isLoading = false
+
+                // Simulate API response error on username/email
+                // Simulate API response error on password
+                self.hasError = true
+                self.errorMessage = "Something went wrong."
+            }
         }
     }
 
-    func setup(_ appSettings: AppSettings) {
-        self.appSettings = appSettings
-    }
 }
 
-private extension SignInViewModel {
+extension SignInViewModel {
 
-    var isEmailValidPublisher: AnyPublisher<Bool, Never> {
+    /// Creates a combine publisher that validates the email or username
+    var isValidEmailPublisher: AnyPublisher<Bool, Never> {
         $email
             .map{ email in
-                let emailPredicate = NSPredicate(format:"SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}")
+                let emailPredicate = NSPredicate(format:"SELF MATCHES %@",
+                                                 "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}")
                 return emailPredicate.evaluate(with: email)
             }
             .eraseToAnyPublisher()
     }
-
-    var isPasswordValidPublisher: AnyPublisher<Bool, Never> {
+    
+    /// Creates a combine publisher that validates the password
+    var isValidPasswordPublisher: AnyPublisher<Bool, Never> {
         $password
             .map{ password in
                 return password.count >= 8
             }
             .eraseToAnyPublisher()
     }
-
-    var isFormValidPublisher: AnyPublisher<Bool, Never> {
+    
+    /// Checks if the form (username and password) are valid
+    var isValidFormPublisher: AnyPublisher<Bool, Never> {
         Publishers.CombineLatest(
-            isEmailValidPublisher,
-            isPasswordValidPublisher
+            isValidEmailPublisher,
+            isValidPasswordPublisher
         )
         .map{ isEmailValid, isPasswordValid in
             return isEmailValid && isPasswordValid //&& !email.isEmpty && !password.isEmpty

@@ -19,6 +19,11 @@ struct CustomTextField: View {
         static let visiblePasswordImageName: String = "eye.fill"
         static let hiddenPasswordImageName: String = "eye.slash.fill"
         static let passwordImageBottonPadding: CGFloat = 3
+
+        struct Ids {
+            static let separatorLineId: String = "separator-line-id"
+            static let errorMessageId: String = "error-message-id"
+        }
     }
 
     @Binding var value: String
@@ -56,13 +61,14 @@ struct CustomTextField: View {
                                 onSubmit()
                             }
                             .accessibilityLabel("\(title) textfield")
+                            .accessibilityIdentifier("\(title.getAccessibiltiyId(suffix: "secure-text-field"))")
                         #if DEBUG
                             .simultaneousGesture(TapGesture().onEnded {
                                 print("\(title) pressed")
                             })
                         #endif
                     } else {
-                        // Textfield content showed
+                        // Textfield content visible
                         TextField("", text: $value)
                             .disableAutocorrection(true)
                             .foregroundStyle(isDisabled ?
@@ -76,6 +82,7 @@ struct CustomTextField: View {
                                 onSubmit()
                             }
                             .accessibilityLabel("\(title) textfield")
+                            .accessibilityIdentifier("\(title.getAccessibiltiyId(suffix: "plain-text-field"))")
                         #if DEBUG
                             .simultaneousGesture(TapGesture().onEnded {
                                 print("\(title) pressed")
@@ -94,6 +101,7 @@ struct CustomTextField: View {
                     .disabled(isDisabled)
                     .padding(.bottom, Constants.passwordImageBottonPadding)
                     .accessibilityLabel(isPasswordHidden ? "Show \(title)" : "Hide \(title)")
+                    .accessibilityIdentifier("eye-button-id")
                 }
             } else {
                 TextField("", text: $value)
@@ -108,6 +116,7 @@ struct CustomTextField: View {
                         onSubmit()
                     }
                     .accessibilityLabel("\(title) textfield")
+                    .accessibilityIdentifier("\(title.getAccessibiltiyId(suffix: "plain-text-field"))")
                 #if DEBUG
                     .simultaneousGesture(TapGesture().onEnded {
                         print("\(title) pressed")
@@ -120,10 +129,12 @@ struct CustomTextField: View {
                       Color.AppPalette.TextField.secondary :
                         Color.AppPalette.TextField.primary)
                 .frame(height: 1)
+                .accessibilityIdentifier(Constants.Ids.separatorLineId)
 
             Text(errorMessage)
                 .font(.system(size: 12))
                 .foregroundStyle(Color.AppPalette.TextField.error)
+                .accessibilityIdentifier(Constants.Ids.errorMessageId)
         }
     }
 }

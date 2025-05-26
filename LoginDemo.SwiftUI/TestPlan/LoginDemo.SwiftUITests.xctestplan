@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "BAEC23F3-E606-4061-87E8-DB59E7831053",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:LoginDemo.SwiftUI.xcodeproj",
+        "identifier" : "BD42C3E12DD50C700035B547",
+        "name" : "LoginDemo.SwiftUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
