@@ -46,7 +46,7 @@
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BDA0668D2DC6311500A807CD"
+               BlueprintIdentifier = "BDCC79642DE4C32800E57D53"
                BuildableName = "LoginDemo.SwiftUIUITests.xctest"
                BlueprintName = "LoginDemo.SwiftUIUITests"
                ReferencedContainer = "container:LoginDemo.SwiftUI.xcodeproj">

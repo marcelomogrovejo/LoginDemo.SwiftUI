@@ -21,8 +21,10 @@ struct CustomTextField: View {
         static let passwordImageBottonPadding: CGFloat = 3
 
         struct Ids {
-            static let separatorLineId: String = "separator-line-id"
-            static let errorMessageId: String = "error-message-id"
+            static let textFieldPlainSuffixId: String = "plain-text-field"
+            static let textFieldSecureSuffixId: String = "secure-text-field"
+            static let separatorLineSuffixId: String = "separator-line"
+            static let errorMessageSuffixId: String = "error-message"
         }
     }
 
@@ -61,7 +63,7 @@ struct CustomTextField: View {
                                 onSubmit()
                             }
                             .accessibilityLabel("\(title) textfield")
-                            .accessibilityIdentifier("\(title.getAccessibiltiyId(suffix: "secure-text-field"))")
+                            .accessibilityIdentifier("\(title.getAccessibiltiyId(suffix: Constants.Ids.textFieldSecureSuffixId))")
                         #if DEBUG
                             .simultaneousGesture(TapGesture().onEnded {
                                 print("\(title) pressed")
@@ -82,7 +84,7 @@ struct CustomTextField: View {
                                 onSubmit()
                             }
                             .accessibilityLabel("\(title) textfield")
-                            .accessibilityIdentifier("\(title.getAccessibiltiyId(suffix: "plain-text-field"))")
+                            .accessibilityIdentifier("\(title.getAccessibiltiyId(suffix: Constants.Ids.textFieldPlainSuffixId))")
                         #if DEBUG
                             .simultaneousGesture(TapGesture().onEnded {
                                 print("\(title) pressed")
@@ -116,7 +118,7 @@ struct CustomTextField: View {
                         onSubmit()
                     }
                     .accessibilityLabel("\(title) textfield")
-                    .accessibilityIdentifier("\(title.getAccessibiltiyId(suffix: "plain-text-field"))")
+                    .accessibilityIdentifier("\(title.getAccessibiltiyId(suffix: Constants.Ids.textFieldPlainSuffixId))")
                 #if DEBUG
                     .simultaneousGesture(TapGesture().onEnded {
                         print("\(title) pressed")
@@ -129,12 +131,12 @@ struct CustomTextField: View {
                       Color.AppPalette.TextField.secondary :
                         Color.AppPalette.TextField.primary)
                 .frame(height: 1)
-                .accessibilityIdentifier(Constants.Ids.separatorLineId)
+                .accessibilityIdentifier("\(title.getAccessibiltiyId(suffix: Constants.Ids.separatorLineSuffixId))")
 
             Text(errorMessage)
                 .font(.system(size: 12))
                 .foregroundStyle(Color.AppPalette.TextField.error)
-                .accessibilityIdentifier(Constants.Ids.errorMessageId)
+                .accessibilityIdentifier("\(title.getAccessibiltiyId(suffix: Constants.Ids.errorMessageSuffixId))")
         }
     }
 }

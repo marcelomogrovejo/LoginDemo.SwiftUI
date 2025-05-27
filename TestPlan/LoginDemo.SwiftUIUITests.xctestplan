@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "F83C144D-540D-41E9-8138-7C75E942306D",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:LoginDemo.SwiftUI.xcodeproj",
+        "identifier" : "BDCC79642DE4C32800E57D53",
+        "name" : "LoginDemo.SwiftUIUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
