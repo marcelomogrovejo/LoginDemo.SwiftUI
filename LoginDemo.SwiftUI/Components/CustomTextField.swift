@@ -16,20 +16,24 @@ struct CustomTextField: View {
 
     struct Constants {
         static let titleFontSize: CGFloat = 15
-        static let visiblePasswordImageName: String = "eye.fill"
-        static let hiddenPasswordImageName: String = "eye.slash.fill"
-        static let passwordImageBottonPadding: CGFloat = 3
+        static let visibleImageName: String = "eye.slash.fill"
+        static let hiddenImageName: String = "eye.fill"
+        static let toggleImageBottonPadding: CGFloat = 3
+        static let toggleButtonHeight: CGFloat = 25
 
         struct Ids {
             static let textFieldPlainSuffixId: String = "plain-text-field"
             static let textFieldSecureSuffixId: String = "secure-text-field"
             static let separatorLineSuffixId: String = "separator-line"
             static let errorMessageSuffixId: String = "error-message"
+            static let toggleButtonId: String = "toggle-button-id"
+            static let toggleImageVisibleid: String = "show-image-id"
+            static let toggleImageHiddenid: String = "hide-image-id"
         }
     }
 
     @Binding var value: String
-    @State private var isPasswordHidden: Bool = true
+    @State private var isHidden: Bool = true
 
     var title: String = "title"
     var placeholderText: String = "placeholder here"
@@ -49,7 +53,7 @@ struct CustomTextField: View {
         VStack(alignment: .leading) {
             if isSecureText {
                 ZStack(alignment: .trailing) {
-                    if isPasswordHidden {
+                    if isHidden {
                         // Textfield content hidden
                         SecureField("", text: $value)
                             .foregroundStyle(isDisabled ?
@@ -93,17 +97,25 @@ struct CustomTextField: View {
                     }
 
                     Button {
-                        isPasswordHidden.toggle()
+                        isHidden.toggle()
                     } label: {
-                        Image(systemName: isPasswordHidden ?
-                              Constants.visiblePasswordImageName :
-                                Constants.hiddenPasswordImageName)
+                        VStack{
+                            Image(systemName: isHidden ?
+                                  Constants.visibleImageName :
+                                    Constants.hiddenImageName)
+                            .accessibilityIdentifier(isHidden ?
+                                                     Constants.Ids.toggleImageVisibleid :
+                                                        Constants.Ids.toggleImageHiddenid)
+
+                            Image(systemName: "")
+                        }
                     }
                     .foregroundStyle(Color.AppPalette.TextField.primary)
                     .disabled(isDisabled)
-                    .padding(.bottom, Constants.passwordImageBottonPadding)
-                    .accessibilityLabel(isPasswordHidden ? "Show \(title)" : "Hide \(title)")
-                    .accessibilityIdentifier("eye-button-id")
+                    .padding(.bottom, Constants.toggleImageBottonPadding)
+                    .accessibilityLabel(isHidden ? "Show \(title)" : "Hide \(title)")
+                    .accessibilityIdentifier(Constants.Ids.toggleButtonId)
+                    .frame(height: Constants.toggleButtonHeight)
                 }
             } else {
                 TextField("", text: $value)

@@ -18,6 +18,10 @@ struct ContentView: View {
             } else {
                 SignInView()
                     .environmentObject(settings)
+
+                // MARK: Warning !
+                // Uncomment for testing eye button
+//                IsolatedTestView()
             }
         }
     }
