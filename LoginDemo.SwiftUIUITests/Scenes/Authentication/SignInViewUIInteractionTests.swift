@@ -29,9 +29,15 @@ final class SignInViewUIInteractionTests: XCTestCase {
     @MainActor
     func testSignInView_SignInButtonEnabledWhenFormIsFilledCorrectly() throws {
         // Arrange
+        let signInButtonId = "sign-in".getAccessibilityIdentifier(type: AccessibilityIdentifierType.button)
+        let emailTextFieldId = "email".getAccessibilityIdentifier(type: AccessibilityIdentifierType.plainTextField)
+        let passwordTextFieldId = "password".getAccessibilityIdentifier(type: AccessibilityIdentifierType.secureField)
+        let validEmail = "test@example.com"
+        let nextButtonTitle = "next"
+        let validPassword = "secureText123"
 
         // Act
-        let signInButton = sut.buttons["sign-in-button-id"]
+        let signInButton = sut.buttons[signInButtonId]
 
         // Assert the circular button is initialy present and disabled
         XCTAssertTrue(signInButton.waitForExistence(timeout: 2),
@@ -40,7 +46,7 @@ final class SignInViewUIInteractionTests: XCTestCase {
                        "Sign in button should be disabled but it is enabled")
 
         // Act
-        let emailTextField = sut.textFields["email-plain-text-field-id"]
+        let emailTextField = sut.textFields[emailTextFieldId]
 
         // Assert the text field is enabled and empty
         XCTAssertTrue(emailTextField.waitForExistence(timeout: 2),
@@ -52,9 +58,9 @@ final class SignInViewUIInteractionTests: XCTestCase {
 
         // Act
         emailTextField.tap()
-        emailTextField.typeText("test@test.com")
+        emailTextField.typeText(validEmail)
 
-        let passwordTextField = sut.secureTextFields["password-secure-text-field-id"]
+        let passwordTextField = sut.secureTextFields[passwordTextFieldId]
 
         // Assert the secure text is enabled and empty
         XCTAssertTrue(passwordTextField.waitForExistence(timeout: 2),
@@ -67,16 +73,16 @@ final class SignInViewUIInteractionTests: XCTestCase {
         // Act
         // TODO: Warning !
         // Check when localization is present if this is still working when the keyboard is in nother language
-        let nextKey = sut.keyboards.buttons["next"]
+        let nextKey = sut.keyboards.buttons[nextButtonTitle]
         XCTAssertTrue(nextKey.exists && nextKey.isHittable,
                       "Next key should be visible and hittable on username keyboard")
         nextKey.tap()
 
-        passwordTextField.typeText("secureText123")
+        passwordTextField.typeText(validPassword)
 
         // Assert the circular button is enabled after filling the form correctly
         XCTAssertTrue(signInButton.isEnabled,
-                       "Sign in button should be disabled but it is enabled")
+                       "Sign in button should be enabled but it is enabled")
     }
 
     // TODO: check error when invalid username/email and button disabled
@@ -90,9 +96,12 @@ final class SignInViewUIInteractionTests: XCTestCase {
     @MainActor
     func testSignInView_PasswordEyeButtonToggle() throws {
         // Arrange
-        let eyeButton = sut.buttons["toggle-button-id"]
-        let eyeSlashButtonImage = sut.images["show-image-id"]
-        let eyeButtonImage = sut.images["hide-image-id"]
+        let eyeButtonId = "toggle".getAccessibilityIdentifier(type: AccessibilityIdentifierType.button)
+        let eyeButton = sut.buttons[eyeButtonId]
+        let eyeSlashButtonImageId = "show".getAccessibilityIdentifier(type: AccessibilityIdentifierType.image)
+        let eyeSlashButtonImage = sut.images[eyeSlashButtonImageId]
+        let eyeButtonImageId = "hide".getAccessibilityIdentifier(type: AccessibilityIdentifierType.image)
+        let eyeButtonImage = sut.images[eyeButtonImageId]
 
         // Assert: initial state
         XCTAssertTrue(eyeButton.waitForExistence(timeout: 2),
@@ -142,9 +151,14 @@ final class SignInViewUIInteractionTests: XCTestCase {
         // Arrange
         let invalidEmail = "invalid.test@test.com"
         let invalidPassword = "invalidPassword123"
-        let signInButton = sut.buttons["sign-in-button-id"]
-        let emailTextField = sut.textFields["email-plain-text-field-id"]
-        let passwordTextField = sut.secureTextFields["password-secure-text-field-id"]
+        let signInButtonId = "sign-in".getAccessibilityIdentifier(type: AccessibilityIdentifierType.button)
+        let signInButton = sut.buttons[signInButtonId]
+        let emailTextFieldId = "email".getAccessibilityIdentifier(type: AccessibilityIdentifierType.plainTextField)
+        let emailTextField = sut.textFields[emailTextFieldId]
+        let nextButtonTitle = "next"
+        let passwordTextFieldId = "password".getAccessibilityIdentifier(type: AccessibilityIdentifierType.secureField)
+        let passwordTextField = sut.secureTextFields[passwordTextFieldId]
+        let returnButtonTitle = "return"
 
         // Act
 
@@ -169,7 +183,7 @@ final class SignInViewUIInteractionTests: XCTestCase {
         // Act
         // TODO: Warning !
         // Check when localization is present if this is still working when the keyboard is in nother language
-        let nextKey = sut.keyboards.buttons["next"]
+        let nextKey = sut.keyboards.buttons[nextButtonTitle]
         XCTAssertTrue(nextKey.exists && nextKey.isHittable,
                       "Next key should be visible and hittable on username keyboard")
         nextKey.tap()
@@ -183,9 +197,10 @@ final class SignInViewUIInteractionTests: XCTestCase {
         // Act
         // TODO: Warning !
         // Check when localization is present if this is still working when the keyboard is in nother language
-        let returnKey = sut.keyboards.buttons["return"]
+        let returnKey = sut.keyboards.buttons[returnButtonTitle]
         XCTAssertTrue(returnKey.waitForExistence(timeout: 2) && returnKey.isHittable,
                       "Return key should be visible and hittable on password keyboard")
+
         returnKey.tap()
 
         // TODO: check the loading state of the sign in button
@@ -203,9 +218,14 @@ final class SignInViewUIInteractionTests: XCTestCase {
         // Arrange
         let validEmail = "valid.test@test.com"
         let validPassword = "validPassword123"
-        let signInButton = sut.buttons["sign-in-button-id"]
-        let emailTextField = sut.textFields["email-plain-text-field-id"]
-        let passwordTextField = sut.secureTextFields["password-secure-text-field-id"]
+        let signInButtonId = "sign-in".getAccessibilityIdentifier(type: AccessibilityIdentifierType.button)
+        let signInButton = sut.buttons[signInButtonId]
+        let emailTextFieldId = "email".getAccessibilityIdentifier(type: AccessibilityIdentifierType.plainTextField)
+        let emailTextField = sut.textFields[emailTextFieldId]
+        let nextButtonTitle = "next"
+        let passwordTextFieldId = "password".getAccessibilityIdentifier(type: AccessibilityIdentifierType.secureField)
+        let passwordTextField = sut.secureTextFields[passwordTextFieldId]
+        let returnButtonTitle = "return"
 
         // Act
 
@@ -230,7 +250,7 @@ final class SignInViewUIInteractionTests: XCTestCase {
         // Act
         // TODO: Warning !
         // Check when localization is present if this is still working when the keyboard is in nother language
-        let nextKey = sut.keyboards.buttons["next"]
+        let nextKey = sut.keyboards.buttons[nextButtonTitle]
         XCTAssertTrue(nextKey.exists && nextKey.isHittable,
                       "Next key should be visible and hittable on username keyboard")
         nextKey.tap()
@@ -244,7 +264,7 @@ final class SignInViewUIInteractionTests: XCTestCase {
         // Act
         // TODO: Warning !
         // Check when localization is present if this is still working when the keyboard is in nother language
-        let returnKey = sut.keyboards.buttons["return"]
+        let returnKey = sut.keyboards.buttons[returnButtonTitle]
         XCTAssertTrue(returnKey.waitForExistence(timeout: 2) && returnKey.isHittable,
                       "Return key should be visible and hittable on password keyboard")
         returnKey.tap()
