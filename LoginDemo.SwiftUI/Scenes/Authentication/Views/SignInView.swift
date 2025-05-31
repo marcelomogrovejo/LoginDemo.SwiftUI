@@ -90,7 +90,7 @@ struct SignInView<ViewModel>: View where ViewModel: SignInViewModelProtocol {
                                 .font(.system(size: AuthConstants.SignInView.submitFontSize))
                             /// Makes UI test fails -> it doesn't find the element
 //                                .accessibilityHidden(true)
-                                .accessibilityIdentifier("sign-in-button-text-id")
+                                .accessibilityIdentifier("sign-in".getAccessibilityIdentifier(type: .buttonTitle))
 
                             Spacer()
 

@@ -40,6 +40,17 @@
 		BDCC79CB2DE5B4DE00E57D53 /* LoginDemo.SwiftUIUITests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = LoginDemo.SwiftUIUITests.xctestplan; path = TestPlan/LoginDemo.SwiftUIUITests.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		BD33FAF02DEB5CF90067C0BF /* Exceptions for "LoginDemo.SwiftUI" folder in "LoginDemo.SwiftUIUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Enums/AccessibilityIdentifierType.swift,
+				"Extensions/String+AccessibilityIdentifier.swift",
+			);
+			target = BDCC79642DE4C32800E57D53 /* LoginDemo.SwiftUIUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		BD42C3E32DD50C700035B547 /* LoginDemo.SwiftUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -48,6 +59,9 @@
 		};
 		BDA066762DC6311100A807CD /* LoginDemo.SwiftUI */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				BD33FAF02DEB5CF90067C0BF /* Exceptions for "LoginDemo.SwiftUI" folder in "LoginDemo.SwiftUIUITests" target */,
+			);
 			path = LoginDemo.SwiftUI;
 			sourceTree = "<group>";
 		};
