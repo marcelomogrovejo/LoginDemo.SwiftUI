@@ -29,9 +29,10 @@ final class SignInViewUITests: XCTestCase {
     @MainActor
     func testSignInView_TitleDisplay() throws {
         // Arrange
+        let titleId: String = "title".getAccessibilityIdentifier(type: AccessibilityIdentifierType.text)
 
         // Act
-        let title = sut.staticTexts["title-text-id"]
+        let title = sut.staticTexts[titleId]
 
         // Assert
         /// Have to wait because of the splash screen has to finish loading and doing the animation.
@@ -42,12 +43,15 @@ final class SignInViewUITests: XCTestCase {
     @MainActor
     func testSignInView_EmailTextFieldDisplay() throws {
         // Arrange
+        let emailTextFielId: String = "email".getAccessibilityIdentifier(type: AccessibilityIdentifierType.plainTextField)
+        let emailSeparatorLineId: String = "email".getAccessibilityIdentifier(type: AccessibilityIdentifierType.separatorLine)
+        let emailErrorMessageId: String = "email".getAccessibilityIdentifier(type: AccessibilityIdentifierType.errorTextMessage)
 
         // Act
-        let emailTextField = sut.textFields["email-plain-text-field-id"]
+        let emailTextField = sut.textFields[emailTextFielId]
         let separatorLine = sut.otherElements.element(matching: .any,
-                                                      identifier: "email-separator-line-id")
-        let errorText = sut.staticTexts["email-error-text-id"]
+                                                      identifier: emailSeparatorLineId)
+        let errorText = sut.staticTexts[emailErrorMessageId]
 
         // Assert
 
@@ -61,14 +65,18 @@ final class SignInViewUITests: XCTestCase {
                        "Error text should NOT be present but it is not")
     }
 
+    @MainActor
     func testSignInView_PasswordTextFieldDisplay() throws {
         // Arrange
+        let passwordTextFielId: String = "password".getAccessibilityIdentifier(type: AccessibilityIdentifierType.secureField)
+        let passwordSeparatorLineId: String = "password".getAccessibilityIdentifier(type: AccessibilityIdentifierType.separatorLine)
+        let passwordErrorMessageId: String = "password".getAccessibilityIdentifier(type: AccessibilityIdentifierType.errorTextMessage)
 
         // Act
-        let passwordTextField = sut.secureTextFields["password-secure-text-field-id"]
+        let passwordTextField = sut.secureTextFields[passwordTextFielId]
         let separatorLine = sut.otherElements.element(matching: .any,
-                                                      identifier: "password-separator-line-id")
-        let errorText = sut.staticTexts["password-error-text-id"]
+                                                      identifier: passwordSeparatorLineId)
+        let errorText = sut.staticTexts[passwordErrorMessageId]
 
         // Assert
 
@@ -82,23 +90,28 @@ final class SignInViewUITests: XCTestCase {
                        "Error text should NOT be present but it is not")
     }
 
+    @MainActor
     func testSignInView_EyeButtonDisplay() throws {
         // Arrange
+        let toggleButtonId = "toggle".getAccessibilityIdentifier(type: AccessibilityIdentifierType.button)
 
         // Act
-        let eyeButton = sut.buttons["eye-button-id"]
+        let eyeButton = sut.buttons[toggleButtonId]
 
         // Assert
         XCTAssertTrue(eyeButton.waitForExistence(timeout: 2),
                       "Eye button should be present but it is not")
     }
 
+    @MainActor
     func testSignInView_SignInButtonDisplay() throws {
         // Arrange
+        let signInButtonTitleId = "sign-in".getAccessibilityIdentifier(type: AccessibilityIdentifierType.buttonTitle)
+        let signInButtonId = "sign-in".getAccessibilityIdentifier(type: AccessibilityIdentifierType.button)
 
         // Act
-        let signInTitle = sut.staticTexts["sign-in-button-text-id"]
-        let signInButton = sut.buttons["sign-in-button-id"]
+        let signInTitle = sut.staticTexts[signInButtonTitleId]
+        let signInButton = sut.buttons[signInButtonId]
 
         // Assert
         XCTAssertTrue(signInTitle.waitForExistence(timeout: 2),
@@ -107,25 +120,28 @@ final class SignInViewUITests: XCTestCase {
                       "Sign in button should be present but it is not")
     }
 
+    @MainActor
     func testSignInView_SignUpButtonDisplay() throws {
         // Arrange
-
+        let signUpButtonId = "sign-up".getAccessibilityIdentifier(type: AccessibilityIdentifierType.button)
         // Act
-        let signUpButton = sut.buttons["sign-up-button-id"]
+        let signUpButton = sut.buttons[signUpButtonId]
 
         // Assert
         XCTAssert(signUpButton.waitForExistence(timeout: 2),
                   "Sign up button should be present but it is not")
     }
 
+    @MainActor
     func testSignInView_ForgotPasswordButtonDisplay() throws {
         // Arrange
+        let forgotPasswordButtonId = "forgot password?".getAccessibilityIdentifier(type: AccessibilityIdentifierType.button)
 
         // Act
         // TODO: Warning !
         // The special char '?' is being taking in account.
         // Id should be just words separated by '-' char
-        let forgotPasswordButton = sut.buttons["forgot-password?-button-id"]
+        let forgotPasswordButton = sut.buttons[forgotPasswordButtonId]
 
         // Assert
         XCTAssert(forgotPasswordButton.waitForExistence(timeout: 2),

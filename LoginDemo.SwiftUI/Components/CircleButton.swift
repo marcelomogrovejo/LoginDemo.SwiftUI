@@ -120,7 +120,7 @@ struct CircleButton: View {
 //        .buttonStyle(GrowingButtonStyle())
         .disabled(!isEnabled)
         .onAppear { self.isLoading = false }
-        .accessibilityIdentifier("\(title.getAccessibiltiyId(suffix: "button"))")
+        .accessibilityIdentifier("\(title.getAccessibilityIdentifier(type: .button))")
     }
 }
 

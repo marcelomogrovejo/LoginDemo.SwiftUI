@@ -39,7 +39,7 @@ struct HeaderView: View {
                     .foregroundStyle(Color.AppPalette.Text.title)
                     .padding(.top, 190)
                     .padding(.leading, 50)
-                    .accessibilityIdentifier("title-text-id")
+                    .accessibilityIdentifier("title".getAccessibilityIdentifier(type: .text))
 
                 Spacer()
             }

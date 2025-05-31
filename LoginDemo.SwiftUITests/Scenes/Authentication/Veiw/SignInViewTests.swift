@@ -17,12 +17,12 @@ final class SignInViewTests: XCTestCase {
 
     // Ids
     struct Constants {
-        static let emailTextFieldId: String = "email-plain-text-field-id"
-        static let passwordSecureTextId: String = "password-secure-text-field-id"
-        static let eyeButtonId: String = "eye-button-id"
-        static let eyeImageId: String = "eye-image-id"
-        static let signInButtonId: String = "sign-in-button-id"
-        static let signUpButtonId: String = "sign-up-button-id"
+        static let emailTextFieldId: String = "email"
+        static let passwordSecureTextId: String = "password"
+        static let eyeButtonId: String = "toggle"
+        static let eyeImageId: String = "eye"
+        static let signInButtonId: String = "sign-in"
+        static let signUpButtonId: String = "sign-up"
     }
 
     var settings: AppSettings!
@@ -117,7 +117,7 @@ final class SignInViewTests: XCTestCase {
         /// Implementing ViewInspector way of traversing the hierarchy
         let inspectedView = try sut.inspect()
         let eyeButton = try inspectedView
-            .find(viewWithAccessibilityIdentifier: Constants.eyeButtonId)
+            .find(viewWithAccessibilityIdentifier: Constants.eyeButtonId.getAccessibilityIdentifier(type: .button))
             .first
         guard let eyeButton = eyeButton else {
             XCTFail("Could not find eye button")
@@ -136,7 +136,7 @@ final class SignInViewTests: XCTestCase {
         // Arrange
         let inspectedView = try sut.inspect()
         let signInButton = try inspectedView
-            .find(viewWithAccessibilityIdentifier: Constants.signInButtonId).first
+            .find(viewWithAccessibilityIdentifier: Constants.signInButtonId.getAccessibilityIdentifier(type: .button)).first
         guard let signInButton = signInButton else {
             XCTFail("Could not find 'Sign In' button")
             return
@@ -170,7 +170,7 @@ final class SignInViewTests: XCTestCase {
 
         let inspectedView = try sut.inspect()
         let signInButton = try inspectedView
-            .find(viewWithAccessibilityIdentifier: Constants.signInButtonId)
+            .find(viewWithAccessibilityIdentifier: Constants.signInButtonId.getAccessibilityIdentifier(type: .button))
             .first
         guard let signInButton = signInButton else {
             XCTFail("Could not find 'Sign In' button")
@@ -186,7 +186,7 @@ final class SignInViewTests: XCTestCase {
 
         // Act
         let emailCustomTextField = try inspectedView
-            .find(viewWithAccessibilityIdentifier: Constants.emailTextFieldId)
+            .find(viewWithAccessibilityIdentifier: Constants.emailTextFieldId.getAccessibilityIdentifier(type: .plainTextField))
             .first
         guard let emailCustomTextField = emailCustomTextField else {
             XCTFail("Could not find email custom text field")
@@ -197,7 +197,7 @@ final class SignInViewTests: XCTestCase {
         print("DEBUG: emailFilledValue: \(emailFilledValue)")
 
         let passwordCustomTextField = try inspectedView
-            .find(viewWithAccessibilityIdentifier: Constants.passwordSecureTextId)
+            .find(viewWithAccessibilityIdentifier: Constants.passwordSecureTextId.getAccessibilityIdentifier(type: .secureField))
             .first
         guard let passwordCustomTextField = passwordCustomTextField else {
             XCTFail("Could not find password custom text field")
@@ -223,7 +223,7 @@ final class SignInViewTests: XCTestCase {
 
         /// Search the button again to get the new enabled state
         let signInEnabledButton = try inspectedView
-            .find(viewWithAccessibilityIdentifier: Constants.signInButtonId)
+            .find(viewWithAccessibilityIdentifier: Constants.signInButtonId.getAccessibilityIdentifier(type: .button))
             .first
         guard let signInEnabledButton = signInEnabledButton else {
             XCTFail("Could not find 'Sign In' button")
@@ -282,7 +282,7 @@ final class SignInViewTests: XCTestCase {
 
         let inspectedView = try sut.inspect()
         let signInButton = try inspectedView
-            .find(viewWithAccessibilityIdentifier: Constants.signInButtonId)
+            .find(viewWithAccessibilityIdentifier: Constants.signInButtonId.getAccessibilityIdentifier(type: .button))
             .first
         guard let signInButton = signInButton else {
             XCTFail("Could not find 'Sign In' button")
@@ -298,7 +298,7 @@ final class SignInViewTests: XCTestCase {
 
         // Act
         let emailCustomTextField = try inspectedView
-            .find(viewWithAccessibilityIdentifier: Constants.emailTextFieldId)
+            .find(viewWithAccessibilityIdentifier: Constants.emailTextFieldId.getAccessibilityIdentifier(type: .plainTextField))
             .first
         guard let emailCustomTextField = emailCustomTextField else {
             XCTFail("Could not find email custom text field")
@@ -309,7 +309,7 @@ final class SignInViewTests: XCTestCase {
         print("DEBUG: emailFilledValue: \(emailFilledValue)")
 
         let passwordCustomTextField = try inspectedView
-            .find(viewWithAccessibilityIdentifier: Constants.passwordSecureTextId)
+            .find(viewWithAccessibilityIdentifier: Constants.passwordSecureTextId.getAccessibilityIdentifier(type: .secureField))
             .first
         guard let passwordCustomTextField = passwordCustomTextField else {
             XCTFail("Could not find password custom text field")
@@ -335,7 +335,7 @@ final class SignInViewTests: XCTestCase {
 
         /// Search the button again to get the new enabled state
         let signInEnabledButton = try inspectedView
-            .find(viewWithAccessibilityIdentifier: Constants.signInButtonId)
+            .find(viewWithAccessibilityIdentifier: Constants.signInButtonId.getAccessibilityIdentifier(type: .button))
             .first
         guard let signInEnabledButton = signInEnabledButton else {
             XCTFail("Could not find 'Sign In' button")

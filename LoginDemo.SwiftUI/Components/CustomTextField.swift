@@ -22,13 +22,9 @@ struct CustomTextField: View {
         static let toggleButtonHeight: CGFloat = 25
 
         struct Ids {
-            static let textFieldPlainSuffixId: String = "plain-text-field"
-            static let textFieldSecureSuffixId: String = "secure-text-field"
-            static let separatorLineSuffixId: String = "separator-line"
-            static let errorMessageSuffixId: String = "error-message"
-            static let toggleButtonId: String = "toggle-button-id"
-            static let toggleImageVisibleid: String = "show-image-id"
-            static let toggleImageHiddenid: String = "hide-image-id"
+            static let toggleButtonId: String = "toggle"
+            static let toggleImageVisibleid: String = "show"
+            static let toggleImageHiddenid: String = "hide"
         }
     }
 
@@ -67,7 +63,7 @@ struct CustomTextField: View {
                                 onSubmit()
                             }
                             .accessibilityLabel("\(title) textfield")
-                            .accessibilityIdentifier("\(title.getAccessibiltiyId(suffix: Constants.Ids.textFieldSecureSuffixId))")
+                            .accessibilityIdentifier("\(title.getAccessibilityIdentifier(type: .secureField))")
                         #if DEBUG
                             .simultaneousGesture(TapGesture().onEnded {
                                 print("\(title) pressed")
@@ -88,7 +84,7 @@ struct CustomTextField: View {
                                 onSubmit()
                             }
                             .accessibilityLabel("\(title) textfield")
-                            .accessibilityIdentifier("\(title.getAccessibiltiyId(suffix: Constants.Ids.textFieldPlainSuffixId))")
+                            .accessibilityIdentifier("\(title.getAccessibilityIdentifier(type: .plainTextField))")
                         #if DEBUG
                             .simultaneousGesture(TapGesture().onEnded {
                                 print("\(title) pressed")
@@ -104,8 +100,8 @@ struct CustomTextField: View {
                                   Constants.visibleImageName :
                                     Constants.hiddenImageName)
                             .accessibilityIdentifier(isHidden ?
-                                                     Constants.Ids.toggleImageVisibleid :
-                                                        Constants.Ids.toggleImageHiddenid)
+                                                     Constants.Ids.toggleImageVisibleid.getAccessibilityIdentifier(type: .image) :
+                                                        Constants.Ids.toggleImageHiddenid.getAccessibilityIdentifier(type: .image))
 
                             Image(systemName: "")
                         }
@@ -114,7 +110,7 @@ struct CustomTextField: View {
                     .disabled(isDisabled)
                     .padding(.bottom, Constants.toggleImageBottonPadding)
                     .accessibilityLabel(isHidden ? "Show \(title)" : "Hide \(title)")
-                    .accessibilityIdentifier(Constants.Ids.toggleButtonId)
+                    .accessibilityIdentifier(Constants.Ids.toggleButtonId.getAccessibilityIdentifier(type: .button))
                     .frame(height: Constants.toggleButtonHeight)
                 }
             } else {
@@ -130,7 +126,7 @@ struct CustomTextField: View {
                         onSubmit()
                     }
                     .accessibilityLabel("\(title) textfield")
-                    .accessibilityIdentifier("\(title.getAccessibiltiyId(suffix: Constants.Ids.textFieldPlainSuffixId))")
+                    .accessibilityIdentifier("\(title.getAccessibilityIdentifier(type: .plainTextField))")
                 #if DEBUG
                     .simultaneousGesture(TapGesture().onEnded {
                         print("\(title) pressed")
@@ -143,12 +139,12 @@ struct CustomTextField: View {
                       Color.AppPalette.TextField.secondary :
                         Color.AppPalette.TextField.primary)
                 .frame(height: 1)
-                .accessibilityIdentifier("\(title.getAccessibiltiyId(suffix: Constants.Ids.separatorLineSuffixId))")
+                .accessibilityIdentifier("\(title.getAccessibilityIdentifier(type: .separatorLine))")
 
             Text(errorMessage)
                 .font(.system(size: 12))
                 .foregroundStyle(Color.AppPalette.TextField.error)
-                .accessibilityIdentifier("\(title.getAccessibiltiyId(suffix: Constants.Ids.errorMessageSuffixId))")
+                .accessibilityIdentifier("\(title.getAccessibilityIdentifier(type: .errorTextMessage))")
         }
     }
 }

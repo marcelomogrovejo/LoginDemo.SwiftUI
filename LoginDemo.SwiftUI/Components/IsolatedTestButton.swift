@@ -11,9 +11,9 @@ struct IsolatedTestButton: View {
 
     struct Constants {
         static let visibleImageName: String = "eye.slash.fill"
-        static let visibleImageId: String = "show-image-id"
+        static let visibleImageId: String = "show"
         static let hiddenImageName: String = "eye.fill"
-        static let hiddenImageId: String = "hide-image-id"
+        static let hiddenImageId: String = "hide"
         static let imageBottonPadding: CGFloat = 3
     }
 
@@ -31,7 +31,7 @@ struct IsolatedTestButton: View {
                 Image(systemName: isHidden ?
                       Constants.visibleImageName :
                         Constants.hiddenImageName)
-                .accessibilityIdentifier(isHidden ? Constants.visibleImageId : Constants.hiddenImageId)
+                .accessibilityIdentifier(isHidden ? Constants.visibleImageId.getAccessibilityIdentifier(type: .image) : Constants.hiddenImageId.getAccessibilityIdentifier(type: .image))
 
                 Image(systemName: "")
             }
@@ -40,7 +40,7 @@ struct IsolatedTestButton: View {
         .disabled(false)
         .padding(.bottom, Constants.imageBottonPadding)
         .accessibilityLabel(isHidden ? "Show \(title)" : "Hide \(title)")
-        .accessibilityIdentifier("eye-button-id")
+        .accessibilityIdentifier("eye".getAccessibilityIdentifier(type: .button))
     }
 }
 
