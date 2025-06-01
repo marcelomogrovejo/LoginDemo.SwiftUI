@@ -16,18 +16,20 @@ struct CustomTextField: View {
 
     struct Constants {
         static let titleFontSize: CGFloat = 15
-        static let visiblePasswordImageName: String = "eye.fill"
-        static let hiddenPasswordImageName: String = "eye.slash.fill"
-        static let passwordImageBottonPadding: CGFloat = 3
+        static let visibleImageName: String = "eye.slash.fill"
+        static let hiddenImageName: String = "eye.fill"
+        static let toggleImageBottonPadding: CGFloat = 3
+        static let toggleButtonHeight: CGFloat = 25
 
         struct Ids {
-            static let separatorLineId: String = "separator-line-id"
-            static let errorMessageId: String = "error-message-id"
+            static let toggleButtonId: String = "toggle"
+            static let toggleImageVisibleid: String = "show"
+            static let toggleImageHiddenid: String = "hide"
         }
     }
 
     @Binding var value: String
-    @State private var isPasswordHidden: Bool = true
+    @State private var isHidden: Bool = true
 
     var title: String = "title"
     var placeholderText: String = "placeholder here"
@@ -47,7 +49,7 @@ struct CustomTextField: View {
         VStack(alignment: .leading) {
             if isSecureText {
                 ZStack(alignment: .trailing) {
-                    if isPasswordHidden {
+                    if isHidden {
                         // Textfield content hidden
                         SecureField("", text: $value)
                             .foregroundStyle(isDisabled ?
@@ -61,7 +63,7 @@ struct CustomTextField: View {
                                 onSubmit()
                             }
                             .accessibilityLabel("\(title) textfield")
-                            .accessibilityIdentifier("\(title.getAccessibiltiyId(suffix: "secure-text-field"))")
+                            .accessibilityIdentifier("\(title.getAccessibilityIdentifier(type: .secureField))")
                         #if DEBUG
                             .simultaneousGesture(TapGesture().onEnded {
                                 print("\(title) pressed")
@@ -82,7 +84,7 @@ struct CustomTextField: View {
                                 onSubmit()
                             }
                             .accessibilityLabel("\(title) textfield")
-                            .accessibilityIdentifier("\(title.getAccessibiltiyId(suffix: "plain-text-field"))")
+                            .accessibilityIdentifier("\(title.getAccessibilityIdentifier(type: .plainTextField))")
                         #if DEBUG
                             .simultaneousGesture(TapGesture().onEnded {
                                 print("\(title) pressed")
@@ -91,17 +93,25 @@ struct CustomTextField: View {
                     }
 
                     Button {
-                        isPasswordHidden.toggle()
+                        isHidden.toggle()
                     } label: {
-                        Image(systemName: isPasswordHidden ?
-                              Constants.visiblePasswordImageName :
-                                Constants.hiddenPasswordImageName)
+                        VStack{
+                            Image(systemName: isHidden ?
+                                  Constants.visibleImageName :
+                                    Constants.hiddenImageName)
+                            .accessibilityIdentifier(isHidden ?
+                                                     Constants.Ids.toggleImageVisibleid.getAccessibilityIdentifier(type: .image) :
+                                                        Constants.Ids.toggleImageHiddenid.getAccessibilityIdentifier(type: .image))
+
+                            Image(systemName: "")
+                        }
                     }
                     .foregroundStyle(Color.AppPalette.TextField.primary)
                     .disabled(isDisabled)
-                    .padding(.bottom, Constants.passwordImageBottonPadding)
-                    .accessibilityLabel(isPasswordHidden ? "Show \(title)" : "Hide \(title)")
-                    .accessibilityIdentifier("eye-button-id")
+                    .padding(.bottom, Constants.toggleImageBottonPadding)
+                    .accessibilityLabel(isHidden ? "Show \(title)" : "Hide \(title)")
+                    .accessibilityIdentifier(Constants.Ids.toggleButtonId.getAccessibilityIdentifier(type: .button))
+                    .frame(height: Constants.toggleButtonHeight)
                 }
             } else {
                 TextField("", text: $value)
@@ -116,7 +126,7 @@ struct CustomTextField: View {
                         onSubmit()
                     }
                     .accessibilityLabel("\(title) textfield")
-                    .accessibilityIdentifier("\(title.getAccessibiltiyId(suffix: "plain-text-field"))")
+                    .accessibilityIdentifier("\(title.getAccessibilityIdentifier(type: .plainTextField))")
                 #if DEBUG
                     .simultaneousGesture(TapGesture().onEnded {
                         print("\(title) pressed")
@@ -129,12 +139,12 @@ struct CustomTextField: View {
                       Color.AppPalette.TextField.secondary :
                         Color.AppPalette.TextField.primary)
                 .frame(height: 1)
-                .accessibilityIdentifier(Constants.Ids.separatorLineId)
+                .accessibilityIdentifier("\(title.getAccessibilityIdentifier(type: .separatorLine))")
 
             Text(errorMessage)
                 .font(.system(size: 12))
                 .foregroundStyle(Color.AppPalette.TextField.error)
-                .accessibilityIdentifier(Constants.Ids.errorMessageId)
+                .accessibilityIdentifier("\(title.getAccessibilityIdentifier(type: .errorTextMessage))")
         }
     }
 }

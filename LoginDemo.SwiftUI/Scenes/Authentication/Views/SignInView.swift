@@ -79,11 +79,18 @@ struct SignInView<ViewModel>: View where ViewModel: SignInViewModelProtocol {
 
                     VStack(alignment: .leading) {
                         HStack {
+                            // TODO: Warning !
+                            // This text componend from the original design is confused
+                            // bucause it looks like a Sign In button but it's not.
+                            // Maybe it shouldn't be here or should have anogher design
+                            // in order not to look like a posible button to tap.
                             Text(AuthConstants.SignInView.submitTitle)
                                 .fontWeight(.bold)
                                 .foregroundStyle(Color.AppPalette.Text.primary)
                                 .font(.system(size: AuthConstants.SignInView.submitFontSize))
-                                .accessibilityHidden(true)
+                            /// Makes UI test fails -> it doesn't find the element
+//                                .accessibilityHidden(true)
+                                .accessibilityIdentifier("sign-in".getAccessibilityIdentifier(type: .buttonTitle))
 
                             Spacer()
 

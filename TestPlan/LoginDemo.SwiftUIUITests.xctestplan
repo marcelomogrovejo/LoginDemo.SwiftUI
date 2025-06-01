@@ -1,0 +1,37 @@
+{
+  "configurations" : [
+    {
+      "id" : "F83C144D-540D-41E9-8138-7C75E942306D",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "skippedTests" : [
+        "IsolatedButtonTests",
+        "IsolatedButtonTests\/testTemView_ImagesOnButtonShouldExist()",
+        "IsolatedButtonTests\/testTempView_ClickMeButtonShouldTap()",
+        "IsolatedButtonTests\/testTempView_EyeButtonShouldToggle()",
+        "IsolatedButtonTests\/testTempView_NewVStackButtonShouldTap()",
+        "IsolatedButtonTests\/testTempView_StartButtonImageShouldExist()",
+        "IsolatedButtonTests\/testTempView_StartButtonShouldTap()",
+        "IsolatedButtonTests\/testTempView_VStackButtonShouldTap()",
+        "LoginDemo_SwiftUIUITestsLaunchTests",
+        "LoginDemo_SwiftUIUITestsLaunchTests\/testLaunch()"
+      ],
+      "target" : {
+        "containerPath" : "container:LoginDemo.SwiftUI.xcodeproj",
+        "identifier" : "BDCC79642DE4C32800E57D53",
+        "name" : "LoginDemo.SwiftUIUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

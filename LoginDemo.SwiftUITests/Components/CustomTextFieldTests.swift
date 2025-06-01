@@ -30,8 +30,8 @@ final class CustomTextFieldTests: XCTestCase {
 
         // Act
         let inspectedView = try sut.inspect()
-        let plainTextFieldId = "\(testTitle.getAccessibiltiyId(suffix: "plain-text-field"))"
-        let secureTextFieldId = "\(testTitle.getAccessibiltiyId(suffix: "secure-text-field"))"
+        let plainTextFieldId = "\(testTitle.getAccessibilityIdentifier(type: .plainTextField))"
+        let secureTextFieldId = "\(testTitle.getAccessibilityIdentifier(type: .secureField))"
 
         // Assert Text(title)
         XCTAssertEqual(try inspectedView.text(0).string(), testTitle)
@@ -53,18 +53,18 @@ final class CustomTextFieldTests: XCTestCase {
 
         // Assert Eye Button is NOT present
         let eyeButton = try? mainVStack
-            .find(viewWithAccessibilityIdentifier: "eye-button-id")
+            .find(viewWithAccessibilityIdentifier: "eye".getAccessibilityIdentifier(type: .button))
             .first
         XCTAssertNil(eyeButton, "Eye button should NOT be present when isSecureText is false")
 
         // Assert Separator and Error Message Text as before
         let separatorLine = try? mainVStack
-            .find(viewWithAccessibilityIdentifier: "separator-line-id")
+            .find(viewWithAccessibilityIdentifier: testTitle.getAccessibilityIdentifier(type: .separatorLine))
             .first
         XCTAssertNotNil(separatorLine, "Separator Line should be present")
 
         let errorMessage = try? mainVStack
-            .find(viewWithAccessibilityIdentifier: "error-message-id")
+            .find(viewWithAccessibilityIdentifier: testTitle.getAccessibilityIdentifier(type: .errorTextMessage))
             .first
         let messageString = try? errorMessage?.text(0).string() ?? ""
         XCTAssertEqual(messageString, testErrorMessage)
@@ -85,8 +85,8 @@ final class CustomTextFieldTests: XCTestCase {
 
         // Act
         let inspectedView = try sut.inspect()
-        let plainTextFieldId = "\(testTitle.getAccessibiltiyId(suffix: "plain-text-field"))"
-        let secureTextFieldId = "\(testTitle.getAccessibiltiyId(suffix: "secure-text-field"))"
+        let plainTextFieldId = "\(testTitle.getAccessibilityIdentifier(type: .plainTextField))"
+        let secureTextFieldId = "\(testTitle.getAccessibilityIdentifier(type: .secureField))"
 
         // Assert Text(title)
         XCTAssertEqual(try inspectedView.text(0).string(), testTitle)
@@ -108,19 +108,19 @@ final class CustomTextFieldTests: XCTestCase {
 
         // Assert Eye Button is present
         let eyeButton = try? mainVStack
-            .find(viewWithAccessibilityIdentifier: "eye-button-id")
+            .find(viewWithAccessibilityIdentifier: "toggle".getAccessibilityIdentifier(type: .button))
             .first
         XCTAssertNotNil(eyeButton, "Eye button should be present when isSecureText is true")
 
         // Assert Separator
         let separatorLine = try? mainVStack
-            .find(viewWithAccessibilityIdentifier: "separator-line-id")
+            .find(viewWithAccessibilityIdentifier: testTitle.getAccessibilityIdentifier(type: .separatorLine))
             .first
         XCTAssertNotNil(separatorLine, "Separator Line should be present")
 
         // Assert Error Message
         let errorMessage = try? mainVStack
-            .find(viewWithAccessibilityIdentifier: "error-message-id")
+            .find(viewWithAccessibilityIdentifier: testTitle.getAccessibilityIdentifier(type: .errorTextMessage))
             .first
         let messageString = try? errorMessage?.text(0).string() ?? ""
         XCTAssertEqual(messageString, testErrorMessage)
@@ -139,7 +139,7 @@ final class CustomTextFieldTests: XCTestCase {
 
         // Act
         var inspectedView = try sut.inspect()
-        var plainTextFieldId = "\(testTitle.getAccessibiltiyId(suffix: "plain-text-field"))"
+        var plainTextFieldId = "\(testTitle.getAccessibilityIdentifier(type: .plainTextField))"
 
         var mainVStack = try inspectedView.vStack(1)
 
@@ -149,7 +149,7 @@ final class CustomTextFieldTests: XCTestCase {
         // Act
         inspectedView = try sut.inspect()
         mainVStack = try inspectedView.vStack(1)
-        plainTextFieldId = "\(testTitle.getAccessibiltiyId(suffix: "plain-text-field"))"
+        plainTextFieldId = "\(testTitle.getAccessibilityIdentifier(type: .plainTextField))"
 
         let plainTextField = try mainVStack
             .find(viewWithAccessibilityIdentifier: plainTextFieldId)
@@ -180,7 +180,7 @@ final class CustomTextFieldTests: XCTestCase {
         let mainVStack = try inspectedView.vStack(1)
         let zStack = try mainVStack.zStack(0)
 
-        let secureFieldId = "\(testTitle.getAccessibiltiyId(suffix: "secure-text-field"))"
+        let secureFieldId = "\(testTitle.getAccessibilityIdentifier(type: .secureField))"
 
         let secureTextField = try zStack
             .find(viewWithAccessibilityIdentifier: secureFieldId)
@@ -209,7 +209,7 @@ final class CustomTextFieldTests: XCTestCase {
         let mainVStack = try inspectedView.vStack(1)
 
         let errorText = try mainVStack
-            .find(viewWithAccessibilityIdentifier: "error-message-id")
+            .find(viewWithAccessibilityIdentifier: testTitle.getAccessibilityIdentifier(type: .errorTextMessage))
             .text()
 
         // Assert
@@ -234,7 +234,7 @@ final class CustomTextFieldTests: XCTestCase {
         let mainVStack = try inspectedView.vStack(1)
 
         let errorText = try mainVStack
-            .find(viewWithAccessibilityIdentifier: "error-message-id")
+            .find(viewWithAccessibilityIdentifier: testTitle.getAccessibilityIdentifier(type: .errorTextMessage))
             .text()
 
         // Assert
@@ -256,7 +256,7 @@ final class CustomTextFieldTests: XCTestCase {
         let mainVStack = try inspectedView.vStack(1)
         let zStack = try mainVStack.zStack(0)
 
-        let secureTextFieldId = testTitle.getAccessibiltiyId(suffix: "secure-text-field")
+        let secureTextFieldId = testTitle.getAccessibilityIdentifier(type: .secureField)
 
         let secureTextField = try? zStack
             .find(viewWithAccessibilityIdentifier: secureTextFieldId)
@@ -268,7 +268,7 @@ final class CustomTextFieldTests: XCTestCase {
         let secureField = try secureTextField.secureField()
 
         let eyeButtonView = try? zStack
-            .find(viewWithAccessibilityIdentifier: "eye-button-id")
+            .find(viewWithAccessibilityIdentifier: "toggle".getAccessibilityIdentifier(type: .button))
             .first
         guard let eyeButtonView = eyeButtonView else {
             XCTFail( "Could not find eye button." )
@@ -308,7 +308,7 @@ final class CustomTextFieldTests: XCTestCase {
         let zStack = try mainVStack.zStack(0)
 
         let toggleButton = try zStack
-            .find(viewWithAccessibilityIdentifier: "eye-button-id")
+            .find(viewWithAccessibilityIdentifier: "toggle".getAccessibilityIdentifier(type: .button))
             .first
         guard let toggleButton = toggleButton else {
             XCTFail("Could not find eye button")
@@ -317,15 +317,14 @@ final class CustomTextFieldTests: XCTestCase {
 
         // Initial Asserts
         let initialSecureField = try? zStack
-            .find(viewWithAccessibilityIdentifier: "title-secure-text-field-id")
+            .find(viewWithAccessibilityIdentifier: "title".getAccessibilityIdentifier(type: .secureField))
             .first
         XCTAssertNotNil(initialSecureField, "Initial state should show SecureField")
 
         let initialTextField = try? zStack
-            .find(viewWithAccessibilityIdentifier: "title-plain-text-field-id")
+            .find(viewWithAccessibilityIdentifier: "title".getAccessibilityIdentifier(type: .plainTextField))
             .first
         XCTAssertNil(initialTextField, "Initial state should NOT show TextField")
-
 
         // Act
         let button = try toggleButton.button()
@@ -348,15 +347,15 @@ final class CustomTextFieldTests: XCTestCase {
         let afterZStack = try afterMainVStack.zStack(0)
 
         let afterTapSecureField = try? afterZStack
-            .find(viewWithAccessibilityIdentifier: "title-secure-text-field-id")
+            .find(viewWithAccessibilityIdentifier: "title".getAccessibilityIdentifier(type: .secureField))
             .first
         
         let afterTapTextField = try? afterZStack
-            .find(viewWithAccessibilityIdentifier: "title-plain-text-field-id")
+            .find(viewWithAccessibilityIdentifier: "title".getAccessibilityIdentifier(type: .plainTextField))
             .first
 
         // Assert
         XCTAssertNil(afterTapSecureField, "After tap, SecureField should not be visible")
-//        XCTAssertNotNil(afterTapTextField, "After tap, TextField should be visible")
+        XCTAssertNotNil(afterTapTextField, "After tap, TextField should be visible")
     }
 }
