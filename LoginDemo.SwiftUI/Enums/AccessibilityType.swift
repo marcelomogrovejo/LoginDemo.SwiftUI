@@ -1,5 +1,5 @@
 //
-//  AccessibilityIdentifierType.swift
+//  AccessibilityType.swift
 //  LoginDemo.SwiftUI
 //
 //  Created by Marcelo Mogrovejo on 31/5/2025.
@@ -16,4 +16,8 @@ enum AccessibilityIdentifierType: String {
     case errorTextMessage = "error-text-message"
     case image
     case text
+}
+
+enum AccessibilityLabelType: String {
+    case signIn = "sign-in-view"
 }

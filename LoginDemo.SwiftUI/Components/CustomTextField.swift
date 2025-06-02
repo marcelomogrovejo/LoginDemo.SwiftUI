@@ -31,9 +31,16 @@ struct CustomTextField: View {
     @Binding var value: String
     @State private var isHidden: Bool = true
 
-    var title: String = "title"
-    var placeholderText: String = "placeholder here"
-    var errorMessage: String = ""
+    // TODO: WARNING
+    // this component shouldn't know how to get identifiers and labels, it just has to receibe them.
+    // Create default hones here as default values and receive as parameters the ones from the view
+    // which implements it.
+    var title: LocalizedStringKey = "title"
+    var accessibilityId: String = "custom"
+    var accessibilityLabelValue: LocalizedStringKey?
+    var placeholderText: LocalizedStringKey = "placeholder here"
+    var errorMessage: LocalizedStringKey = ""
+    var accessibilityErrorLabelValue: LocalizedStringKey = "Something was wrong"
     var isSecureText: Bool = false
     var textContentType: UITextContentType? = nil
     var keyboardType: UIKeyboardType = .default
@@ -51,19 +58,19 @@ struct CustomTextField: View {
                 ZStack(alignment: .trailing) {
                     if isHidden {
                         // Textfield content hidden
-                        SecureField("", text: $value)
+                        SecureField(placeholderText, text: $value)
                             .foregroundStyle(isDisabled ?
                                              Color.AppPalette.TextField.secondary :
                                                 Color.AppPalette.TextField.primary)
                             .textContentType(textContentType)
                             .keyboardType(keyboardType)
-                            .submitLabel(.return) // TODO: param
+                            .submitLabel(.return) // TODO: pass it as param
                             .disabled(isDisabled)
                             .onSubmit {
                                 onSubmit()
                             }
                             .accessibilityLabel("\(title) textfield")
-                            .accessibilityIdentifier("\(title.getAccessibilityIdentifier(type: .secureField))")
+                            .accessibilityIdentifier("\(accessibilityId.getAccessibilityIdentifier(type: .secureField))")
                         #if DEBUG
                             .simultaneousGesture(TapGesture().onEnded {
                                 print("\(title) pressed")
@@ -71,20 +78,20 @@ struct CustomTextField: View {
                         #endif
                     } else {
                         // Textfield content visible
-                        TextField("", text: $value)
+                        TextField(placeholderText, text: $value)
                             .disableAutocorrection(true)
                             .foregroundStyle(isDisabled ?
                                              Color.AppPalette.TextField.secondary :
                                                 Color.AppPalette.TextField.primary)
                             .textContentType(textContentType)
                             .keyboardType(keyboardType)
-                            .submitLabel(.return) // TODO: param
+                            .submitLabel(.return) // TODO: pass it as param
                             .disabled(isDisabled)
                             .onSubmit {
                                 onSubmit()
                             }
                             .accessibilityLabel("\(title) textfield")
-                            .accessibilityIdentifier("\(title.getAccessibilityIdentifier(type: .plainTextField))")
+                            .accessibilityIdentifier("\(accessibilityId.getAccessibilityIdentifier(type: .plainTextField))")
                         #if DEBUG
                             .simultaneousGesture(TapGesture().onEnded {
                                 print("\(title) pressed")
@@ -114,19 +121,19 @@ struct CustomTextField: View {
                     .frame(height: Constants.toggleButtonHeight)
                 }
             } else {
-                TextField("", text: $value)
+                TextField(placeholderText, text: $value)
                     .foregroundStyle(isDisabled ?
                                      Color.AppPalette.TextField.secondary :
                                         Color.AppPalette.TextField.primary)
                     .textContentType(textContentType)
                     .keyboardType(keyboardType)
-                    .submitLabel(.next) // TODO: param
+                    .submitLabel(.next) // TODO: pass it as param
                     .disabled(isDisabled)
                     .onSubmit {
                         onSubmit()
                     }
                     .accessibilityLabel("\(title) textfield")
-                    .accessibilityIdentifier("\(title.getAccessibilityIdentifier(type: .plainTextField))")
+                    .accessibilityIdentifier("\(accessibilityId.getAccessibilityIdentifier(type: .plainTextField))")
                 #if DEBUG
                     .simultaneousGesture(TapGesture().onEnded {
                         print("\(title) pressed")
@@ -139,12 +146,13 @@ struct CustomTextField: View {
                       Color.AppPalette.TextField.secondary :
                         Color.AppPalette.TextField.primary)
                 .frame(height: 1)
-                .accessibilityIdentifier("\(title.getAccessibilityIdentifier(type: .separatorLine))")
+                .accessibilityIdentifier("\(accessibilityId.getAccessibilityIdentifier(type: .separatorLine))")
 
             Text(errorMessage)
                 .font(.system(size: 12))
                 .foregroundStyle(Color.AppPalette.TextField.error)
-                .accessibilityIdentifier("\(title.getAccessibilityIdentifier(type: .errorTextMessage))")
+                .accessibilityIdentifier("\(accessibilityId.getAccessibilityIdentifier(type: .errorTextMessage))")
+                .accessibilityLabel(accessibilityErrorLabelValue)
         }
     }
 }
