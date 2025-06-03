@@ -17,39 +17,134 @@
 
     },
     "Hide %@" : {
+
+    },
+    "Home View" : {
+
+    },
+    "lang-default-custom-plain-text-field-accessibility-label-key" : {
+      "comment" : "Component CustomTextField plain text field accessibility label",
+      "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom Text Field"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom Text Field"
+          }
+        },
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ocultar %@"
+            "value" : "Campo de texto generico"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@を非表示"
+            "value" : "カスタムテキストフィールド"
           }
         }
       }
     },
-    "Home View" : {
+    "lang-default-custom-secure-text-field-accessibility-label-key" : {
+      "comment" : "Component CustomTextField secure text field accessibility label",
+      "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom Secure Text Field"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom Secure Field"
+          }
+        },
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Home"
+            "value" : "Campo de texto seguro"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ホーム"
+            "value" : "カスタムセキュアフィールド"
+          }
+        }
+      }
+    },
+    "lang-default-custom-text-field-error-text-key" : {
+      "comment" : "Component CustomTextField error text",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Something went wrong"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error: Something went wrong"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error: Algo salió mal"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "何かがうまくいきませんでした"
+          }
+        }
+      }
+    },
+    "lang-default-custom-text-field-placeholder-key" : {
+      "comment" : "Component CustomTextField placeholder text",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "placeholder here"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "placeholder here"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "placeholder here"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プレースホルダー"
           }
         }
       }
     },
     "lang-default-custom-text-field-title-key" : {
       "comment" : "Component CustomTextField title",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -77,8 +172,99 @@
         }
       }
     },
+    "lang-default-custom-text-field-toggle-hidden-label-key" : {
+      "comment" : "Component CustomTextField toggle hidden content label",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hide %@"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HIde %@"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esconder %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@を非表示"
+          }
+        }
+      }
+    },
+    "lang-default-custom-text-field-toggle-visible-label-key" : {
+      "comment" : "Component CustomTextField toggle visible content label",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show %@"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show %@"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@を表示"
+          }
+        }
+      }
+    },
+    "lang-sign-in-view-forgot-password-button-accessibility-label-key" : {
+      "comment" : "Sign in view forgot password button title voiceover label",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forgot password button"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forgot password button"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón de olvidaste tu contraseña"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "パスワードをお忘れですかボタン"
+          }
+        }
+      }
+    },
     "lang-sign-in-view-forgot-password-button-title-key" : {
       "comment" : "Sign in view forgot password button title",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -106,8 +292,39 @@
         }
       }
     },
+    "lang-sign-in-view-password-accessibility-label-key" : {
+      "comment" : "Sign in view password voice over label",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Complete with your password"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Complete with your password"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Complete con su contraseña"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "パスワードを入力してください"
+          }
+        }
+      }
+    },
     "lang-sign-in-view-password-placeholder-key" : {
       "comment" : "Sign in view password placeholder",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -137,6 +354,7 @@
     },
     "lang-sign-in-view-password-title-key" : {
       "comment" : "Sign in view password text field title",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -194,8 +412,39 @@
         }
       }
     },
+    "lang-sign-in-view-sign-up-button-accessibility-label-key" : {
+      "comment" : "Sign in view sign up button voiceover label",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign Up button"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign up button"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón crear cuenta"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新規登録ボタン"
+          }
+        }
+      }
+    },
     "lang-sign-in-view-sign-up-button-title-key" : {
       "comment" : "Sign in view sign up button title",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -225,6 +474,7 @@
     },
     "lang-sign-in-view-submit-title-key" : {
       "comment" : "Sign in view sign in button title",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -282,8 +532,39 @@
         }
       }
     },
+    "lang-sign-in-view-username-accessibility-label-key" : {
+      "comment" : "Sign in view username voice over label",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Complete with your email address"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Complete with your email"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Complete con su email"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メールアドレスを入力してください"
+          }
+        }
+      }
+    },
     "lang-sign-in-view-username-placeholder-key" : {
       "comment" : "Sign in view username placeholder",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -313,6 +594,7 @@
     },
     "lang-sign-in-view-username-title-key" : {
       "comment" : "Sign in view username text field title",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -402,6 +684,7 @@
     },
     "link-style-button" : {
       "comment" : "Component LinkStyleButton",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -419,12 +702,19 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Botón tipo link"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リンクボタン"
           }
         }
       }
     },
     "link-style-button-title" : {
       "comment" : "Component LinkStyleButton title",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -443,45 +733,19 @@
             "state" : "translated",
             "value" : "Botón tipo link"
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リンクボタンのタイトル"
+          }
         }
       }
     },
     "Logout" : {
-      "localizations" : {
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Cerrar Session"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "ログアウト"
-          }
-        }
-      }
-    },
-    "placeholder here" : {
 
     },
     "Show %@" : {
-      "localizations" : {
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostrar %@"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@を表示"
-          }
-        }
-      }
-    },
-    "Something was wrong" : {
 
     }
   },

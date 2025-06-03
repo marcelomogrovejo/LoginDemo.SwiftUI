@@ -16,20 +16,30 @@ struct CustomTextField: View {
 
     struct Constants {
         static let titleFontSize: CGFloat = 15
+
+        static let defaultTitle: LocalizedStringKey = "lang-default-custom-text-field-title-key"
+        static let defaultPlaceholderText: LocalizedStringKey = "lang-default-custom-text-field-placeholder-key"
+
+        static let defaultSecureTextAccessibilityId: String = "custom".getAccessibilityIdentifier(type: .secureTextField)
+        static let defaultSecureTextAccessibilityLabelValue: LocalizedStringKey = "lang-default-custom-secure-text-field-accessibility-label-key"
+
+        static let defaultPlainTextAccessibilityId: String = "custom".getAccessibilityIdentifier(type: .plainTextField)
+        static let defaultPlainTextAccessibilityLabelValue: LocalizedStringKey = "lang-default-custom-plain-text-field-accessibility-label-key"
+
+        static let defaultSeparatorLineAccessibilityId: String = "custom".getAccessibilityIdentifier(type: .separatorLine)
+
+        static let defaultErrorTextAccessibilityId: String = "custom".getAccessibilityIdentifier(type: .errorTextMessage)
+        static let defaultErrorTextAccessibilityLabelValue: LocalizedStringKey = "lang-default-custom-text-field-error-text-key"
+
         static let visibleImageName: String = "eye.slash.fill"
         static let hiddenImageName: String = "eye.fill"
         static let toggleImageBottonPadding: CGFloat = 3
         static let toggleButtonHeight: CGFloat = 25
-
-        static let defaultTitle: LocalizedStringKey = "lang-default-custom-text-field-title-key"
-        static let defaultSecureTextAccessibilityId: String = "custom".getAccessibilityIdentifier(type: .secureField)
-        static let defaultPlainTextAccessibilityId: String = "custom".getAccessibilityIdentifier(type: .plainTextField)
-
-        struct Ids {
-            static let toggleButtonId: String = "toggle"
-            static let toggleImageVisibleid: String = "show"
-            static let toggleImageHiddenid: String = "hide"
-        }
+        static let defaultToggleButtonId: String = "toggle".getAccessibilityIdentifier(type: .button)
+        static let defaultToggleImageVisibleId: String = "show".getAccessibilityIdentifier(type: .image)
+        static let defaultToggleImageHiddenId: String = "hide".getAccessibilityIdentifier(type: .image)
+        static let defaultToggleVisibleLabelValue: LocalizedStringKey = "lang-default-custom-text-field-toggle-visible-label-key"
+        static let defaultToggleHiddenLabelValue: LocalizedStringKey = "lang-default-custom-text-field-toggle-hidden-label-key"
     }
 
     @Binding var value: String
@@ -44,16 +54,15 @@ struct CustomTextField: View {
     var title: LocalizedStringKey?
     var accessibilityId: String?
     var accessibilityLabelValue: LocalizedStringKey?
-    var placeholderText: LocalizedStringKey = "placeholder here"
+    var placeholderText: LocalizedStringKey?
     var errorMessage: LocalizedStringKey = ""
-    var accessibilityErrorLabelValue: LocalizedStringKey = "Something was wrong"
+    var errorMessageAccessibilityId: String?
+    var errorTextAccessibilityLabelValue: LocalizedStringKey?
     var isSecureText: Bool = false
     var textContentType: UITextContentType? = nil
     var keyboardType: UIKeyboardType = .default
     @Binding var isDisabled: Bool
     var onSubmit: () -> Void = { }
-
-//    lang-sign-in-view-username-title-key
 
     var body: some View {
         Text(title ?? Constants.defaultTitle)
@@ -66,7 +75,7 @@ struct CustomTextField: View {
                 ZStack(alignment: .trailing) {
                     if isHidden {
                         // Textfield content hidden
-                        SecureField(placeholderText, text: $value)
+                        SecureField(placeholderText ?? Constants.defaultPlaceholderText, text: $value)
                             .foregroundStyle(isDisabled ?
                                              Color.AppPalette.TextField.secondary :
                                                 Color.AppPalette.TextField.primary)
@@ -77,16 +86,16 @@ struct CustomTextField: View {
                             .onSubmit {
                                 onSubmit()
                             }
-                            .accessibilityLabel("\(title) textfield")
-                            .accessibilityIdentifier("\(accessibilityId.getAccessibilityIdentifier(type: .secureField))")
+                            .accessibilityLabel(accessibilityLabelValue ?? Constants.defaultSecureTextAccessibilityLabelValue)
+                            .accessibilityIdentifier(accessibilityId ?? Constants.defaultSecureTextAccessibilityId)
                         #if DEBUG
                             .simultaneousGesture(TapGesture().onEnded {
-                                print("\(title) pressed")
+                                print("\(title ?? Constants.defaultTitle) pressed")
                             })
                         #endif
                     } else {
                         // Textfield content visible
-                        TextField(placeholderText, text: $value)
+                        TextField(placeholderText ?? Constants.defaultPlaceholderText, text: $value)
                             .disableAutocorrection(true)
                             .foregroundStyle(isDisabled ?
                                              Color.AppPalette.TextField.secondary :
@@ -98,11 +107,11 @@ struct CustomTextField: View {
                             .onSubmit {
                                 onSubmit()
                             }
-                            .accessibilityLabel("\(title) textfield")
-                            .accessibilityIdentifier("\(accessibilityId.getAccessibilityIdentifier(type: .plainTextField))")
+                            .accessibilityLabel(accessibilityLabelValue ?? Constants.defaultPlainTextAccessibilityLabelValue)
+                            .accessibilityIdentifier(accessibilityId ?? Constants.defaultPlainTextAccessibilityId)
                         #if DEBUG
                             .simultaneousGesture(TapGesture().onEnded {
-                                print("\(title) pressed")
+                                print("\(title ?? Constants.defaultTitle) pressed")
                             })
                         #endif
                     }
@@ -115,8 +124,8 @@ struct CustomTextField: View {
                                   Constants.visibleImageName :
                                     Constants.hiddenImageName)
                             .accessibilityIdentifier(isHidden ?
-                                                     Constants.Ids.toggleImageVisibleid.getAccessibilityIdentifier(type: .image) :
-                                                        Constants.Ids.toggleImageHiddenid.getAccessibilityIdentifier(type: .image))
+                                                     Constants.defaultToggleImageVisibleId :
+                                                        Constants.defaultToggleImageHiddenId)
 
                             Image(systemName: "")
                         }
@@ -124,12 +133,14 @@ struct CustomTextField: View {
                     .foregroundStyle(Color.AppPalette.TextField.primary)
                     .disabled(isDisabled)
                     .padding(.bottom, Constants.toggleImageBottonPadding)
-                    .accessibilityLabel(isHidden ? "Show \(title)" : "Hide \(title)")
-                    .accessibilityIdentifier(Constants.Ids.toggleButtonId.getAccessibilityIdentifier(type: .button))
+                    .accessibilityLabel(isHidden ?
+                                        Constants.defaultToggleVisibleLabelValue :
+                                            Constants.defaultToggleHiddenLabelValue)
+                    .accessibilityIdentifier(Constants.defaultToggleButtonId)
                     .frame(height: Constants.toggleButtonHeight)
                 }
             } else {
-                TextField(placeholderText, text: $value)
+                TextField(placeholderText ?? Constants.defaultPlaceholderText, text: $value)
                     .foregroundStyle(isDisabled ?
                                      Color.AppPalette.TextField.secondary :
                                         Color.AppPalette.TextField.primary)
@@ -140,11 +151,11 @@ struct CustomTextField: View {
                     .onSubmit {
                         onSubmit()
                     }
-                    .accessibilityLabel("\(title) textfield")
-                    .accessibilityIdentifier("\(accessibilityId.getAccessibilityIdentifier(type: .plainTextField))")
+                    .accessibilityLabel(accessibilityLabelValue ?? Constants.defaultPlainTextAccessibilityLabelValue)
+                    .accessibilityIdentifier(accessibilityId ?? Constants.defaultPlainTextAccessibilityId)
                 #if DEBUG
                     .simultaneousGesture(TapGesture().onEnded {
-                        print("\(title) pressed")
+                        print("\(title ?? Constants.defaultTitle) pressed")
                     })
                 #endif
             }
@@ -154,13 +165,13 @@ struct CustomTextField: View {
                       Color.AppPalette.TextField.secondary :
                         Color.AppPalette.TextField.primary)
                 .frame(height: 1)
-                .accessibilityIdentifier("\(accessibilityId.getAccessibilityIdentifier(type: .separatorLine))")
+                .accessibilityIdentifier(Constants.defaultSeparatorLineAccessibilityId)
 
             Text(errorMessage)
                 .font(.system(size: 12))
                 .foregroundStyle(Color.AppPalette.TextField.error)
-                .accessibilityIdentifier("\(accessibilityId.getAccessibilityIdentifier(type: .errorTextMessage))")
-                .accessibilityLabel(accessibilityErrorLabelValue)
+                .accessibilityIdentifier(errorMessageAccessibilityId ?? Constants.defaultErrorTextAccessibilityId)
+                .accessibilityLabel(errorTextAccessibilityLabelValue ?? Constants.defaultErrorTextAccessibilityLabelValue)
         }
     }
 }

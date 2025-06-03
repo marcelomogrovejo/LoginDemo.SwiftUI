@@ -57,7 +57,7 @@ struct SignInView<ViewModel>: View where ViewModel: SignInViewModelProtocol {
                                         /// On this implementation the placeholder in not needed but I want to keep the keys and translations.
 //                                        placeholderText: AuthConstants.SignInView.usernamePlaceholder,
                                         placeholderText: "",
-                                        accessibilityErrorLabelValue: AuthConstants.SignInView.usernameAccessibilityErrorLabel,
+                                        errorTextAccessibilityLabelValue: AuthConstants.SignInView.usernameAccessibilityErrorLabel,
                                         textContentType: .emailAddress,
                                         keyboardType: .emailAddress,
                                         isDisabled: $viewModel.isLoading,
@@ -78,7 +78,7 @@ struct SignInView<ViewModel>: View where ViewModel: SignInViewModelProtocol {
                                         /// On this implementation the placeholder in not needed but I want to keep the keys and translations.
 //                                        placeholderText: AuthConstants.SignInView.passwordPlaceholder,
                                         placeholderText: "",
-                                        accessibilityErrorLabelValue: AuthConstants.SignInView.passwordAccessibilityErrorLabel,
+                                        errorTextAccessibilityLabelValue: AuthConstants.SignInView.passwordAccessibilityErrorLabel,
                                         isSecureText: true,
                                         textContentType: .password,
                                         isDisabled: $viewModel.isLoading,
@@ -181,7 +181,6 @@ struct SignInView<ViewModel>: View where ViewModel: SignInViewModelProtocol {
             viewModel.setup(settings)
         }
 
-        
 
         // MARK: Pending from here
 

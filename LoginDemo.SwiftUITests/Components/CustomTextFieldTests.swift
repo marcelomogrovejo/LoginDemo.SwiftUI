@@ -31,7 +31,7 @@ final class CustomTextFieldTests: XCTestCase {
         // Act
         let inspectedView = try sut.inspect()
         let plainTextFieldId = "\(testTitle.getAccessibilityIdentifier(type: .plainTextField))"
-        let secureTextFieldId = "\(testTitle.getAccessibilityIdentifier(type: .secureField))"
+        let secureTextFieldId = "\(testTitle.getAccessibilityIdentifier(type: .secureTextField))"
 
         // Assert Text(title)
         XCTAssertEqual(try inspectedView.text(0).string(), testTitle)
@@ -86,7 +86,7 @@ final class CustomTextFieldTests: XCTestCase {
         // Act
         let inspectedView = try sut.inspect()
         let plainTextFieldId = "\(testTitle.getAccessibilityIdentifier(type: .plainTextField))"
-        let secureTextFieldId = "\(testTitle.getAccessibilityIdentifier(type: .secureField))"
+        let secureTextFieldId = "\(testTitle.getAccessibilityIdentifier(type: .secureTextField))"
 
         // Assert Text(title)
         XCTAssertEqual(try inspectedView.text(0).string(), testTitle)
@@ -180,7 +180,7 @@ final class CustomTextFieldTests: XCTestCase {
         let mainVStack = try inspectedView.vStack(1)
         let zStack = try mainVStack.zStack(0)
 
-        let secureFieldId = "\(testTitle.getAccessibilityIdentifier(type: .secureField))"
+        let secureFieldId = "\(testTitle.getAccessibilityIdentifier(type: .secureTextField))"
 
         let secureTextField = try zStack
             .find(viewWithAccessibilityIdentifier: secureFieldId)
@@ -256,7 +256,7 @@ final class CustomTextFieldTests: XCTestCase {
         let mainVStack = try inspectedView.vStack(1)
         let zStack = try mainVStack.zStack(0)
 
-        let secureTextFieldId = testTitle.getAccessibilityIdentifier(type: .secureField)
+        let secureTextFieldId = testTitle.getAccessibilityIdentifier(type: .secureTextField)
 
         let secureTextField = try? zStack
             .find(viewWithAccessibilityIdentifier: secureTextFieldId)
@@ -317,7 +317,7 @@ final class CustomTextFieldTests: XCTestCase {
 
         // Initial Asserts
         let initialSecureField = try? zStack
-            .find(viewWithAccessibilityIdentifier: "title".getAccessibilityIdentifier(type: .secureField))
+            .find(viewWithAccessibilityIdentifier: "title".getAccessibilityIdentifier(type: .secureTextField))
             .first
         XCTAssertNotNil(initialSecureField, "Initial state should show SecureField")
 
@@ -347,7 +347,7 @@ final class CustomTextFieldTests: XCTestCase {
         let afterZStack = try afterMainVStack.zStack(0)
 
         let afterTapSecureField = try? afterZStack
-            .find(viewWithAccessibilityIdentifier: "title".getAccessibilityIdentifier(type: .secureField))
+            .find(viewWithAccessibilityIdentifier: "title".getAccessibilityIdentifier(type: .secureTextField))
             .first
         
         let afterTapTextField = try? afterZStack

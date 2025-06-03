@@ -11,7 +11,7 @@ enum AccessibilityIdentifierType: String {
     case button
     case buttonTitle = "button-title"
     case plainTextField = "plain-text-field"
-    case secureField = "secure-text-field"
+    case secureTextField = "secure-text-field"
     case separatorLine = "separator-line"
     case errorTextMessage = "error-text-message"
     case image

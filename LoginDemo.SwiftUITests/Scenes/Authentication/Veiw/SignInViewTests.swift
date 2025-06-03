@@ -197,7 +197,7 @@ final class SignInViewTests: XCTestCase {
         print("DEBUG: emailFilledValue: \(emailFilledValue)")
 
         let passwordCustomTextField = try inspectedView
-            .find(viewWithAccessibilityIdentifier: Constants.passwordSecureTextId.getAccessibilityIdentifier(type: .secureField))
+            .find(viewWithAccessibilityIdentifier: Constants.passwordSecureTextId.getAccessibilityIdentifier(type: .secureTextField))
             .first
         guard let passwordCustomTextField = passwordCustomTextField else {
             XCTFail("Could not find password custom text field")
@@ -309,7 +309,7 @@ final class SignInViewTests: XCTestCase {
         print("DEBUG: emailFilledValue: \(emailFilledValue)")
 
         let passwordCustomTextField = try inspectedView
-            .find(viewWithAccessibilityIdentifier: Constants.passwordSecureTextId.getAccessibilityIdentifier(type: .secureField))
+            .find(viewWithAccessibilityIdentifier: Constants.passwordSecureTextId.getAccessibilityIdentifier(type: .secureTextField))
             .first
         guard let passwordCustomTextField = passwordCustomTextField else {
             XCTFail("Could not find password custom text field")
