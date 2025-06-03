@@ -21,6 +21,10 @@ struct CustomTextField: View {
         static let toggleImageBottonPadding: CGFloat = 3
         static let toggleButtonHeight: CGFloat = 25
 
+        static let defaultTitle: LocalizedStringKey = "lang-default-custom-text-field-title-key"
+        static let defaultSecureTextAccessibilityId: String = "custom".getAccessibilityIdentifier(type: .secureField)
+        static let defaultPlainTextAccessibilityId: String = "custom".getAccessibilityIdentifier(type: .plainTextField)
+
         struct Ids {
             static let toggleButtonId: String = "toggle"
             static let toggleImageVisibleid: String = "show"
@@ -37,8 +41,8 @@ struct CustomTextField: View {
     // which implements them.
     // WARNING: check out the secure and plain text field identifiers, to keep the ui test working
     // as expected.
-    var title: LocalizedStringKey = "title"
-    var accessibilityId: String = "custom"
+    var title: LocalizedStringKey?
+    var accessibilityId: String?
     var accessibilityLabelValue: LocalizedStringKey?
     var placeholderText: LocalizedStringKey = "placeholder here"
     var errorMessage: LocalizedStringKey = ""
@@ -49,8 +53,10 @@ struct CustomTextField: View {
     @Binding var isDisabled: Bool
     var onSubmit: () -> Void = { }
 
+//    lang-sign-in-view-username-title-key
+
     var body: some View {
-        Text(title)
+        Text(title ?? Constants.defaultTitle)
             .foregroundStyle(Color.AppPalette.TextField.secondary)
             .font(.system(size: Constants.titleFontSize))
             .accessibilityHidden(true)

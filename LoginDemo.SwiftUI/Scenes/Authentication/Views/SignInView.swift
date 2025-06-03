@@ -185,8 +185,6 @@ struct SignInView<ViewModel>: View where ViewModel: SignInViewModelProtocol {
 
         // MARK: Pending from here
 
-
-
         .customeAlert(isPresented: $viewModel.hasError,
                       title: AuthConstants.SignInView.errorAlertTitle,
                       message: viewModel.errorMessage ?? AuthConstants.SignInView.errorAlertMessage,

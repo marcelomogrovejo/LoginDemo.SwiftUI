@@ -18,12 +18,6 @@
     },
     "Hide %@" : {
       "localizations" : {
-        "en-AU" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hide %@"
-          }
-        },
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
@@ -40,12 +34,6 @@
     },
     "Home View" : {
       "localizations" : {
-        "en-AU" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Home"
-          }
-        },
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
@@ -60,8 +48,63 @@
         }
       }
     },
+    "lang-default-custom-text-field-title-key" : {
+      "comment" : "Component CustomTextField title",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom Text Field"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom Text Field"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Campo de texto"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カスタムテキストフィールド"
+          }
+        }
+      }
+    },
     "lang-sign-in-view-forgot-password-button-title-key" : {
-
+      "comment" : "Sign in view forgot password button title",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forgot Password?"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forgot Passwor?"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Olvidaste tu contraseña?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "パスワードをお忘れですか。"
+          }
+        }
+      }
     },
     "lang-sign-in-view-password-placeholder-key" : {
       "comment" : "Sign in view password placeholder",
@@ -152,9 +195,36 @@
       }
     },
     "lang-sign-in-view-sign-up-button-title-key" : {
-
+      "comment" : "Sign in view sign up button title",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign Up"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign Up"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crear cuenta"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アカウント作成"
+          }
+        }
+      }
     },
     "lang-sign-in-view-submit-title-key" : {
+      "comment" : "Sign in view sign in button title",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -331,28 +401,62 @@
       }
     },
     "link-style-button" : {
-
-    },
-    "link-style-button-title" : {
-
-    },
-    "Logout" : {
+      "comment" : "Component LinkStyleButton",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Link Button"
+          }
+        },
         "en-AU" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Logout"
+            "value" : "Link Button"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Botón tipo link"
+          }
+        }
+      }
+    },
+    "link-style-button-title" : {
+      "comment" : "Component LinkStyleButton title",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Link Button Title"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Link Button Title"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón tipo link"
+          }
+        }
+      }
+    },
+    "Logout" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "Cerrar Session"
           }
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "ログアウト"
           }
         }
@@ -363,12 +467,6 @@
     },
     "Show %@" : {
       "localizations" : {
-        "en-AU" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Show %@"
-          }
-        },
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
@@ -384,9 +482,6 @@
       }
     },
     "Something was wrong" : {
-
-    },
-    "title" : {
 
     }
   },

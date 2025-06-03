@@ -14,7 +14,7 @@ struct AuthConstants {
         static let screenHeight: CGFloat = 750
 
         static let mainTitle: LocalizedStringKey = "lang-sign-in-view-title-key"
-        static let usernameTitle: LocalizedStringKey = "lang-sign-in-view-username-title-key"
+        static let usernameTitle = LocalizedStringKey("lang-sign-in-view-username-title-key")
         static let usernameAccessibilityId: String = "username"
         static let usernameAccessibilityLabel = LocalizedStringKey("username".getAccessibilityLabel(viewType: .signIn))
         static let usernamePlaceholder: LocalizedStringKey = "lang-sign-in-view-username-placeholder-key"
