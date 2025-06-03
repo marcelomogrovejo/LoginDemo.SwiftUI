@@ -60,63 +60,8 @@
         }
       }
     },
-    "lang-sign-in-view-password-accessibility-error-label-key" : {
-      "comment" : "Sign in view username voice over error text",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Error with the email"
-          }
-        },
-        "en-AU" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Error with username"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Error en el nombre de usuario"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "有効なメールアドレスを入力してください"
-          }
-        }
-      }
-    },
-    "lang-sign-in-view-password-accessibility-label-key" : {
-      "comment" : "Sign in view password voice over text",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Password text field"
-          }
-        },
-        "en-AU" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Password text field"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Contraseña"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "パスワード入力欄"
-          }
-        }
-      }
+    "lang-sign-in-view-forgot-password-button-title-key" : {
+
     },
     "lang-sign-in-view-password-placeholder-key" : {
       "comment" : "Sign in view password placeholder",
@@ -176,6 +121,39 @@
         }
       }
     },
+    "lang-sign-in-view-sign-in-button-accessibility-label-key" : {
+      "comment" : "Sign in view sign in button",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign In Button"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign In Button"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón Enviar"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ログインボタン"
+          }
+        }
+      }
+    },
+    "lang-sign-in-view-sign-up-button-title-key" : {
+
+    },
     "lang-sign-in-view-submit-title-key" : {
       "localizations" : {
         "en" : {
@@ -230,64 +208,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "おかえりなさい！"
-          }
-        }
-      }
-    },
-    "lang-sign-in-view-username-accessibility-error-label-key" : {
-      "comment" : "Sign in view username voice over error text",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Error with password"
-          }
-        },
-        "en-AU" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Error with password"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Error en la contraseña"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "有効なパスワードを入力してください\n"
-          }
-        }
-      }
-    },
-    "lang-sign-in-view-username-accessibility-label-key" : {
-      "comment" : "Sign in view username voice over text",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Email text field"
-          }
-        },
-        "en-AU" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Email text field"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dirección de correo electrónico "
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "メールアドレス入力欄"
           }
         }
       }
@@ -349,6 +269,72 @@
           }
         }
       }
+    },
+    "lang-text-loading-indicator-accessibility-label-key" : {
+      "comment" : "Sign in loading indicator",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading indicator"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading indicator"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Indicador de carga"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "読み込み中のインジケーター"
+          }
+        }
+      }
+    },
+    "lang-text-loading-message-accessibility-label-key" : {
+      "comment" : "Sign in spinner rolling",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading indicator rolling"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading indicator rolling"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargando"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "読み込み中"
+          }
+        }
+      }
+    },
+    "link-style-button" : {
+
+    },
+    "link-style-button-title" : {
+
     },
     "Logout" : {
       "localizations" : {

@@ -20,4 +20,6 @@ enum AccessibilityIdentifierType: String {
 
 enum AccessibilityLabelType: String {
     case signIn = "sign-in-view"
+    case button = "button"
+    case text = "text"
 }

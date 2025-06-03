@@ -20,6 +20,6 @@ extension String {
     /// - Parameter viewType: AccessibilityLabelType
     /// - Returns: a label key
     func getAccessibilityLabel(viewType: AccessibilityLabelType) -> String {
-        String("lang-\(viewType)-\(self)-accessibility-label-key")
+        String("lang-\(viewType.rawValue)-\(self.lowercased().replacingOccurrences(of: " ", with: "-"))-accessibility-label-key")
     }
 }

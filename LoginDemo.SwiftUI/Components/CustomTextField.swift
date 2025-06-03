@@ -32,9 +32,11 @@ struct CustomTextField: View {
     @State private var isHidden: Bool = true
 
     // TODO: WARNING
-    // this component shouldn't know how to get identifiers and labels, it just has to receibe them.
-    // Create default hones here as default values and receive as parameters the ones from the view
-    // which implements it.
+    // Components shouldn't know how to get identifiers and labels, it just has to receibe them.
+    // Create default ones to be default values and receive them as parameters from the views
+    // which implements them.
+    // WARNING: check out the secure and plain text field identifiers, to keep the ui test working
+    // as expected.
     var title: LocalizedStringKey = "title"
     var accessibilityId: String = "custom"
     var accessibilityLabelValue: LocalizedStringKey?

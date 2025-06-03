@@ -106,12 +106,11 @@ struct SignInView<ViewModel>: View where ViewModel: SignInViewModelProtocol {
 
                             Spacer()
 
-
-
-
-                            // MARK: Pending from here
-
                             CircleButton(title: AuthConstants.SignInView.circularButtonTitle,
+                                         accessibilityId: AuthConstants.SignInView.signInButtonAccessibilityId,
+                                         accessibilityLabelValue: AuthConstants.SignInView.signInButtonAccessibilityLabel,
+                                         accessibilityLoadingLabel: AuthConstants.SignInView.signInButtonLoadingAccessibilityLabel,
+                                         accessibilityLoadingValue: AuthConstants.SignInView.signInButtonLoadingAccessibilityValue,
                                          isEnabled: $viewModel.isFormValid,
                                          isLoading: $viewModel.isLoading) {
                                 viewModel.triggerAuthentication()
@@ -119,12 +118,16 @@ struct SignInView<ViewModel>: View where ViewModel: SignInViewModelProtocol {
                         }
 
                         HStack {
-                            LinkStyleButton(title: AuthConstants.SignInView.signUpTitle)
+                            LinkStyleButton(title: AuthConstants.SignInView.signUpButtonTitle,
+                                            accessibilityLabelValue: AuthConstants.SignInView.signUpButtonAccessibilityLabel,
+                                            accessibilityId: AuthConstants.SignInView.signUpButtonAccessibilityId)
                                 .padding(.vertical, AuthConstants.SignInView.signUpButtonVerticalPadding)
 
                             Spacer()
 
-                            LinkStyleButton(title: AuthConstants.SignInView.forgotPasswordTitle)
+                            LinkStyleButton(title: AuthConstants.SignInView.forgotPasswordButtonTitle,
+                                            accessibilityLabelValue: AuthConstants.SignInView.forgotPasswordButtonAccessibilityLabel,
+                                            accessibilityId: AuthConstants.SignInView.forgotPasswordButtonAccessibilityId)
                         }
 
                         Spacer()
@@ -177,6 +180,13 @@ struct SignInView<ViewModel>: View where ViewModel: SignInViewModelProtocol {
             // Configure enviroment vars
             viewModel.setup(settings)
         }
+
+        
+
+        // MARK: Pending from here
+
+
+
         .customeAlert(isPresented: $viewModel.hasError,
                       title: AuthConstants.SignInView.errorAlertTitle,
                       message: viewModel.errorMessage ?? AuthConstants.SignInView.errorAlertMessage,

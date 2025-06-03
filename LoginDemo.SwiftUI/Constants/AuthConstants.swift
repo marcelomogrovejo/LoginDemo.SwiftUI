@@ -32,9 +32,14 @@ struct AuthConstants {
         static let submitTitleAccessibilityId: String = "sign-in".getAccessibilityIdentifier(type: .buttonTitle)
         static let submitFontSize: CGFloat = 24
 
-        static let signUpTitle: String = "Sign Up"
         static let signUpButtonVerticalPadding: CGFloat = 30
-        static let forgotPasswordTitle: String = "Forgot Password?"
+        static let signUpButtonTitle: LocalizedStringKey = "lang-sign-in-view-sign-up-button-title-key"
+        static let signUpButtonAccessibilityId: String = "sign-up".getAccessibilityIdentifier(type: .button)
+        static let signUpButtonAccessibilityLabel = LocalizedStringKey("Sign up button".getAccessibilityLabel(viewType: .signIn))
+
+        static let forgotPasswordButtonTitle: LocalizedStringKey = "lang-sign-in-view-forgot-password-button-title-key"
+        static let forgotPasswordButtonAccessibilityId: String = "forgot-password".getAccessibilityIdentifier(type: .button)
+        static let forgotPasswordButtonAccessibilityLabel = LocalizedStringKey("Forgot password button".getAccessibilityLabel(viewType: .signIn))
 
         static let buttonSectionPadding: CGFloat = 40
 
@@ -45,5 +50,9 @@ struct AuthConstants {
         static let errorAlertMessage: String = "Something went wrong"
 
         static let circularButtonTitle: String = "Sign In"
+        static let signInButtonAccessibilityId: String = "sign-in".getAccessibilityIdentifier(type: .button)
+        static let signInButtonAccessibilityLabel = LocalizedStringKey("Sign In button".getAccessibilityLabel(viewType: .signIn))
+        static let signInButtonLoadingAccessibilityLabel = LocalizedStringKey("Loading indicator".getAccessibilityLabel(viewType: .text))
+        static let signInButtonLoadingAccessibilityValue = LocalizedStringKey("Loading message".getAccessibilityLabel(viewType: .text))
     }
 }
