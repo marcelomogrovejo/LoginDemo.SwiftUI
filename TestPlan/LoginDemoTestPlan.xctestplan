@@ -1,19 +1,25 @@
 {
   "configurations" : [
     {
-      "id" : "F83C144D-540D-41E9-8138-7C75E942306D",
-      "name" : "Test Scheme Action",
+      "id" : "96E00182-EE39-425A-A2CA-15300CD48EC4",
+      "name" : "Configuration 1",
       "options" : {
+        "environmentVariableEntries" : [
 
+        ],
+        "language" : "en"
       }
     }
   ],
   "defaultOptions" : {
+    "environmentVariableEntries" : [
 
+    ],
+    "language" : "en",
+    "testTimeoutsEnabled" : true
   },
   "testTargets" : [
     {
-      "parallelizable" : true,
       "skippedTests" : [
         "IsolatedButtonTests",
         "IsolatedButtonTests\/testTemView_ImagesOnButtonShouldExist()",
@@ -30,6 +36,17 @@
         "containerPath" : "container:LoginDemo.SwiftUI.xcodeproj",
         "identifier" : "BDCC79642DE4C32800E57D53",
         "name" : "LoginDemo.SwiftUIUITests"
+      }
+    },
+    {
+      "skippedTests" : [
+        "ViewInspectorBasicToggleTest",
+        "ViewInspectorBasicToggleTest\/testBasicToggleFunctionality()"
+      ],
+      "target" : {
+        "containerPath" : "container:LoginDemo.SwiftUI.xcodeproj",
+        "identifier" : "BD42C3E12DD50C700035B547",
+        "name" : "LoginDemo.SwiftUITests"
       }
     }
   ],

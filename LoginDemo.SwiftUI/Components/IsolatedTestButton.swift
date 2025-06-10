@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CommonAccessibility
 
 struct IsolatedTestButton: View {
 
@@ -31,7 +32,7 @@ struct IsolatedTestButton: View {
                 Image(systemName: isHidden ?
                       Constants.visibleImageName :
                         Constants.hiddenImageName)
-                .accessibilityIdentifier(isHidden ? Constants.visibleImageId.getAccessibilityIdentifier(type: .image) : Constants.hiddenImageId.getAccessibilityIdentifier(type: .image))
+                .accessibilityIdentifier(isHidden ? Constants.visibleImageId.getAccessibilityIdentifier(type: .accImage) : Constants.hiddenImageId.getAccessibilityIdentifier(type: .accImage))
 
                 Image(systemName: "")
             }
@@ -40,7 +41,7 @@ struct IsolatedTestButton: View {
         .disabled(false)
         .padding(.bottom, Constants.imageBottonPadding)
         .accessibilityLabel(isHidden ? "Show \(title)" : "Hide \(title)")
-        .accessibilityIdentifier("eye".getAccessibilityIdentifier(type: .button))
+        .accessibilityIdentifier("eye".getAccessibilityIdentifier(type: .accButton))
     }
 }
 

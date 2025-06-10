@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import CommonAccessibility
 
 struct HeaderView: View {
 
-    var title: String = ""
+    var title: LocalizedStringKey = ""
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -33,13 +34,13 @@ struct HeaderView: View {
                 .offset(x: 0, y: 0)
 
             HStack {
-                Text(title)
+                Text(title, comment: "Header title")
                     .fontWeight(.bold)
                     .font(.system(size: 32))
                     .foregroundStyle(Color.AppPalette.Text.title)
                     .padding(.top, 190)
                     .padding(.leading, 50)
-                    .accessibilityIdentifier("title".getAccessibilityIdentifier(type: .text))
+                    .accessibilityIdentifier("title".getAccessibilityIdentifier(type: .accText))
 
                 Spacer()
             }

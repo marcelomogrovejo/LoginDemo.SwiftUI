@@ -9,6 +9,7 @@
 
 import XCTest
 import SwiftUI
+import CommonAccessibility
 
 final class SignInViewUIInteractionTests: XCTestCase {
 
@@ -29,9 +30,9 @@ final class SignInViewUIInteractionTests: XCTestCase {
     @MainActor
     func testSignInView_SignInButtonEnabledWhenFormIsFilledCorrectly() throws {
         // Arrange
-        let signInButtonId = "sign-in".getAccessibilityIdentifier(type: AccessibilityIdentifierType.button)
-        let emailTextFieldId = "email".getAccessibilityIdentifier(type: AccessibilityIdentifierType.plainTextField)
-        let passwordTextFieldId = "password".getAccessibilityIdentifier(type: AccessibilityIdentifierType.secureField)
+        let signInButtonId = "sign-in".getAccessibilityIdentifier(type: .accButton)
+        let emailTextFieldId = "username".getAccessibilityIdentifier(type: .accPlainTextField)
+        let passwordTextFieldId = "password".getAccessibilityIdentifier(type: .accSecureTextField)
         let validEmail = "test@example.com"
         let nextButtonTitle = "next"
         let validPassword = "secureText123"
@@ -96,11 +97,11 @@ final class SignInViewUIInteractionTests: XCTestCase {
     @MainActor
     func testSignInView_PasswordEyeButtonToggle() throws {
         // Arrange
-        let eyeButtonId = "toggle".getAccessibilityIdentifier(type: AccessibilityIdentifierType.button)
+        let eyeButtonId = "toggle".getAccessibilityIdentifier(type: .accButton)
         let eyeButton = sut.buttons[eyeButtonId]
-        let eyeSlashButtonImageId = "show".getAccessibilityIdentifier(type: AccessibilityIdentifierType.image)
+        let eyeSlashButtonImageId = "show".getAccessibilityIdentifier(type: .accImage)
         let eyeSlashButtonImage = sut.images[eyeSlashButtonImageId]
-        let eyeButtonImageId = "hide".getAccessibilityIdentifier(type: AccessibilityIdentifierType.image)
+        let eyeButtonImageId = "hide".getAccessibilityIdentifier(type: .accImage)
         let eyeButtonImage = sut.images[eyeButtonImageId]
 
         // Assert: initial state
@@ -151,12 +152,12 @@ final class SignInViewUIInteractionTests: XCTestCase {
         // Arrange
         let invalidEmail = "invalid.test@test.com"
         let invalidPassword = "invalidPassword123"
-        let signInButtonId = "sign-in".getAccessibilityIdentifier(type: AccessibilityIdentifierType.button)
+        let signInButtonId = "sign-in".getAccessibilityIdentifier(type: .accButton)
         let signInButton = sut.buttons[signInButtonId]
-        let emailTextFieldId = "email".getAccessibilityIdentifier(type: AccessibilityIdentifierType.plainTextField)
+        let emailTextFieldId = "username".getAccessibilityIdentifier(type: .accPlainTextField)
         let emailTextField = sut.textFields[emailTextFieldId]
         let nextButtonTitle = "next"
-        let passwordTextFieldId = "password".getAccessibilityIdentifier(type: AccessibilityIdentifierType.secureField)
+        let passwordTextFieldId = "password".getAccessibilityIdentifier(type: .accSecureTextField)
         let passwordTextField = sut.secureTextFields[passwordTextFieldId]
         let returnButtonTitle = "return"
 
@@ -207,9 +208,13 @@ final class SignInViewUIInteractionTests: XCTestCase {
         // TODO: check the disabled state of the email, password text fields and eye, sign up and forgot password buttons while loading
 
         // Assert
-        // TODO: Warning !
-        // Check when localization is present if this is still working when the language changes
-        XCTAssertEqual(sut.alerts.element.label, "Error",
+        // TODO: Alert accessibilityId doesn't work.
+        let errorAlert = sut.alerts.element
+        XCTAssertTrue(errorAlert.waitForExistence(timeout: 2), "Error alert should be present but it is not")
+
+        // MARK: Warning !
+        // en_EN was set as the default testing language.
+        XCTAssertEqual(errorAlert.label, "Error",
                        "An error alert should be present but it is not")
     }
 
@@ -218,12 +223,12 @@ final class SignInViewUIInteractionTests: XCTestCase {
         // Arrange
         let validEmail = "valid.test@test.com"
         let validPassword = "validPassword123"
-        let signInButtonId = "sign-in".getAccessibilityIdentifier(type: AccessibilityIdentifierType.button)
+        let signInButtonId = "sign-in".getAccessibilityIdentifier(type: .accButton)
         let signInButton = sut.buttons[signInButtonId]
-        let emailTextFieldId = "email".getAccessibilityIdentifier(type: AccessibilityIdentifierType.plainTextField)
+        let emailTextFieldId = "username".getAccessibilityIdentifier(type: .accPlainTextField)
         let emailTextField = sut.textFields[emailTextFieldId]
         let nextButtonTitle = "next"
-        let passwordTextFieldId = "password".getAccessibilityIdentifier(type: AccessibilityIdentifierType.secureField)
+        let passwordTextFieldId = "password".getAccessibilityIdentifier(type: .accSecureTextField)
         let passwordTextField = sut.secureTextFields[passwordTextFieldId]
         let returnButtonTitle = "return"
 

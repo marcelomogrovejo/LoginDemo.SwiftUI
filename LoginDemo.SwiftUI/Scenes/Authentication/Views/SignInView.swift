@@ -52,6 +52,13 @@ struct SignInView<ViewModel>: View where ViewModel: SignInViewModelProtocol {
                     VStack(alignment: .leading) {
                         CustomTextField(value: $viewModel.email,
                                         title: AuthConstants.SignInView.usernameTitle,
+                                        accessibilityId: AuthConstants.SignInView.usernameAccessibilityId,
+                                        accessibilityLabelValue: AuthConstants.SignInView.usernameAccessibilityLabel,
+                                        /// On this implementation the placeholder in not needed but I want to keep the keys and translations.
+//                                        placeholderText: AuthConstants.SignInView.usernamePlaceholder,
+                                        placeholderText: "",
+                                        separatorLineAccessibilityId: AuthConstants.SignInView.usernameSeparatorLineAccessibilityId,
+                                        errorTextAccessibilityLabelValue: AuthConstants.SignInView.usernameAccessibilityErrorLabel,
                                         textContentType: .emailAddress,
                                         keyboardType: .emailAddress,
                                         isDisabled: $viewModel.isLoading,
@@ -67,6 +74,13 @@ struct SignInView<ViewModel>: View where ViewModel: SignInViewModelProtocol {
 
                         CustomTextField(value: $viewModel.password,
                                         title: AuthConstants.SignInView.passwordTitle,
+                                        accessibilityId: AuthConstants.SignInView.passwordAccessibilityId,
+                                        accessibilityLabelValue: AuthConstants.SignInView.passwordAccesiibilityLabel,
+                                        /// On this implementation the placeholder in not needed but I want to keep the keys and translations.
+//                                        placeholderText: AuthConstants.SignInView.passwordPlaceholder,
+                                        placeholderText: "",
+                                        separatorLineAccessibilityId: AuthConstants.SignInView.passwordSeparatorLineAccessibilityId,
+                                        errorTextAccessibilityLabelValue: AuthConstants.SignInView.passwordAccessibilityErrorLabel,
                                         isSecureText: true,
                                         textContentType: .password,
                                         isDisabled: $viewModel.isLoading,
@@ -90,11 +104,15 @@ struct SignInView<ViewModel>: View where ViewModel: SignInViewModelProtocol {
                                 .font(.system(size: AuthConstants.SignInView.submitFontSize))
                             /// Makes UI test fails -> it doesn't find the element
 //                                .accessibilityHidden(true)
-                                .accessibilityIdentifier("sign-in".getAccessibilityIdentifier(type: .buttonTitle))
+                                .accessibilityIdentifier(AuthConstants.SignInView.submitTitleAccessibilityId)
 
                             Spacer()
 
                             CircleButton(title: AuthConstants.SignInView.circularButtonTitle,
+                                         accessibilityId: AuthConstants.SignInView.signInButtonAccessibilityId,
+                                         accessibilityLabelValue: AuthConstants.SignInView.signInButtonAccessibilityLabel,
+                                         accessibilityLoadingLabel: AuthConstants.SignInView.signInButtonLoadingAccessibilityLabel,
+                                         accessibilityLoadingValue: AuthConstants.SignInView.signInButtonLoadingAccessibilityValue,
                                          isEnabled: $viewModel.isFormValid,
                                          isLoading: $viewModel.isLoading) {
                                 viewModel.triggerAuthentication()
@@ -102,12 +120,16 @@ struct SignInView<ViewModel>: View where ViewModel: SignInViewModelProtocol {
                         }
 
                         HStack {
-                            LinkStyleButton(title: AuthConstants.SignInView.signUpTitle)
+                            LinkStyleButton(title: AuthConstants.SignInView.signUpButtonTitle,
+                                            accessibilityLabelValue: AuthConstants.SignInView.signUpButtonAccessibilityLabel,
+                                            accessibilityId: AuthConstants.SignInView.signUpButtonAccessibilityId)
                                 .padding(.vertical, AuthConstants.SignInView.signUpButtonVerticalPadding)
 
                             Spacer()
 
-                            LinkStyleButton(title: AuthConstants.SignInView.forgotPasswordTitle)
+                            LinkStyleButton(title: AuthConstants.SignInView.forgotPasswordButtonTitle,
+                                            accessibilityLabelValue: AuthConstants.SignInView.forgotPasswordButtonAccessibilityLabel,
+                                            accessibilityId: AuthConstants.SignInView.forgotPasswordButtonAccessibilityId)
                         }
 
                         Spacer()
@@ -160,10 +182,15 @@ struct SignInView<ViewModel>: View where ViewModel: SignInViewModelProtocol {
             // Configure enviroment vars
             viewModel.setup(settings)
         }
+
+        // MARK: Error handling #48
+        // When https://github.com/marcelomogrovejo/LoginDemo.SwiftUI/tree/48-error-handling is implemented,
+        // the viewModel.errorMessage will be able to work approriatedly.
         .customeAlert(isPresented: $viewModel.hasError,
                       title: AuthConstants.SignInView.errorAlertTitle,
-                      message: viewModel.errorMessage ?? AuthConstants.SignInView.errorAlertMessage,
-                      buttonTitle: AuthConstants.SignInView.errorAlertButtonTitle)
+                      message: /*viewModel.errorMessage ?? */AuthConstants.SignInView.errorAlertMessage,
+                      buttonTitle: AuthConstants.SignInView.errorAlertButtonTitle,
+                      accessibilityId: AuthConstants.SignInView.errorAlertAccessibilityId)
     }
 }
 
