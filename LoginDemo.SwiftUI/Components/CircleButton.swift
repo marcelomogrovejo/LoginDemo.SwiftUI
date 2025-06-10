@@ -8,6 +8,7 @@
 // Source SF symbols colors: https://stackoverflow.com/questions/56709463/change-the-stroke-fill-color-of-sf-symbol-icon-in-swiftui
 
 import SwiftUI
+import CommonAccessibility
 
 enum CircleButtonType {
     case enabled
@@ -39,7 +40,7 @@ struct CircleButton: View {
         static let imageWidth: CGFloat = 50
         static let imageHeight: CGFloat = 50
 
-        static let defaultAccessibilityId: String = "main".getAccessibilityIdentifier(type: .button)
+        static let defaultAccessibilityId: String = "main".getAccessibilityIdentifier(type: .accButton)
         static let defaultAccessibilityLabelValue = LocalizedStringKey("submit-button".getAccessibilityLabel(viewType: .button))
 
 //        static let accessibilityLoadingLabel: String = "Loading indicator rolling"

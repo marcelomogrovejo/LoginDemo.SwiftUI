@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import CommonAccessibility
 
 struct LinkStyleButton: View {
 
     struct Constants {
         static let defaultButtonTitle = LocalizedStringKey("link-style-button-title")
         static let defaultAccessibilityLabel: LocalizedStringKey = "link-style-button"
-        static let defaultAccessibilityIdentifier: String = "link-style".getAccessibilityIdentifier(type: .button)
+        static let defaultAccessibilityIdentifier: String = "link-style".getAccessibilityIdentifier(type: .accButton)
     }
 
     var title: LocalizedStringKey = Constants.defaultButtonTitle

@@ -8,6 +8,7 @@
 import SwiftUI
 import XCTest
 import ViewInspector
+import CommonAccessibility
 
 @testable import LoginDemo_SwiftUI
 
@@ -15,23 +16,36 @@ final class CustomTextFieldTests: XCTestCase {
 
     var sut: CustomTextField!
 
+    override func setUp() {
+
+    }
+
+    override func tearDown() {
+        sut = nil
+    }
+
     func testInitialPlainTextField_ShouldBeDisplayed() throws {
         // Arrange
         let testValue = Binding.constant("plain text")
+        /// LocalizedStringKey here is just a wrapper that holds the key, which will be rendered by SwiftUI when is
+        /// createds the CustomTextField component.
+        let testTitleLocalized = LocalizedStringKey("lang-test-sign-in-view-plain-text-field-username-key")
         let testTitle = "Username"
+        let testErrorMessageLocalized = LocalizedStringKey("lang-test-sign-in-view-plain-text-field-error-message-key")
         let testErrorMessage = ""
+        let plainTextFieldId = "\("username".getAccessibilityIdentifier(type: .accPlainTextField))"
+        let secureTextFieldId = "\("username".getAccessibilityIdentifier(type: .accSecureTextField))"
 
         let sut = CustomTextField(value: testValue,
-                                  title: testTitle,
-                                  errorMessage: testErrorMessage,
+                                  title: testTitleLocalized,
+                                  accessibilityId: plainTextFieldId,
+                                  errorMessage: testErrorMessageLocalized,
                                   isSecureText: false,
                                   isDisabled: Binding.constant(false),
                                   onSubmit: {})
 
         // Act
         let inspectedView = try sut.inspect()
-        let plainTextFieldId = "\(testTitle.getAccessibilityIdentifier(type: .plainTextField))"
-        let secureTextFieldId = "\(testTitle.getAccessibilityIdentifier(type: .secureTextField))"
 
         // Assert Text(title)
         XCTAssertEqual(try inspectedView.text(0).string(), testTitle)
@@ -53,40 +67,45 @@ final class CustomTextFieldTests: XCTestCase {
 
         // Assert Eye Button is NOT present
         let eyeButton = try? mainVStack
-            .find(viewWithAccessibilityIdentifier: "eye".getAccessibilityIdentifier(type: .button))
+            .find(viewWithAccessibilityIdentifier: "eye".getAccessibilityIdentifier(type: .accButton))
             .first
         XCTAssertNil(eyeButton, "Eye button should NOT be present when isSecureText is false")
 
-        // Assert Separator and Error Message Text as before
+        // Assert Separator is present
+        /// WARNING ! separator line HAS a fixed id
         let separatorLine = try? mainVStack
-            .find(viewWithAccessibilityIdentifier: testTitle.getAccessibilityIdentifier(type: .separatorLine))
+            .find(viewWithAccessibilityIdentifier: "custom".getAccessibilityIdentifier(type: .accSeparatorLine))
             .first
         XCTAssertNotNil(separatorLine, "Separator Line should be present")
 
+        // Assert Error Message is present and empty
         let errorMessage = try? mainVStack
-            .find(viewWithAccessibilityIdentifier: testTitle.getAccessibilityIdentifier(type: .errorTextMessage))
+            .find(viewWithAccessibilityIdentifier: "username".getAccessibilityIdentifier(type: .accErrorTextMessage))
             .first
         let messageString = try? errorMessage?.text(0).string() ?? ""
-        XCTAssertEqual(messageString, testErrorMessage)
+        XCTAssertEqual(messageString, testErrorMessage, "Error Message should be displayed correctly")
     }
 
     func testInitialSecureTextField_ShouldBeDisplayed() throws {
         // Arrange
         let testValue = Binding.constant("secureText1234")
+        let testTitleLocalized = LocalizedStringKey("lang-test-sign-in-view-secure-text-field-password-key")
         let testTitle = "Password"
+        let testErrorMessageLocalized = LocalizedStringKey("lang-test-sign-in-view-secure-text-field-error-message-key")
         let testErrorMessage = ""
+        let plainTextFieldId = "\("password".getAccessibilityIdentifier(type: .accPlainTextField))"
+        let secureTextFieldId = "\("password".getAccessibilityIdentifier(type: .accSecureTextField))"
 
         let sut = CustomTextField(value: testValue,
-                                  title: testTitle,
-                                  errorMessage: testErrorMessage,
+                                  title: testTitleLocalized,
+                                  accessibilityId: secureTextFieldId,
+                                  errorMessage: testErrorMessageLocalized,
                                   isSecureText: true,
                                   isDisabled: Binding.constant(false),
                                   onSubmit: {})
 
         // Act
         let inspectedView = try sut.inspect()
-        let plainTextFieldId = "\(testTitle.getAccessibilityIdentifier(type: .plainTextField))"
-        let secureTextFieldId = "\(testTitle.getAccessibilityIdentifier(type: .secureTextField))"
 
         // Assert Text(title)
         XCTAssertEqual(try inspectedView.text(0).string(), testTitle)
@@ -108,19 +127,20 @@ final class CustomTextFieldTests: XCTestCase {
 
         // Assert Eye Button is present
         let eyeButton = try? mainVStack
-            .find(viewWithAccessibilityIdentifier: "toggle".getAccessibilityIdentifier(type: .button))
+            .find(viewWithAccessibilityIdentifier: "toggle".getAccessibilityIdentifier(type: .accButton))
             .first
         XCTAssertNotNil(eyeButton, "Eye button should be present when isSecureText is true")
 
         // Assert Separator
+        /// WARNING ! separator line HAS a fixed id
         let separatorLine = try? mainVStack
-            .find(viewWithAccessibilityIdentifier: testTitle.getAccessibilityIdentifier(type: .separatorLine))
+            .find(viewWithAccessibilityIdentifier: "custom".getAccessibilityIdentifier(type: .accSeparatorLine))
             .first
         XCTAssertNotNil(separatorLine, "Separator Line should be present")
 
         // Assert Error Message
         let errorMessage = try? mainVStack
-            .find(viewWithAccessibilityIdentifier: testTitle.getAccessibilityIdentifier(type: .errorTextMessage))
+            .find(viewWithAccessibilityIdentifier: "password".getAccessibilityIdentifier(type: .accErrorTextMessage))
             .first
         let messageString = try? errorMessage?.text(0).string() ?? ""
         XCTAssertEqual(messageString, testErrorMessage)
@@ -130,17 +150,18 @@ final class CustomTextFieldTests: XCTestCase {
         // Arrange
         let initialValue = "initial input text"
         var liveBoundValue = initialValue
-        let testTitle = "Email"
+        let testTitleLocalized = LocalizedStringKey("lang-test-sign-in-view-secure-text-field-email-key")
+//        let testTitle = "Email"
+        var plainTextFieldId = "\("email".getAccessibilityIdentifier(type: .accPlainTextField))"
 
         let sut = CustomTextField(value: Binding(get: { liveBoundValue }, set: { liveBoundValue = $0 }),
-                                  title: testTitle,
+                                  title: testTitleLocalized,
+                                  accessibilityId: plainTextFieldId,
                                   isSecureText: false,
                                   isDisabled: Binding.constant(false))
 
         // Act
         var inspectedView = try sut.inspect()
-        var plainTextFieldId = "\(testTitle.getAccessibilityIdentifier(type: .plainTextField))"
-
         var mainVStack = try inspectedView.vStack(1)
 
         // Assert initial value
@@ -149,7 +170,7 @@ final class CustomTextFieldTests: XCTestCase {
         // Act
         inspectedView = try sut.inspect()
         mainVStack = try inspectedView.vStack(1)
-        plainTextFieldId = "\(testTitle.getAccessibilityIdentifier(type: .plainTextField))"
+        plainTextFieldId = "\("email".getAccessibilityIdentifier(type: .accPlainTextField))"
 
         let plainTextField = try mainVStack
             .find(viewWithAccessibilityIdentifier: plainTextFieldId)
@@ -165,10 +186,13 @@ final class CustomTextFieldTests: XCTestCase {
         // Arrange
         let initialValue = "secretPassword123"
         var liveBoundValue = initialValue
-        let testTitle = "Secret Password"
+        let testTitleLocalized = LocalizedStringKey("lang-test-sign-in-view-secure-text-field-password-key")
+//        let testTitle = "Secret Password"
+        let secureFieldId = "\("password".getAccessibilityIdentifier(type: .accSecureTextField))"
 
         let sut = CustomTextField(value: Binding(get: { liveBoundValue }, set: { liveBoundValue = $0 }),
-                                  title: testTitle,
+                                  title: testTitleLocalized,
+                                  accessibilityId: secureFieldId,
                                   isSecureText: true,
                                   isDisabled: Binding.constant(false))
 
@@ -179,8 +203,6 @@ final class CustomTextFieldTests: XCTestCase {
         let inspectedView = try sut.inspect()
         let mainVStack = try inspectedView.vStack(1)
         let zStack = try mainVStack.zStack(0)
-
-        let secureFieldId = "\(testTitle.getAccessibilityIdentifier(type: .secureTextField))"
 
         let secureTextField = try zStack
             .find(viewWithAccessibilityIdentifier: secureFieldId)
@@ -195,12 +217,18 @@ final class CustomTextFieldTests: XCTestCase {
     func testErrorMessage_ShouldDisplayAnErrorMessage() throws {
         // Arrange
         let testValue = Binding.constant("")
-        let testTitle = "Username"
+        let testTitleLocalized = LocalizedStringKey("lang-test-sign-in-view-plain-text-field-username-key")
+//        let testTitle = "Username"
+        let accessibilityId = "username".getAccessibilityIdentifier(type: .accPlainTextField)
+        let errorMessageTextLocalized = LocalizedStringKey("lang-test-sign-in-view-plain-text-field-error-message-key")
         let errorMessageText = "This field is required."
+        let errorMessageAccessibilityId = "username".getAccessibilityIdentifier(type: .accErrorTextMessage)
 
         let sut = CustomTextField(value: testValue,
-                                  title: testTitle,
-                                  errorMessage: errorMessageText,
+                                  title: testTitleLocalized,
+                                  accessibilityId: accessibilityId,
+                                  errorMessage: errorMessageTextLocalized,
+                                  errorMessageAccessibilityId: errorMessageAccessibilityId,
                                   isSecureText: false,
                                   isDisabled: Binding.constant(false))
 
@@ -209,23 +237,27 @@ final class CustomTextFieldTests: XCTestCase {
         let mainVStack = try inspectedView.vStack(1)
 
         let errorText = try mainVStack
-            .find(viewWithAccessibilityIdentifier: testTitle.getAccessibilityIdentifier(type: .errorTextMessage))
+            .find(viewWithAccessibilityIdentifier: errorMessageAccessibilityId)
             .text()
 
         // Assert
-        XCTAssertEqual(try errorText.string(), errorMessageText, "Error message should match.")
+        XCTAssertEqual(try errorText.string(), errorMessageText, "Error messages should match.")
         XCTAssertEqual(try errorText.attributes().foregroundColor(), Color.AppPalette.TextField.error, "Error message color should match.")
     }
 
     func testErrorMessageWhenEmpty_ShouldNotBeDisplayed() throws {
         // Arrange
         let testValue = Binding.constant("")
-        let testTitle = "Field"
-        let errorMessageText = ""
+        let testTitleLocalized = LocalizedStringKey("lang-test-sign-in-view-plain-text-field-field-key")
+//        let testTitle = "Field"
+        let errorMessageLocalized = LocalizedStringKey("lang-test-sign-in-view-plain-text-field-empty-error-message-key")
+//        let errorMessage = ""
+        let errorMessageAccessibilityId = "field".getAccessibilityIdentifier(type: .accErrorTextMessage)
 
         let sut = CustomTextField(value: testValue,
-                                  title: testTitle,
-                                  errorMessage: errorMessageText,
+                                  title: testTitleLocalized,
+                                  errorMessage: errorMessageLocalized,
+                                  errorMessageAccessibilityId: errorMessageAccessibilityId,
                                   isSecureText: false,
                                   isDisabled: Binding.constant(false))
 
@@ -234,20 +266,25 @@ final class CustomTextFieldTests: XCTestCase {
         let mainVStack = try inspectedView.vStack(1)
 
         let errorText = try mainVStack
-            .find(viewWithAccessibilityIdentifier: testTitle.getAccessibilityIdentifier(type: .errorTextMessage))
+            .find(viewWithAccessibilityIdentifier: errorMessageAccessibilityId)
             .text()
 
         // Assert
-        XCTAssertEqual(try errorText.string(), "", "Error message should be empty.")
+        /// WARNING ! the key "lang-test-sign-in-view-plain-text-field-error-message-key" cannot be totaly empty, otherwise errorText.string() find the key itself.
+        /// So, to solve the issue, the key on localizable has just an empty space.
+        XCTAssertEqual(try errorText.string(), " ", "Error message should be empty.")
     }
 
     func testDisabledState_ShouldShowDisabledVisuals() throws {
         // Arrange
         let testValue = Binding.constant("some text")
-        let testTitle = "Disabled Password"
+        let testTitleLocalized = LocalizedStringKey("lang-test-sign-in-view-plain-text-field-disabled-password-key")
+//        let testTitle = "Disabled Password"
+        let secureTextFieldId = "disabled-password".getAccessibilityIdentifier(type: .accSecureTextField)
 
         let sut = CustomTextField(value: testValue,
-                                  title: testTitle,
+                                  title: testTitleLocalized,
+                                  accessibilityId: secureTextFieldId,
                                   isSecureText: true,
                                   isDisabled: Binding.constant(true))
 
@@ -256,7 +293,6 @@ final class CustomTextFieldTests: XCTestCase {
         let mainVStack = try inspectedView.vStack(1)
         let zStack = try mainVStack.zStack(0)
 
-        let secureTextFieldId = testTitle.getAccessibilityIdentifier(type: .secureTextField)
 
         let secureTextField = try? zStack
             .find(viewWithAccessibilityIdentifier: secureTextFieldId)
@@ -268,7 +304,7 @@ final class CustomTextFieldTests: XCTestCase {
         let secureField = try secureTextField.secureField()
 
         let eyeButtonView = try? zStack
-            .find(viewWithAccessibilityIdentifier: "toggle".getAccessibilityIdentifier(type: .button))
+            .find(viewWithAccessibilityIdentifier: "toggle".getAccessibilityIdentifier(type: .accButton))
             .first
         guard let eyeButtonView = eyeButtonView else {
             XCTFail( "Could not find eye button." )
@@ -290,7 +326,11 @@ final class CustomTextFieldTests: XCTestCase {
         // Arrange
         let passwordBinding = Binding.constant("myPassword")
         let isDisabled = Binding.constant(false)
+        let plainTextFieldId = "title".getAccessibilityIdentifier(type: .accPlainTextField)
+        let secureFieldId = "title".getAccessibilityIdentifier(type: .accSecureTextField)
+
         sut = CustomTextField(value: passwordBinding,
+                              accessibilityId: secureFieldId,
                               isSecureText: true,
                               isDisabled: isDisabled)
 
@@ -308,7 +348,7 @@ final class CustomTextFieldTests: XCTestCase {
         let zStack = try mainVStack.zStack(0)
 
         let toggleButton = try zStack
-            .find(viewWithAccessibilityIdentifier: "toggle".getAccessibilityIdentifier(type: .button))
+            .find(viewWithAccessibilityIdentifier: "toggle".getAccessibilityIdentifier(type: .accButton))
             .first
         guard let toggleButton = toggleButton else {
             XCTFail("Could not find eye button")
@@ -317,12 +357,12 @@ final class CustomTextFieldTests: XCTestCase {
 
         // Initial Asserts
         let initialSecureField = try? zStack
-            .find(viewWithAccessibilityIdentifier: "title".getAccessibilityIdentifier(type: .secureTextField))
+            .find(viewWithAccessibilityIdentifier: secureFieldId)
             .first
         XCTAssertNotNil(initialSecureField, "Initial state should show SecureField")
 
         let initialTextField = try? zStack
-            .find(viewWithAccessibilityIdentifier: "title".getAccessibilityIdentifier(type: .plainTextField))
+            .find(viewWithAccessibilityIdentifier: plainTextFieldId)
             .first
         XCTAssertNil(initialTextField, "Initial state should NOT show TextField")
 
@@ -332,6 +372,7 @@ final class CustomTextFieldTests: XCTestCase {
         // MARK: - Warning !
         /* .tap() is not working, the state of the text field doesn't change. To analyze that better I have created an isolated and simple test 'TestToggleStates' */
         try button.tap()
+        XCTFail(".tap() is not working, the state of the text field doesn't change.")
 
         // Inspect the after tap view
         let afterInspectedView = try sut.inspect()
@@ -347,11 +388,11 @@ final class CustomTextFieldTests: XCTestCase {
         let afterZStack = try afterMainVStack.zStack(0)
 
         let afterTapSecureField = try? afterZStack
-            .find(viewWithAccessibilityIdentifier: "title".getAccessibilityIdentifier(type: .secureTextField))
+            .find(viewWithAccessibilityIdentifier: "title".getAccessibilityIdentifier(type: .accSecureTextField))
             .first
         
         let afterTapTextField = try? afterZStack
-            .find(viewWithAccessibilityIdentifier: "title".getAccessibilityIdentifier(type: .plainTextField))
+            .find(viewWithAccessibilityIdentifier: "title".getAccessibilityIdentifier(type: .accPlainTextField))
             .first
 
         // Assert

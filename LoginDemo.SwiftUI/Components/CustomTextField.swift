@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CommonAccessibility
 
 enum TextFieldFocusType: Hashable {
     case email
@@ -20,24 +21,24 @@ struct CustomTextField: View {
         static let defaultTitle: LocalizedStringKey = "lang-default-custom-text-field-title-key"
         static let defaultPlaceholderText: LocalizedStringKey = "lang-default-custom-text-field-placeholder-key"
 
-        static let defaultSecureTextAccessibilityId: String = "custom".getAccessibilityIdentifier(type: .secureTextField)
-        static let defaultSecureTextAccessibilityLabelValue: LocalizedStringKey = "lang-default-custom-secure-text-field-accessibility-label-key"
-
-        static let defaultPlainTextAccessibilityId: String = "custom".getAccessibilityIdentifier(type: .plainTextField)
+        static let defaultPlainTextAccessibilityId: String = "plain".getAccessibilityIdentifier(type: .accPlainTextField)
         static let defaultPlainTextAccessibilityLabelValue: LocalizedStringKey = "lang-default-custom-plain-text-field-accessibility-label-key"
 
-        static let defaultSeparatorLineAccessibilityId: String = "custom".getAccessibilityIdentifier(type: .separatorLine)
+        static let defaultSecureTextAccessibilityId: String = "secure".getAccessibilityIdentifier(type: .accSecureTextField)
+        static let defaultSecureTextAccessibilityLabelValue: LocalizedStringKey = "lang-default-custom-secure-text-field-accessibility-label-key"
 
-        static let defaultErrorTextAccessibilityId: String = "custom".getAccessibilityIdentifier(type: .errorTextMessage)
+        static let defaultSeparatorLineAccessibilityId: String = "custom".getAccessibilityIdentifier(type: .accSeparatorLine)
+
+        static let defaultErrorTextAccessibilityId: String = "custom".getAccessibilityIdentifier(type: .accErrorTextMessage)
         static let defaultErrorTextAccessibilityLabelValue: LocalizedStringKey = "lang-default-custom-text-field-error-text-key"
 
         static let visibleImageName: String = "eye.slash.fill"
         static let hiddenImageName: String = "eye.fill"
         static let toggleImageBottonPadding: CGFloat = 3
         static let toggleButtonHeight: CGFloat = 25
-        static let defaultToggleButtonId: String = "toggle".getAccessibilityIdentifier(type: .button)
-        static let defaultToggleImageVisibleId: String = "show".getAccessibilityIdentifier(type: .image)
-        static let defaultToggleImageHiddenId: String = "hide".getAccessibilityIdentifier(type: .image)
+        static let defaultToggleButtonId: String = "toggle".getAccessibilityIdentifier(type: .accButton)
+        static let defaultToggleImageVisibleId: String = "show".getAccessibilityIdentifier(type: .accImage)
+        static let defaultToggleImageHiddenId: String = "hide".getAccessibilityIdentifier(type: .accImage)
         static let defaultToggleVisibleLabelValue: LocalizedStringKey = "lang-default-custom-text-field-toggle-visible-label-key"
         static let defaultToggleHiddenLabelValue: LocalizedStringKey = "lang-default-custom-text-field-toggle-hidden-label-key"
     }
@@ -55,6 +56,7 @@ struct CustomTextField: View {
     var accessibilityId: String?
     var accessibilityLabelValue: LocalizedStringKey?
     var placeholderText: LocalizedStringKey?
+    var separatorLineAccessibilityId: String?
     var errorMessage: LocalizedStringKey = ""
     var errorMessageAccessibilityId: String?
     var errorTextAccessibilityLabelValue: LocalizedStringKey?
@@ -165,7 +167,7 @@ struct CustomTextField: View {
                       Color.AppPalette.TextField.secondary :
                         Color.AppPalette.TextField.primary)
                 .frame(height: 1)
-                .accessibilityIdentifier(Constants.defaultSeparatorLineAccessibilityId)
+                .accessibilityIdentifier(separatorLineAccessibilityId ?? Constants.defaultSeparatorLineAccessibilityId)
 
             Text(errorMessage)
                 .font(.system(size: 12))

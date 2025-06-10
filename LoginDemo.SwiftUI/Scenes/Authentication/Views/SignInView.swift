@@ -57,6 +57,7 @@ struct SignInView<ViewModel>: View where ViewModel: SignInViewModelProtocol {
                                         /// On this implementation the placeholder in not needed but I want to keep the keys and translations.
 //                                        placeholderText: AuthConstants.SignInView.usernamePlaceholder,
                                         placeholderText: "",
+                                        separatorLineAccessibilityId: AuthConstants.SignInView.usernameSeparatorLineAccessibilityId,
                                         errorTextAccessibilityLabelValue: AuthConstants.SignInView.usernameAccessibilityErrorLabel,
                                         textContentType: .emailAddress,
                                         keyboardType: .emailAddress,
@@ -78,6 +79,7 @@ struct SignInView<ViewModel>: View where ViewModel: SignInViewModelProtocol {
                                         /// On this implementation the placeholder in not needed but I want to keep the keys and translations.
 //                                        placeholderText: AuthConstants.SignInView.passwordPlaceholder,
                                         placeholderText: "",
+                                        separatorLineAccessibilityId: AuthConstants.SignInView.passwordSeparatorLineAccessibilityId,
                                         errorTextAccessibilityLabelValue: AuthConstants.SignInView.passwordAccessibilityErrorLabel,
                                         isSecureText: true,
                                         textContentType: .password,
@@ -181,13 +183,14 @@ struct SignInView<ViewModel>: View where ViewModel: SignInViewModelProtocol {
             viewModel.setup(settings)
         }
 
-
-        // MARK: Pending from here
-
+        // MARK: Error handling #48
+        // When https://github.com/marcelomogrovejo/LoginDemo.SwiftUI/tree/48-error-handling is implemented,
+        // the viewModel.errorMessage will be able to work approriatedly.
         .customeAlert(isPresented: $viewModel.hasError,
                       title: AuthConstants.SignInView.errorAlertTitle,
-                      message: viewModel.errorMessage ?? AuthConstants.SignInView.errorAlertMessage,
-                      buttonTitle: AuthConstants.SignInView.errorAlertButtonTitle)
+                      message: /*viewModel.errorMessage ?? */AuthConstants.SignInView.errorAlertMessage,
+                      buttonTitle: AuthConstants.SignInView.errorAlertButtonTitle,
+                      accessibilityId: AuthConstants.SignInView.errorAlertAccessibilityId)
     }
 }
 

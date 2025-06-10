@@ -5,20 +5,27 @@
 //  Created by Marcelo Mogrovejo on 12/5/2025.
 //
 
-// Source: https://stackoverflow.com/questions/68178219/swiftui-creating-custom-alert
-
 import SwiftUI
 
 extension View {
 
-    func customeAlert(isPresented: Binding<Bool>, title: String?, message: String?, buttonTitle: String?, action: (() -> ())? = nil) -> some View {
-        self.alert(isPresented: isPresented) {
-            Alert(
-                title: Text(title ?? "Title"),
-                message: Text(message ?? "Some message"),
-                dismissButton: .default(Text(buttonTitle ?? "OK")) { action?() }
-            )
+    func customeAlert(isPresented: Binding<Bool>,
+                      title: LocalizedStringKey?,
+                      message: LocalizedStringKey?,
+                      buttonTitle: LocalizedStringKey?,
+                      accessibilityId: String? = nil,
+                      action: (() -> ())? = nil) -> some View {
+        self.alert(
+            Text(title ?? "Title"),
+            isPresented: isPresented
+        ) {
+            Button(buttonTitle ?? "OK") {
+                action?()
+            }
+        } message: {
+            Text(message ?? "Some message")
         }
+        .accessibilityIdentifier(accessibilityId ?? "custom-alert-id")
     }
 
 }

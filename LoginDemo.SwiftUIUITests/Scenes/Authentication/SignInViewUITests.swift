@@ -8,6 +8,7 @@
 // Source: https://blog.egesucu.com.tr/how-to-do-ui-tests-in-swiftui-5d16b5ade080
 
 import XCTest
+import CommonAccessibility
 @testable import LoginDemo_SwiftUI
 
 final class SignInViewUITests: XCTestCase {
@@ -29,7 +30,7 @@ final class SignInViewUITests: XCTestCase {
     @MainActor
     func testSignInView_TitleDisplay() throws {
         // Arrange
-        let titleId: String = "title".getAccessibilityIdentifier(type: AccessibilityIdentifierType.text)
+        let titleId: String = "title".getAccessibilityIdentifier(type: .accText)
 
         // Act
         let title = sut.staticTexts[titleId]
@@ -43,9 +44,9 @@ final class SignInViewUITests: XCTestCase {
     @MainActor
     func testSignInView_EmailTextFieldDisplay() throws {
         // Arrange
-        let emailTextFielId: String = "email".getAccessibilityIdentifier(type: AccessibilityIdentifierType.plainTextField)
-        let emailSeparatorLineId: String = "email".getAccessibilityIdentifier(type: AccessibilityIdentifierType.separatorLine)
-        let emailErrorMessageId: String = "email".getAccessibilityIdentifier(type: AccessibilityIdentifierType.errorTextMessage)
+        let emailTextFielId: String = "username".getAccessibilityIdentifier(type: .accPlainTextField)
+        let emailSeparatorLineId: String = "username".getAccessibilityIdentifier(type: .accSeparatorLine)
+        let emailErrorMessageId: String = "username".getAccessibilityIdentifier(type: .accErrorTextMessage)
 
         // Act
         let emailTextField = sut.textFields[emailTextFielId]
@@ -59,6 +60,8 @@ final class SignInViewUITests: XCTestCase {
 
         XCTAssertTrue(emailTextField.waitForExistence(timeout: 2),
                       "Email text field should be present but it is not")
+
+        // MARK: it is failing because CustomTextField is not receiving a separatorLine accessibility id
         XCTAssertTrue(separatorLine.waitForExistence(timeout: 2),
                       "Separator line should be present but it is not")
         XCTAssertFalse(errorText.waitForExistence(timeout: 2),
@@ -68,9 +71,9 @@ final class SignInViewUITests: XCTestCase {
     @MainActor
     func testSignInView_PasswordTextFieldDisplay() throws {
         // Arrange
-        let passwordTextFielId: String = "password".getAccessibilityIdentifier(type: AccessibilityIdentifierType.secureField)
-        let passwordSeparatorLineId: String = "password".getAccessibilityIdentifier(type: AccessibilityIdentifierType.separatorLine)
-        let passwordErrorMessageId: String = "password".getAccessibilityIdentifier(type: AccessibilityIdentifierType.errorTextMessage)
+        let passwordTextFielId: String = "password".getAccessibilityIdentifier(type: .accSecureTextField)
+        let passwordSeparatorLineId: String = "password".getAccessibilityIdentifier(type: .accSeparatorLine)
+        let passwordErrorMessageId: String = "password".getAccessibilityIdentifier(type: .accErrorTextMessage)
 
         // Act
         let passwordTextField = sut.secureTextFields[passwordTextFielId]
@@ -84,6 +87,9 @@ final class SignInViewUITests: XCTestCase {
 
         XCTAssertTrue(passwordTextField.waitForExistence(timeout: 2),
                       "Password text field should be present but it is not")
+
+        // MARK: it is failing because CustomTextField is not receiving a separatorLine accessibility id
+        
         XCTAssertTrue(separatorLine.waitForExistence(timeout: 2),
                       "Separator line should be present but it is not")
         XCTAssertFalse(errorText.waitForExistence(timeout: 2),
@@ -93,7 +99,7 @@ final class SignInViewUITests: XCTestCase {
     @MainActor
     func testSignInView_EyeButtonDisplay() throws {
         // Arrange
-        let toggleButtonId = "toggle".getAccessibilityIdentifier(type: AccessibilityIdentifierType.button)
+        let toggleButtonId = "toggle".getAccessibilityIdentifier(type: .accButton)
 
         // Act
         let eyeButton = sut.buttons[toggleButtonId]
@@ -106,8 +112,8 @@ final class SignInViewUITests: XCTestCase {
     @MainActor
     func testSignInView_SignInButtonDisplay() throws {
         // Arrange
-        let signInButtonTitleId = "sign-in".getAccessibilityIdentifier(type: AccessibilityIdentifierType.buttonTitle)
-        let signInButtonId = "sign-in".getAccessibilityIdentifier(type: AccessibilityIdentifierType.button)
+        let signInButtonTitleId = "sign-in".getAccessibilityIdentifier(type: .accButtonTitle)
+        let signInButtonId = "sign-in".getAccessibilityIdentifier(type: .accButton)
 
         // Act
         let signInTitle = sut.staticTexts[signInButtonTitleId]
@@ -123,7 +129,7 @@ final class SignInViewUITests: XCTestCase {
     @MainActor
     func testSignInView_SignUpButtonDisplay() throws {
         // Arrange
-        let signUpButtonId = "sign-up".getAccessibilityIdentifier(type: AccessibilityIdentifierType.button)
+        let signUpButtonId = "sign-up".getAccessibilityIdentifier(type: .accButton)
         // Act
         let signUpButton = sut.buttons[signUpButtonId]
 
@@ -135,12 +141,9 @@ final class SignInViewUITests: XCTestCase {
     @MainActor
     func testSignInView_ForgotPasswordButtonDisplay() throws {
         // Arrange
-        let forgotPasswordButtonId = "forgot password?".getAccessibilityIdentifier(type: AccessibilityIdentifierType.button)
+        let forgotPasswordButtonId = "forgot-password".getAccessibilityIdentifier(type: .accButton)
 
         // Act
-        // TODO: Warning !
-        // The special char '?' is being taking in account.
-        // Id should be just words separated by '-' char
         let forgotPasswordButton = sut.buttons[forgotPasswordButtonId]
 
         // Assert

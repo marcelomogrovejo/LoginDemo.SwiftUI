@@ -232,6 +232,93 @@
         }
       }
     },
+    "lang-sign-in-view-error-alert-button-title-key" : {
+      "comment" : "Sign in view alert title",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Got it!"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cheers!"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aceptar"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "了解"
+          }
+        }
+      }
+    },
+    "lang-sign-in-view-error-alert-message-key" : {
+      "comment" : "Sign in view alert message",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Something went wrong."
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Something went wrong mate."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Algo salió mal."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "何かがうまくいきませんでした。"
+          }
+        }
+      }
+    },
+    "lang-sign-in-view-error-alert-title-key" : {
+      "comment" : "Sign in view alert button title",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "エラー"
+          }
+        }
+      }
+    },
     "lang-sign-in-view-forgot-password-button-accessibility-label-key" : {
       "comment" : "Sign in view forgot password button title voiceover label",
       "extractionState" : "manual",
@@ -622,6 +709,108 @@
         }
       }
     },
+    "lang-test-sign-in-view-plain-text-field-empty-error-message-key" : {
+      "comment" : "Test lang: Sign in view text field empty error message",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " "
+          }
+        }
+      }
+    },
+    "lang-test-sign-in-view-plain-text-field-error-message-key" : {
+      "comment" : "Test lang: Sign in view text field error message",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This field is required."
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This field is required."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este campo es requerido."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この項目は必須です。"
+          }
+        }
+      }
+    },
+    "lang-test-sign-in-view-plain-text-field-username-key" : {
+      "comment" : "Test lang: Sign in view username text field title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Username"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Username"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre de usuario"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ユーザー名"
+          }
+        }
+      }
+    },
+    "lang-test-sign-in-view-secure-text-field-password-key" : {
+      "comment" : "Test lang: Sign in view password text field title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Password"
+          }
+        },
+        "en-AU" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Password"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contraseña"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "パスワード"
+          }
+        }
+      }
+    },
     "lang-text-loading-indicator-accessibility-label-key" : {
       "comment" : "Sign in loading indicator",
       "extractionState" : "manual",
@@ -745,7 +934,16 @@
     "Logout" : {
 
     },
+    "OK" : {
+
+    },
     "Show %@" : {
+
+    },
+    "Some message" : {
+
+    },
+    "Title" : {
 
     }
   },

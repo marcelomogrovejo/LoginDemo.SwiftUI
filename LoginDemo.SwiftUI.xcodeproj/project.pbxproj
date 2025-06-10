@@ -10,7 +10,10 @@
 		BD42D24E2DD3069E00059F07 /* LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = BD42D24B2DD3069E00059F07 /* LICENSE.md */; };
 		BD42D24F2DD3069E00059F07 /* logo-logindemo-app.png in Resources */ = {isa = PBXBuildFile; fileRef = BD42D24C2DD3069E00059F07 /* logo-logindemo-app.png */; };
 		BD42D2502DD3069E00059F07 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = BD42D24D2DD3069E00059F07 /* README.md */; };
+		BDBC80C32DF6F12F006B4E48 /* LoginDemoTestPlan.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = BDBC80C22DF6F12F006B4E48 /* LoginDemoTestPlan.xctestplan */; };
 		BDE012F62DE1A0FC000DFC88 /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = BDE012F52DE1A0FC000DFC88 /* ViewInspector */; };
+		BDFDDB8E2DF6C36500FD1B6E /* CommonAccessibility in Frameworks */ = {isa = PBXBuildFile; productRef = BDFDDB8D2DF6C36500FD1B6E /* CommonAccessibility */; };
+		BDFDDBF72DF6C61E00FD1B6E /* CommonAccessibility in Frameworks */ = {isa = PBXBuildFile; productRef = BDFDDBF62DF6C61E00FD1B6E /* CommonAccessibility */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,18 +39,17 @@
 		BD42D24C2DD3069E00059F07 /* logo-logindemo-app.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-logindemo-app.png"; sourceTree = "<group>"; };
 		BD42D24D2DD3069E00059F07 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BDA066742DC6311100A807CD /* LoginDemo.SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoginDemo.SwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDBC80C22DF6F12F006B4E48 /* LoginDemoTestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = LoginDemoTestPlan.xctestplan; path = TestPlan/LoginDemoTestPlan.xctestplan; sourceTree = "<group>"; };
 		BDCC79652DE4C32800E57D53 /* LoginDemo.SwiftUIUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LoginDemo.SwiftUIUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		BDCC79CB2DE5B4DE00E57D53 /* LoginDemo.SwiftUIUITests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = LoginDemo.SwiftUIUITests.xctestplan; path = TestPlan/LoginDemo.SwiftUIUITests.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		BD33FAF02DEB5CF90067C0BF /* Exceptions for "LoginDemo.SwiftUI" folder in "LoginDemo.SwiftUIUITests" target */ = {
+		BD022D312DF412F100B46720 /* Exceptions for "LoginDemo.SwiftUI" folder in "LoginDemo.SwiftUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Enums/AccessibilityType.swift,
-				"Extensions/String+AccessibilityIdentifier.swift",
+				Extensions/Localizable.xcstrings,
 			);
-			target = BDCC79642DE4C32800E57D53 /* LoginDemo.SwiftUIUITests */;
+			target = BD42C3E12DD50C700035B547 /* LoginDemo.SwiftUITests */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -60,7 +62,7 @@
 		BDA066762DC6311100A807CD /* LoginDemo.SwiftUI */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				BD33FAF02DEB5CF90067C0BF /* Exceptions for "LoginDemo.SwiftUI" folder in "LoginDemo.SwiftUIUITests" target */,
+				BD022D312DF412F100B46720 /* Exceptions for "LoginDemo.SwiftUI" folder in "LoginDemo.SwiftUITests" target */,
 			);
 			path = LoginDemo.SwiftUI;
 			sourceTree = "<group>";
@@ -85,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDFDDB8E2DF6C36500FD1B6E /* CommonAccessibility in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDFDDBF72DF6C61E00FD1B6E /* CommonAccessibility in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,7 +105,7 @@
 		BDA0666B2DC6311100A807CD = {
 			isa = PBXGroup;
 			children = (
-				BDCC79CB2DE5B4DE00E57D53 /* LoginDemo.SwiftUIUITests.xctestplan */,
+				BDBC80C22DF6F12F006B4E48 /* LoginDemoTestPlan.xctestplan */,
 				BDA066762DC6311100A807CD /* LoginDemo.SwiftUI */,
 				BD42C3E32DD50C700035B547 /* LoginDemo.SwiftUITests */,
 				BDCC79662DE4C32800E57D53 /* LoginDemo.SwiftUIUITests */,
@@ -109,6 +113,7 @@
 				BD42D24B2DD3069E00059F07 /* LICENSE.md */,
 				BD42D24C2DD3069E00059F07 /* logo-logindemo-app.png */,
 				BD42D24D2DD3069E00059F07 /* README.md */,
+				BDFDDBF52DF6C61E00FD1B6E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -120,6 +125,13 @@
 				BDCC79652DE4C32800E57D53 /* LoginDemo.SwiftUIUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		BDFDDBF52DF6C61E00FD1B6E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,6 +178,7 @@
 			);
 			name = LoginDemo.SwiftUI;
 			packageProductDependencies = (
+				BDFDDB8D2DF6C36500FD1B6E /* CommonAccessibility */,
 			);
 			productName = LoginDemo.SwiftUI;
 			productReference = BDA066742DC6311100A807CD /* LoginDemo.SwiftUI.app */;
@@ -189,6 +202,7 @@
 			);
 			name = LoginDemo.SwiftUIUITests;
 			packageProductDependencies = (
+				BDFDDBF62DF6C61E00FD1B6E /* CommonAccessibility */,
 			);
 			productName = LoginDemo.SwiftUIUITests;
 			productReference = BDCC79652DE4C32800E57D53 /* LoginDemo.SwiftUIUITests.xctest */;
@@ -231,6 +245,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				BDE012F42DE1A0FC000DFC88 /* XCRemoteSwiftPackageReference "ViewInspector" */,
+				BDFDDB8C2DF6C36500FD1B6E /* XCLocalSwiftPackageReference "../LoginDemoAccessibilityPackage" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = BDA066752DC6311100A807CD /* Products */;
@@ -259,6 +274,7 @@
 				BD42D24E2DD3069E00059F07 /* LICENSE.md in Resources */,
 				BD42D24F2DD3069E00059F07 /* logo-logindemo-app.png in Resources */,
 				BD42D2502DD3069E00059F07 /* README.md in Resources */,
+				BDBC80C32DF6F12F006B4E48 /* LoginDemoTestPlan.xctestplan in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,6 +617,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		BDFDDB8C2DF6C36500FD1B6E /* XCLocalSwiftPackageReference "../LoginDemoAccessibilityPackage" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../LoginDemoAccessibilityPackage;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		BDE012F42DE1A0FC000DFC88 /* XCRemoteSwiftPackageReference "ViewInspector" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -617,6 +640,15 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BDE012F42DE1A0FC000DFC88 /* XCRemoteSwiftPackageReference "ViewInspector" */;
 			productName = ViewInspector;
+		};
+		BDFDDB8D2DF6C36500FD1B6E /* CommonAccessibility */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CommonAccessibility;
+		};
+		BDFDDBF62DF6C61E00FD1B6E /* CommonAccessibility */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BDFDDB8C2DF6C36500FD1B6E /* XCLocalSwiftPackageReference "../LoginDemoAccessibilityPackage" */;
+			productName = CommonAccessibility;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
