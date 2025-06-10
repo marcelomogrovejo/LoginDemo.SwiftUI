@@ -152,7 +152,7 @@ final class SignInViewTests: XCTestCase {
         // Arrange
         let inspectedView = try sut.inspect()
         let signInButton = try inspectedView
-            .find(viewWithAccessibilityIdentifier: Constants.signInButtonId.getAccessibilityIdentifier(type: .accButton))
+            .find(viewWithAccessibilityIdentifier: Constants.signInButtonId)
             .first
         guard let signInButton = signInButton else {
             XCTFail("Could not find 'Sign In' button")
